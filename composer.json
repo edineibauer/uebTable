@@ -1,0 +1,25 @@
+{
+  "name": "ueb/table",
+  "description": "Tabela de Listagem de uma entidade para controle de seus dados",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Edinei J. Bauer",
+      "email": "edineibauer@gmail.com"
+    }
+  ],
+  "require": {
+    "ueb/helpers": "*",
+    "ueb/form": "*",
+    "matthiasmullie/minify": "1.3.*",
+    "php": "^7.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "Table": "public/src/"
+    }
+  }
+}
+
+

@@ -1,0 +1,48 @@
+.iconEditableField {
+    cursor: pointer;
+    padding-left:15px;
+    padding-top:4px;
+    height:35px;
+}
+
+.tableImgTd {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 96%;
+}
+
+.textEditableField {
+    float: left!important;
+    height: 35px;
+    padding-top:6px;
+    cursor: default;
+}
+
+.inputEditableTableList {
+    margin: 0!important;
+    text-transform: uppercase;
+    float:left
+}
+
+.tableList thead tr th .hoverI {
+    visibility: hidden;
+}
+
+.tableList thead tr th:hover .hoverI{
+    visibility: inherit;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+.iconArrowTableList {
+    position: absolute;
+    top: 4px;
+    left:-27px;
+    cursor: default;
+}
