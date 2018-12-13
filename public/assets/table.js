@@ -11,6 +11,7 @@ if (typeof tableNovo !== 'function') {
             loadingTable(entity);
             resetPagination(entity);
             readTable(entity);
+            $(".table-campo-geral").val("");
         }))
     }
 
@@ -75,7 +76,8 @@ if (typeof tableNovo !== 'function') {
             id: id
         }, function () {
             loadingTable(entity);
-            readTable(entity)
+            readTable(entity);
+            $(".table-campo-geral").val("");
         }))
     }
 
