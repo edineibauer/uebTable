@@ -69,7 +69,7 @@ if (typeof tableNovo !== 'function') {
     function editEntityDataId(entity, id) {
         var p = new RegExp(/s$/i);
         $("#edit-" + entity + "-" + id).panel(themeDashboard((p.test(entity) ? entity.substr(0, (entity.length - 1)) : entity).replace('_', ' ').replace('-', ' '), {
-            lib: 'form-crud',
+            lib: 'form',
             file: 'api',
             entity: entity,
             id: id
