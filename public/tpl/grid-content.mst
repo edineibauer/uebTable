@@ -1,0 +1,39 @@
+<tr id="row-{{entity}}-{{id}}">
+    {{#fields}}
+        <td class="padding-16 {{class}}">
+            {{#first}}
+                <label class="left">
+                    <input type="checkbox" class="table-select" rel="{{id}}" data-entity="{{entity}}"
+                           style="margin: 15px 2rem 11px 0px;"/>
+                </label>
+            {{/first}}
+            {{value}}
+        </td>
+    {{/fields}}
+
+    <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}">
+        {{^button.delete}}
+            <button id="del-{{entity}}-{{id}}" onclick="deleteEntityData('{{entity}}', {{id}})"
+                    class="right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
+                <i class="material-icons">delete</i>
+            </button>
+        {{/button.delete}}
+        {{^button.update}}
+            <a href="formulario/{{entity}}/{{id}}"
+                    class="right btn-floating color-white hover-shadow opacity hover-opacity-off">
+                <i class="material-icons">edit</i>
+            </a>
+        {{/button.update}}
+        {{#button.status.have}}
+            <label class="right">
+                <div class="switch switch-squad margin-0 margin-right">
+                    <input type="checkbox" class="switch-status-table switchCheck" data-status="{{button.status.status}}"
+                           data-entity="{{entity}}" data-id="{{id}}"
+                           {{#button.status.status}}checked='checked'{{/button.status.status}}
+                    />
+                    <div class="slider"></div>
+                </div>
+            </label>
+        {{/button.status.have}}
+    </td>
+</tr>
