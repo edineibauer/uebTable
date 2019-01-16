@@ -3,7 +3,7 @@
         <td class="padding-16 {{class}}">
             {{#first}}
                 <label class="left">
-                    <input type="checkbox" class="table-select" rel="{{id}}" data-entity="{{entity}}"
+                    <input type="checkbox" class="table-select" rel="{{id}}" data-id="{{identificador}}"
                            style="margin: 15px 2rem 11px 0px;"/>
                 </label>
             {{/first}}

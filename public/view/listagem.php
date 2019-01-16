@@ -1,4 +1,4 @@
-<div class="col font-light theme-d2 theme-border-l margin-bottom" style="border-bottom: solid 5px">
+<div class="col font-light theme-d2 theme-border-l" style="border-bottom: solid 5px">
     <div class="container-1200">
         <h4 class="panel padding-32"></h4>
     </div>
