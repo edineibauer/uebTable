@@ -1,6 +1,6 @@
 <tr id="row-{{entity}}-{{id}}">
     {{#fields}}
-        <td class="padding-16 {{class}}">
+        <td class="padding-16 {{class}}" style="{{style}}">
             {{#first}}
                 <label class="left">
                     <input type="checkbox" class="table-select" rel="{{id}}" data-id="{{identificador}}"
@@ -20,7 +20,7 @@
         {{/button.delete}}
         {{^button.update}}
             <a href="formulario/{{entity}}/{{id}}"
-                    class="right btn-floating color-white hover-shadow opacity hover-opacity-off">
+               class="right btn-floating color-white hover-shadow opacity hover-opacity-off">
                 <i class="material-icons">edit</i>
             </a>
         {{/button.update}}

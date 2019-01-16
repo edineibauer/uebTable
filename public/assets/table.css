@@ -3,6 +3,12 @@
     padding-top: 20px;
 }
 
+.tableImgTd {
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 96%;
+}
+
 .table-all thead th, .table-all tbody td{
     display: none;
 }
