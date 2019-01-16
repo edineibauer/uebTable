@@ -1,33 +1,3 @@
-if(typeof deleteEntityData === "undefined") {
-    function deleteEntityData(entity, id) {
-        var $table = $("#tableList-" + entity);
-        var cont = $table.find(".table-select:checked").length;
-        cont = (cont === 0 ? 1 : cont);
-        if (confirm(cont > 1 ? "Remover os " + cont + " Registros?" : "Remover este Registro? ")) {
-            let resultCount = $table.find("tbody").find("tr").length;
-            let page = $(".pagination").length ? parseInt($("#table-pagina-" + entity).val()) : 1;
-            page = (page < 2 ? 1 : (page - 1));
-            if (cont > 1) {
-                $.each($table.find(".table-select"), function () {
-                    if ($(this).is(":checked")) {
-                        db.exeDelete(entity, id).then(d => {
-                            $table.find("#row-" + entity + "-" + id).remove()
-                        })
-                    }
-                })
-            } else {
-                db.exeDelete(entity, id).then(d => {
-                    $table.find("#row-" + entity + "-" + id).remove()
-                })
-            }
-            /*if ((resultCount - cont) === 0) {
-                resetPagination(entity, page);
-                readTable(entity)
-            }*/
-        }
-    }
-}
-
 (function ($, window, document) {
     var MaterializePagination = function (elem, options) {
         this.$elem = $(elem);

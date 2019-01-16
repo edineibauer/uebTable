@@ -1,4 +1,4 @@
-<div class="responsive tableList col" id="tableList-{{entity}}" data-entity="{{entity}}" data-id="{{identificador}}">
+<div class="responsive tableList col" id="tableList-{{entity}}" data-entity="{{entity}}" data-id="{{identificador}}" style="padding-top: 20px;">
     <div class="row panel">
 
         <div class="font-xlarge left">{{#goodName}}{{entity}}{{/goodName}}</div>
@@ -17,14 +17,14 @@
         </label>
 
         <select class="right tableLimit font-small" data-id="{{identificador}}"
-                style="width: auto;margin-bottom: 0;margin-top: 1.5px;">
-            <option value="15">15</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="250">250</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
+                style="width: auto;margin-bottom: 0;margin-top: 2px;">
+            <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">15</option>
+            <option {{#limits.b}}selected="selected" {{/limits.b}}value="25">25</option>
+            <option {{#limits.c}}selected="selected" {{/limits.c}}value="50">50</option>
+            <option {{#limits.d}}selected="selected" {{/limits.d}}value="100">100</option>
+            <option {{#limits.e}}selected="selected" {{/limits.e}}value="250">250</option>
+            <option {{#limits.f}}selected="selected" {{/limits.f}}value="500">500</option>
+            <option {{#limits.g}}selected="selected" {{/limits.g}}value="1000">1000</option>
         </select>
 
         <span class="padding-small color-text-grey right table-cont-pag" style="margin-top: 5px;"

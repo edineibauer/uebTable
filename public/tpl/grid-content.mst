@@ -13,8 +13,8 @@
 
     <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}">
         {{^button.delete}}
-            <button id="del-{{entity}}-{{id}}" onclick="deleteEntityData('{{entity}}', {{id}})"
-                    class="right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
+            <button data-id="{{identificador}}" rel="{{id}}"
+                    class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
                 <i class="material-icons">delete</i>
             </button>
         {{/button.delete}}
