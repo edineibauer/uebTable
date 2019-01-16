@@ -31,7 +31,7 @@
               id="table-cont-pag-{{entity}}"></span>
 
     </div>
-    <table class="table-all" id="table-{{entity}}">
+    <table class="table-all" style="min-width: 700px;">
         <thead>
         <tr>
             {{#fields}}
