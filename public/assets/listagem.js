@@ -12,7 +12,7 @@ if(typeof loadListagem === "undefined") {
         $("#core-content").find("h4").html(title + " <small class='opacity'> >> listagem</small>");
 
         //form
-        $("#listagem").grid(entityListagem);
+        $("#listagem").html("").grid(entityListagem);
     }
 }
 
