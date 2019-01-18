@@ -16,4 +16,10 @@ if(typeof loadListagem === "undefined") {
     }
 }
 
+$(function () {
+    $("#core-content").off("click", ".table-reload").on("click", ".table-reload", function () {
+        loadListagem();
+    });
+})
+
 loadListagem();
