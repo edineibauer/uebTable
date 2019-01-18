@@ -114,9 +114,9 @@ $(function () {
         }
 
         if(grid.orderPosition)
-            $(this).append("<i class='material-icons grid-order-by-arrow left'>arrow_drop_up</i>");
+            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>");
         else
-            $(this).append("<i class='material-icons grid-order-by-arrow left'>arrow_drop_down</i>");
+            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
 
         grid.readData();
 

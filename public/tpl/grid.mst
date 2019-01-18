@@ -88,12 +88,12 @@
             {{#fields}}
                 <th>
                     {{#first}}
-                        <label class="left">
+                        <label class="left" style="margin-left: -8px;">
                             <input type="checkbox" class="table-select-all" data-id="{{identificador}}" />
                         </label>
                     {{/first}}
                     <span class="pointer grid-order-by" data-column="{{column}}" rel="{{identificador}}">
-                        <span class="left">{{nome}}</span>
+                        <span class="left padding-small padding-8">{{nome}}</span>
                     </span>
                 </th>
             {{/fields}}
