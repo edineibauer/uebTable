@@ -110,5 +110,4 @@
     <input type="hidden" class="table-pagina-{{entity}}" value="0" data-entity="{{entity}}" id="table-pagina-{{entity}}"/>
 
     <link rel="stylesheet" href="{{home}}assetsPublic/tableCore.min.css" />
-    <script src="{{home}}assetsPublic/tableCore.min.js" defer></script>
 </div>
