@@ -59,9 +59,11 @@
             <b class="total">{{total}}</b> registros
         </span>
 
-        <button class="btb radius right theme-d2 hover-shadow opacity hover-opacity-off btn-table-novo" rel="{{identificador}}">
-            <i class="material-icons left">add</i><span class="left">Novo</span>
-        </button>
+        {{#novo}}
+            <button class="btb radius right theme-d2 hover-shadow opacity hover-opacity-off btn-table-novo" rel="{{identificador}}">
+                <i class="material-icons left">add</i><span class="left">Novo</span>
+            </button>
+        {{/novo}}
 
         <div class="col right padding-right sub-header-table">
             <div class="col sub-header-table-limit">
