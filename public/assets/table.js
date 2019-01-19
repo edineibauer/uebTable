@@ -92,12 +92,13 @@ $(function () {
         $filter.find(".table-filter-operator, .table-filter-value, .table-filter-btn").addClass("hide");
         $filter.find(".table-filter-columns, .table-filter-operator, .table-filter-value").val("");
         grid.filter.push(filter);
-        grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter));
-
-        //close modal
-        grid.$element.find(".modal-filter").addClass("hide");
-
-        grid.readData();
+        dbLocal.exeRead('__template', 1).then(templates => {
+            return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter));
+        }).then(d => {
+            //close modal
+            grid.$element.find(".modal-filter").addClass("hide");
+            grid.readData();
+        });
 
     }).off("click", ".grid-order-by").on("click", ".grid-order-by", function () {
         let grid = grids[$(this).attr("rel")];
@@ -125,16 +126,16 @@ $(function () {
         let id = parseInt($this.attr("data-id"));
         let entity = $this.attr("data-entity");
         dbLocal.exeRead(entity, id).then(data => {
-            get("info").then(info => {
+            dbLocal.exeRead('__info', 1).then(info => {
                 $.each(dicionarios[entity], function (col, meta) {
                     if (meta.id === info[entity].status) {
-                        data[col] = $this.attr("data-status") === "false"
+                        data[col] = $this.attr("data-status") === "false";
                         db.exeCreate(entity, data);
                         $this.attr("data-status", data[col]);
                         return !1
                     }
                 })
-            })
+            });
         })
 
     }).off("change keyup", ".table-campo-geral").on("change keyup", ".table-campo-geral", function () {
@@ -173,8 +174,11 @@ $(function () {
                 };
 
                 grid.filter.push(filter);
-                grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter));
-                grid.readData();
+                dbLocal.exeRead('__template', 1).then(templates => {
+                    return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter));
+                }).then(d => {
+                    grid.readData();
+                });
             }
         }, 350);
 
