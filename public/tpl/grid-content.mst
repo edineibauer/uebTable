@@ -1,4 +1,4 @@
-<tr id="row-{{entity}}-{{id}}">
+<tr id="row-{{entity}}-{{id}}" style="border: none;">
     {{#fields}}
         <td class="padding-16 {{class}}" style="{{style}}">
             {{#first}}

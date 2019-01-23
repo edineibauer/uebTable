@@ -41,6 +41,10 @@ $(function () {
             });
         })
 
+    }).off("click", ".table-reload").on("click", ".table-reload", function () {
+        let grid = grids[$(this).attr("rel")];
+        grid.readData();
+
     }).off("change", ".table-filter-columns").on("change", ".table-filter-columns", function () {
         if ($(this).val() !== "") {
             $(this).siblings(".table-filter-operator").removeClass("hide");
@@ -120,9 +124,6 @@ $(function () {
 
         grid.readData();
 
-    }).off("click", ".table-reload").on("click", ".table-reload", function () {
-        let grid = grids[$(this).attr("rel")];
-        grid.readData();
 
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         let grid = grids[$(this).attr("rel")];
