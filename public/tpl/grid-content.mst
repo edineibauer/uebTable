@@ -19,10 +19,10 @@
             </button>
         {{/button.delete}}
         {{#button.update}}
-            <a href="formulario/{{entity}}/{{id}}"
-               class="right btn-floating color-white hover-shadow opacity hover-opacity-off">
+            <button data-id="{{id}}"
+               class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit" rel="{{identificador}}">
                 <i class="material-icons">edit</i>
-            </a>
+            </button>
         {{/button.update}}
         {{#button.status.have}}
             <label class="right">

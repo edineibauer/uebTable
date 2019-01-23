@@ -17,7 +17,6 @@ if(typeof loadListagem === "undefined") {
 
                     //form
                     $("#listagem").html("").grid(entityListagem);
-                    $.cachedScript(HOME + "assetsPublic/tableCore.min.js");
 
                     return false;
                 }

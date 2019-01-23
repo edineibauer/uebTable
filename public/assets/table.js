@@ -121,7 +121,12 @@ $(function () {
         grid.readData();
 
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
-        app.loadView('formulario/' + grids[$(this).attr("rel")].entity)
+        let grid = grids[$(this).attr("rel")];
+        grid.$element.html("").form(grid.entity);
+
+    }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
+        let grid = grids[$(this).attr("rel")];
+        grid.$element.html("").form(grid.entity, parseInt($(this).attr("data-id")));
 
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
         let $this = $(this);
