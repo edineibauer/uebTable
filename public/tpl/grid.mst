@@ -3,7 +3,7 @@
     <div class="container-1200 padding-24" style="display: flow-root">
         <div class="col z-depth-2">
             <div class="col theme-d2 loadindTableSpace">
-                <div class="container-1200 padding-large padding-24" style="display: flow-root">
+                <div class="col padding-large padding-24" style="display: flow-root">
                     <button class="left color-gray-light hover-shadow btn-floating table-reload" title="atualizar"
                             rel="{{identificador}}">
                         <i class="material-icons left padding-right">replay</i>
