@@ -124,14 +124,21 @@ $(function () {
 
         grid.readData();
 
-
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         let grid = grids[$(this).attr("rel")];
-        grid.$element.html("").form(grid.entity);
+        let form = formCrud(grid.entity, grid.$element);
+        grid.$element.html("")
+
+        form.header = true;
+        form.show();
 
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
         let grid = grids[$(this).attr("rel")];
-        grid.$element.html("").form(grid.entity, parseInt($(this).attr("data-id")));
+        let form = formCrud(grid.entity, grid.$element);
+        grid.$element.html("")
+
+        form.header = true;
+        form.show(parseInt($(this).attr("data-id")));
 
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
         let $this = $(this);
