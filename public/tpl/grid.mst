@@ -1,113 +1,141 @@
-<div class="responsive tableList panel" id="tableList-{{entity}}" data-entity="{{entity}}" data-id="{{identificador}}">
-    <div class="row table-filter transition-easy">
-        <div class="col s12 s-margin-bottom">
-            <div class="font-light font-large col">Filtros</div>
-            <div class="col table-filter-list padding-8 color-text-gray">
-                <button class="btn-small left radius padding-4 color-white hover-shadow btn-new-filter" rel="{{identificador}}">
-                    <i class="material-icons left">add</i>
-                </button>
-            </div>
-        </div>
-        <div class="modal-filter modal-filter-opacity btn-close-modal hide color-black opacity" rel="{{identificador}}"></div>
-        <div class="modal-filter modal-filter-content hide">
-            <div class="panel">
-                <div class="display-container radius animate-zoom card-4">
-                    <header class="container theme">
-                        <span class="theme-d3 padding-large opacity hover-opacity-off button margin-0 display-topright btn-close-modal" rel="{{identificador}}">
-                            &times;
-                        </span>
-                        <h4 class="padding-8">Novo Filtro</h4>
-                    </header>
-                    <div class="panel padding-24">
-                        <select class="col s12 m3 table-filter-columns"></select>
-                        <select class="col s12 m3 table-filter-operator hide">
-                            <option disabled="disabled" class="color-text-gray" selected="selected" value="">regra...</option>
-                            <option value="contém">contém</option>
-                            <option value="igual a">igual a</option>
-                            <option value="diferente de">diferente de</option>
-                            <option value="começa com">começa com</option>
-                            <option value="termina com">termina com</option>
-                            <option value="maior que">maior que</option>
-                            <option value="maior igual a">maior igual a</option>
-                            <option value="menor que">menor que</option>
-                            <option value="menor igual a">menor igual a</option>
-                        </select>
-                        <input type="text" placeholder="valor..." class="col s12 m3 table-filter-value hide" />
+<div class="responsive tableList col" id="tableList-{{entity}}" data-entity="{{entity}}" data-id="{{identificador}}">
+    <div class="col theme-d2 loadindTableSpace">
+        <div class="row">
+            <div class="container-1200 padding-medium padding-32" style="display: flow-root">
 
-                        <div class="col s12 m2 hide table-filter-btn">
-                            <button title="aplicar filtro" class="btb left radius color-white hover-shadow opacity hover-opacity-off btn-table-filter-apply" rel="{{identificador}}">
-                                <i class="material-icons left">done</i><span class="left padding-left">Aplicar</span>
-                            </button>
-                        </div>
-                        <div class="col padding-12"></div>
+                <div class="left color-gray-light btn-floating table-reload hover-shadow" title="atualizar" rel="{{identificador}}">
+                    <i class="material-icons left padding-right">replay</i>
+                </div>
+
+                <div class="font-xlarge s-font-large s-padding-small left">{{#goodName}}{{entity}}{{/goodName}}</div>
+
+                <div class="padding-medium s-padding-small s-padding-top left s-font-small theme-text-aux">
+                    <b class="total">{{total}}</b> registros
+                </div>
+
+                {{#novo}}
+                    <button class="btb radius right color-white hover-shadow btn-table-novo" rel="{{identificador}}">
+                        <i class="material-icons left">add</i><span class="left">Novo</span>
+                    </button>
+                {{/novo}}
+
+                <div class="col right padding-right sub-header-table">
+                    <div class="col" style="width: 60px">
+                        <button title="filtro"
+                                class="btb left radius s-margin-0 color-white hover-shadow btn-table-filter"
+                                rel="{{identificador}}">
+                            <i class="material-icons left">list</i>
+                        </button>
+                    </div>
+                    <div class="col sub-header-table-limit">
+                        <select class="col tableLimit font-small theme-text-aux" data-id="{{identificador}}">
+                            <option {{#limits.a}}selected="selected" {{/limits.a}}value="15" class="theme-text">15</option>
+                            <option {{#limits.b}}selected="selected" {{/limits.b}}value="25" class="theme-text">25</option>
+                            <option {{#limits.c}}selected="selected" {{/limits.c}}value="50" class="theme-text">50</option>
+                            <option {{#limits.d}}selected="selected" {{/limits.d}}value="100" class="theme-text">100</option>
+                            <option {{#limits.e}}selected="selected" {{/limits.e}}value="250" class="theme-text">250</option>
+                            <option {{#limits.f}}selected="selected" {{/limits.f}}value="500" class="theme-text">500</option>
+                            <option {{#limits.g}}selected="selected" {{/limits.g}}value="1000" class="theme-text">1000</option>
+                        </select>
+                    </div>
+
+                    <div class="rest">
+                        <input type="text" class="table-campo-geral theme-text-aux" autocomplete="off"
+                               data-id="{{identificador}}"
+                               placeholder="busca..."/>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col padding-8"></div>
     </div>
 
-    <div class="row padding-8 padding-top">
-        <button title="filtro" class="btb left radius margin-right s-margin-0 color-white hover-shadow opacity hover-opacity-off btn-table-filter" rel="{{identificador}}">
-            <i class="material-icons left">list</i>
-        </button>
-
-        <div class="font-xlarge s-font-large s-padding-small left">{{#goodName}}{{entity}}{{/goodName}}</div>
-
-        <span class="padding-medium s-padding-small s-padding-top color-text-grey left s-font-small">
-            <b class="total">{{total}}</b> registros
-        </span>
-
-        {{#novo}}
-            <button class="btb radius right theme-d2 hover-shadow opacity hover-opacity-off btn-table-novo" rel="{{identificador}}">
-                <i class="material-icons left">add</i><span class="left">Novo</span>
-            </button>
-        {{/novo}}
-
-        <div class="col right padding-right sub-header-table">
-            <div class="col sub-header-table-limit">
-                <select class="col tableLimit font-small" data-id="{{identificador}}">
-                    <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">15</option>
-                    <option {{#limits.b}}selected="selected" {{/limits.b}}value="25">25</option>
-                    <option {{#limits.c}}selected="selected" {{/limits.c}}value="50">50</option>
-                    <option {{#limits.d}}selected="selected" {{/limits.d}}value="100">100</option>
-                    <option {{#limits.e}}selected="selected" {{/limits.e}}value="250">250</option>
-                    <option {{#limits.f}}selected="selected" {{/limits.f}}value="500">500</option>
-                    <option {{#limits.g}}selected="selected" {{/limits.g}}value="1000">1000</option>
-                </select>
+    <div class="col theme-l1 padding-4">
+        <div class="container-1200 table-filter transition-easy" style="display: flow-root">
+            <div class="col s12 s-margin-bottom">
+                <div class="col table-filter-list padding-medium color-text-gray">
+                    <div class="font-light font-large left padding-small theme-text-aux">Filtros</div>
+                    <button class="btn-small left radius padding-4 color-white hover-shadow btn-new-filter"
+                            rel="{{identificador}}">
+                        <i class="material-icons left">add</i>
+                    </button>
+                </div>
             </div>
+            <div class="modal-filter modal-filter-opacity btn-close-modal hide color-black opacity"
+                 rel="{{identificador}}"></div>
+            <div class="modal-filter modal-filter-content hide">
+                <div class="panel">
+                    <div class="display-container radius animate-zoom card-4">
+                        <header class="container theme">
+                        <span class="theme-d3 padding-large opacity hover-opacity-off button margin-0 display-topright btn-close-modal"
+                              rel="{{identificador}}">
+                            &times;
+                        </span>
+                            <h4 class="padding-8">Novo Filtro</h4>
+                        </header>
+                        <div class="panel padding-24">
+                            <select class="col s12 m3 table-filter-columns"></select>
+                            <select class="col s12 m3 table-filter-operator hide">
+                                <option disabled="disabled" class="color-text-gray" selected="selected" value="">
+                                    regra...
+                                </option>
+                                <option value="contém">contém</option>
+                                <option value="igual a">igual a</option>
+                                <option value="diferente de">diferente de</option>
+                                <option value="começa com">começa com</option>
+                                <option value="termina com">termina com</option>
+                                <option value="maior que">maior que</option>
+                                <option value="maior igual a">maior igual a</option>
+                                <option value="menor que">menor que</option>
+                                <option value="menor igual a">menor igual a</option>
+                            </select>
+                            <input type="text" placeholder="valor..." class="col s12 m3 table-filter-value hide"/>
 
-            <div class="rest">
-                <input type="text" class="table-campo-geral" autocomplete="off" data-id="{{identificador}}"
-                       placeholder="busca..."/>
+                            <div class="col s12 m2 hide table-filter-btn">
+                                <button title="aplicar filtro"
+                                        class="btb left radius color-white hover-shadow opacity hover-opacity-off btn-table-filter-apply"
+                                        rel="{{identificador}}">
+                                    <i class="material-icons left">done</i><span
+                                        class="left padding-left">Aplicar</span>
+                                </button>
+                            </div>
+                            <div class="col padding-12"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <table class="table-all">
-        <thead>
-        <tr class="no-select">
-            {{#fields}}
-                <th>
-                    {{#first}}
-                        <label class="left" style="margin-left: -8px;">
-                            <input type="checkbox" class="table-select-all" data-id="{{identificador}}" />
-                        </label>
-                    {{/first}}
-                    <span class="pointer grid-order-by" data-column="{{column}}" rel="{{identificador}}">
+
+    <div class="col">
+        <div class="container-1200 padding-24" style="display: flow-root">
+            <table class="table-all">
+                <thead>
+                <tr class="no-select">
+                    {{#fields}}
+                        <th>
+                            {{#first}}
+                                <label class="left" style="margin-left: -8px;">
+                                    <input type="checkbox" class="table-select-all" data-id="{{identificador}}"/>
+                                </label>
+                            {{/first}}
+                            <span class="pointer grid-order-by" data-column="{{column}}" rel="{{identificador}}">
                         <span class="left padding-small padding-8">{{nome}}</span>
                     </span>
-                </th>
-            {{/fields}}
-            <th class="align-right" style="padding-right: 20px;">Ações</th>
-        </tr>
-        </thead>
-        <tbody class="relative"></tbody>
-    </table>
+                        </th>
+                    {{/fields}}
+                    <th class="align-right" style="padding-right: 20px;">Ações</th>
+                </tr>
+                </thead>
+                <tbody class="relative"></tbody>
+            </table>
 
-    <div class="row panel" id="pagination-{{entity}}"></div>
+            <div class="row panel" id="pagination-{{entity}}"></div>
 
-    <input type="hidden" class="table-pagina-{{entity}}" value="0" data-entity="{{entity}}" id="table-pagina-{{entity}}"/>
+        </div>
+    </div>
 
-    <link rel="stylesheet" href="{{home}}assetsPublic/tableCore.min.css" />
+    <input type="hidden" class="table-pagina-{{entity}}" value="0" data-entity="{{entity}}"
+           id="table-pagina-{{entity}}"/>
+
+    <link rel="stylesheet" href="{{home}}assetsPublic/tableCore.min.css"/>
 </div>

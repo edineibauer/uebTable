@@ -20,7 +20,7 @@
         {{/button.delete}}
         {{#button.update}}
             <button data-id="{{id}}"
-               class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit" rel="{{identificador}}">
+                    class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit" rel="{{identificador}}">
                 <i class="material-icons">edit</i>
             </button>
         {{/button.update}}

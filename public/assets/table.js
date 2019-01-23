@@ -120,6 +120,10 @@ $(function () {
 
         grid.readData();
 
+    }).off("click", ".table-reload").on("click", ".table-reload", function () {
+        let grid = grids[$(this).attr("rel")];
+        grid.readData();
+
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         let grid = grids[$(this).attr("rel")];
         grid.$element.html("").form(grid.entity);
