@@ -35,7 +35,7 @@ $(function () {
 
         //column filter options
         $filter.find(".table-filter-columns").html("<option disabled='disabled' class='color-text-gray' selected='selected' value=''>coluna...</option>");
-        dbLocal.exeCreate("__dicionario", 1).then(dicionarios => {
+        dbLocal.exeRead("__dicionario", 1).then(dicionarios => {
             $.each(dicionarios[grid.entity], function (col, meta) {
                 $filter.find(".table-filter-columns").append("<option value='" + col + "' >" + meta.nome + "</option>");
             });
@@ -128,7 +128,7 @@ $(function () {
         let id = parseInt($this.attr("data-id"));
         let entity = $this.attr("data-entity");
         dbLocal.exeRead(entity, id).then(data => {
-            dbLocal.exeCreate("__dicionario", 1).then(dicionarios => {
+            dbLocal.exeRead("__dicionario", 1).then(dicionarios => {
                 dbLocal.exeRead('__info', 1).then(info => {
                     $.each(dicionarios[entity], function (col, meta) {
                         if (meta.id === info[entity].status) {
