@@ -2,7 +2,7 @@
 
     <div class="container padding-24">
         <div class="col z-depth-2">
-            <div class="col theme-d2 loadindTableSpace">
+            <div class="col theme-d1 loadindTableSpace">
                 <div class="col padding-large padding-24">
                     <button class="left color-gray-light hover-shadow btn-floating table-reload" title="atualizar"
                             rel="{{identificador}}">
@@ -62,7 +62,7 @@
             </div>
 
             <div class="col theme-l1 padding-4">
-                <div class="container-1200 table-filter transition-easy" style="display: flow-root">
+                <div class="col table-filter transition-easy" style="display: flow-root">
                     <div class="col s12 s-margin-bottom">
                         <div class="col table-filter-list padding-medium color-text-gray">
                             <div class="font-light font-large left padding-small theme-text-aux">Filtros</div>
