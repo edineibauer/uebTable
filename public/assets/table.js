@@ -12,6 +12,13 @@ function deleteBadge(id) {
     }, 250);
 }
 
+function changeAutor(entity, autor, id, valor) {
+    return dbLocal.exeRead(entity, id).then(data => {
+        data[autor === 2 ? "ownerpub" : "autorpub"] = valor;
+        return db.exeCreate(entity, data);
+    });
+}
+
 $(function () {
     $("#core-content").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
         let grid = grids[$(this).attr("rel")];
@@ -139,6 +146,22 @@ $(function () {
 
         form.header = true;
         form.show(parseInt($(this).attr("data-id")));
+
+    }).off("change", ".autor-switch-form").on("change", ".autor-switch-form", function () {
+        let $this = $(this);
+        let valor = $this.val();
+        let grid = grids[$this.attr("rel")];
+
+        dbLocal.exeRead("__info", 1).then(info => {
+            if (grid.$content.find(".table-select:checked").length > 0) {
+                $.each(grid.$content.find(".table-select:checked"), function () {
+                    changeAutor(grid.entity, info[grid.entity]['autor'], parseInt($(this).attr("rel")), valor);
+                    grid.$element.find(".autor-switch-form[data-id='" + $(this).attr("rel") + "']").val(valor);
+                })
+            } else {
+                changeAutor(grid.entity, info[grid.entity]['autor'], parseInt($this.attr("data-id")), valor);
+            }
+        });
 
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
         let $this = $(this);
@@ -297,7 +320,7 @@ $(function () {
             this.config.firstPage = parseInt(this.config.firstPage);
             this.config.lastPage = parseInt(this.config.lastPage);
             this.currentPage = this.config.firstPage - this.config.maxVisiblePages;
-            this.$container = $('<ul class="bar" style="-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none; -ms-user-select: none; user-select: none;">').addClass('pagination').addClass(this.config.align + '-align');
+            this.$container = $('<ul class="bar" style="-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none; -ms-user-select: none; user-select: none;">').addClass('pagination padding-16').addClass(this.config.align + '-align');
             this.$prevEllipsis = this.util.Ellipsis();
             this.$nextEllipsis = this.util.Ellipsis();
             var $firstPage = this.util.createPage(this.config.firstPage);
@@ -331,7 +354,7 @@ $(function () {
             this.renderEllipsis();
             this.$container.find('li.active').removeClass('active');
             var currentPageComponent = $(this.$container.find('[data-page="' + this.currentPage + '"]')[0]);
-            currentPageComponent.addClass('active')
+            currentPageComponent.addClass('active z-depth-2')
         }, renderEllipsis: function () {
             if (this.$prevEllipsis.isHidden && this.currentPage > this.config.firstPage + this.config.maxVisiblePages + 1)
                 this.$prevEllipsis.show(); else if (!this.$prevEllipsis.isHidden && this.currentPage < this.config.firstPage + this.config.maxVisiblePages + 2)

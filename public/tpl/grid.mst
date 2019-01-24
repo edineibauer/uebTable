@@ -1,9 +1,9 @@
 <div class="responsive tableList col" id="tableList-{{entity}}" data-entity="{{entity}}" data-id="{{identificador}}">
 
-    <div class="container padding-24">
-        <div class="col z-depth-2">
-            <div class="col theme-d1 loadindTableSpace">
-                <div class="col padding-large padding-24">
+    <div class="container padding-24" style="display: flow-root">
+        <div class="col z-depth-2 grid-form-body">
+            <div class="col theme-d2 loadindTableSpace">
+                <div class="col padding-large padding-24" style="display: flow-root">
                     <button class="left color-gray-light hover-shadow btn-floating table-reload" title="atualizar"
                             rel="{{identificador}}">
                         <i class="material-icons left padding-right">replay</i>
@@ -62,7 +62,7 @@
             </div>
 
             <div class="col theme-l1 padding-4">
-                <div class="col table-filter transition-easy" style="display: flow-root">
+                <div class="container-1200 table-filter transition-easy" style="display: flow-root">
                     <div class="col s12 s-margin-bottom">
                         <div class="col table-filter-list padding-medium color-text-gray">
                             <div class="font-light font-large left padding-small theme-text-aux">Filtros</div>
@@ -140,10 +140,9 @@
                 </thead>
                 <tbody class="relative"></tbody>
             </table>
-
         </div>
-        <div class="row panel" id="pagination-{{entity}}"></div>
     </div>
+    <div class="col padding-12"></div>
 
     <input type="hidden" class="table-pagina-{{entity}}" value="0" data-entity="{{entity}}"
            id="table-pagina-{{entity}}"/>

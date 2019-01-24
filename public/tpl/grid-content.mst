@@ -18,16 +18,20 @@
                 <i class="material-icons">delete</i>
             </button>
         {{/button.delete}}
+
         {{#button.update}}
             <button data-id="{{id}}"
-                    class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit" rel="{{identificador}}">
+                    class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit"
+                    rel="{{identificador}}">
                 <i class="material-icons">edit</i>
             </button>
         {{/button.update}}
+
         {{#button.status.have}}
             <label class="right">
                 <div class="switch switch-squad margin-0 margin-right">
-                    <input type="checkbox" class="switch-status-table switchCheck" data-status="{{button.status.status}}"
+                    <input type="checkbox" class="switch-status-table switchCheck"
+                           data-status="{{button.status.status}}"
                            data-entity="{{entity}}" data-id="{{id}}"
                            {{#button.status.status}}checked='checked'{{/button.status.status}}
                     />
@@ -35,5 +39,28 @@
                 </div>
             </label>
         {{/button.status.have}}
+
+        {{#button.autor.have}}
+            {{#button.autor.id}}
+                <label class="right">
+                    <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}" rel="{{identificador}}">
+                        <option value="" selected="selected"></option>
+                        {{#button.autor.list}}
+                            <option value="{{id}}">{{nome}}</option>
+                        {{/button.autor.list}}
+                    </select>
+                </label>
+            {{/button.autor.id}}
+
+            {{^button.autor.id}}
+                <label class="right">
+                    <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}" rel="{{identificador}}">
+                        {{#button.autor.list}}
+                            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{nome}}</option>
+                        {{/button.autor.list}}
+                    </select>
+                </label>
+            {{/button.autor.id}}
+        {{/button.autor.have}}
     </td>
 </tr>
