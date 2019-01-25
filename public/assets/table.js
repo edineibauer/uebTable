@@ -165,22 +165,47 @@ $(function () {
 
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
         let $this = $(this);
-        let id = parseInt($this.attr("data-id"));
-        let entity = $this.attr("data-entity");
-        dbLocal.exeRead(entity, id).then(data => {
-            dbLocal.exeRead("__dicionario", 1).then(dicionarios => {
-                dbLocal.exeRead('__info', 1).then(info => {
-                    $.each(dicionarios[entity], function (col, meta) {
-                        if (meta.id === info[entity].status) {
-                            data[col] = $this.attr("data-status") === "false";
-                            db.exeCreate(entity, data);
-                            $this.attr("data-status", data[col]);
-                            return !1
-                        }
-                    })
-                });
+        let grid = grids[$this.attr("rel")];
+        let dicionarios = dbLocal.exeRead("__dicionario", 1);
+        let info = dbLocal.exeRead('__info', 1);
+        let valor = $this.attr("data-status") === "false";
+
+        Promise.all([dicionarios, info]).then(r => {
+            dicionarios = r[0];
+            info = r[1];
+
+            //obtém o nome da coluna de status
+            let column = "";
+            $.each(dicionarios[grid.entity], function (col, meta) {
+                if (meta.id === info[grid.entity].status) {
+                    column = col;
+                    return false;
+                }
             });
-        })
+
+            //se achou a coluna status
+            if(column !== "") {
+                dbLocal.exeRead(grid.entity, parseInt($this.attr("data-id"))).then(data => {
+                    //unica alteração
+                    data[column] = valor;
+                    db.exeCreate(grid.entity, data);
+                    $this.attr("data-status", valor);
+                });
+                if (grid.$content.find(".table-select:checked").length > 0) {
+
+                    //multiplas alterações
+                    $.each(grid.$content.find(".table-select:checked"), function () {
+                        let id = parseInt($(this).attr("rel"));
+                        let $switch = grid.$element.find(".switch-status-table[data-id='" + id + "']");
+                        dbLocal.exeRead(grid.entity, id).then(data => {
+                            data[column] = valor;
+                            db.exeCreate(grid.entity, data);
+                            $switch.attr("data-status", valor).prop("checked", valor);
+                        });
+                    })
+                }
+            }
+        });
 
     }).off("change keyup", ".table-campo-geral").on("change keyup", ".table-campo-geral", function () {
         let $this = $(this);
@@ -267,16 +292,16 @@ $(function () {
     }).off("click", ".btn-grid-delete").on("click", ".btn-grid-delete", function () {
         let grid = grids[$(this).attr("data-id")];
         let id = parseInt($(this).attr("rel"));
+        let $this = $(this);
         var cont = grid.$content.find(".table-select:checked").length;
-        cont = (cont === 0 ? 1 : cont);
-        if (confirm(cont > 1 ? "Remover os " + cont + " Registros?" : "Remover este Registro? ")) {
+        if (confirm(cont > 0 ? "Remover " + (cont === 1 ? "os " + (cont + 1) + " Registros" : "esse Registro") + "?" : "Remover este Registro? ")) {
             let allDel = [];
-            if (cont > 1) {
+            if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
-                    allDel.push(db.exeDelete(grid.entity, id))
+                    allDel.push(db.exeDelete(grid.entity, parseInt($(this).attr("rel"))))
                 })
             } else {
-                allDel.push(db.exeDelete(grid.entity, id))
+                allDel.push(db.exeDelete(grid.entity, parseInt($this.attr("rel"))))
             }
             Promise.all(allDel).then(d => {
                 dbLocal.keys(grid.entity).then(registros => {
