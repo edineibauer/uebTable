@@ -1,6 +1,5 @@
 .sub-header-table {
     width: 100%;
-    padding-top: 20px
 }
 
 .sub-header-table-limit {
@@ -101,7 +100,7 @@
     }
 
     .sub-header-table {
-        width: 320px;
+        width: 250px;
         padding-top: 0
     }
 }
