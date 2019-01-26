@@ -134,16 +134,14 @@ $(function () {
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
-        grid.$element.html("")
-
+        grid.destroy();
         form.header = true;
         form.show();
 
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
-        grid.$element.html("")
-
+        grid.destroy();
         form.header = true;
         form.show(parseInt($(this).attr("data-id")));
 
