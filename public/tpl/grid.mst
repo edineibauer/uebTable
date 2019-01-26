@@ -5,7 +5,7 @@
             <div class="col theme-d1 loadindTableSpace">
                 <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
                     <button title="filtro"
-                            class="btb left radius s-margin-0 color-white hover-shadow btn-table-filter"
+                            class="btn-floating left color-white hover-shadow btn-table-filter"
                             rel="{{identificador}}">
                         <i class="material-icons left">list</i>
                     </button>
