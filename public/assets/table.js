@@ -288,18 +288,18 @@ $(function () {
         grid.$element.find(".table-select-all").prop("checked", (all && $this.is(":checked")))
 
     }).off("click", ".btn-grid-delete").on("click", ".btn-grid-delete", function () {
-        let grid = grids[$(this).attr("data-id")];
-        let id = parseInt($(this).attr("rel"));
-        let $this = $(this);
-        var cont = grid.$content.find(".table-select:checked").length;
-        if (confirm(cont > 0 ? "Remover " + (cont === 1 ? "os " + (cont + 1) + " Registros" : "esse Registro") + "?" : "Remover este Registro? ")) {
+        let grid = grids[$(this).attr("rel")];
+        let cont = grid.$content.find(".table-select:checked").length;
+        console.log(cont);
+        if (confirm(cont > 1 ? "Remover os " + cont + " Registros?" : "Remover este Registro? ")) {
             let allDel = [];
             if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
+                    console.log(parseInt($(this).attr("rel")));
                     allDel.push(db.exeDelete(grid.entity, parseInt($(this).attr("rel"))))
                 })
             } else {
-                allDel.push(db.exeDelete(grid.entity, parseInt($this.attr("rel"))))
+                allDel.push(db.exeDelete(grid.entity, parseInt($(this).attr("rel"))))
             }
             Promise.all(allDel).then(d => {
                 dbLocal.keys(grid.entity).then(registros => {
