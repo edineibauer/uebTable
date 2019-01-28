@@ -3,81 +3,69 @@ var tempoDigitacao = null;
 function deleteBadge(id) {
     if (tempoDigitacao)
         clearTimeout(tempoDigitacao);
-
     let $badge = $("#" + id);
     $badge.css("width", $badge.css("width")).removeClass("padding-small").addClass("padding-4");
     $badge.css("width", 0);
     setTimeout(function () {
-        $badge.remove();
-    }, 250);
+        $badge.remove()
+    }, 250)
 }
 
 function changeAutor(entity, autor, id, valor) {
     return dbLocal.exeRead(entity, id).then(data => {
         data[autor === 2 ? "ownerpub" : "autorpub"] = valor;
-        return db.exeCreate(entity, data);
-    });
+        return db.exeCreate(entity, data)
+    })
 }
 
 $(function () {
     $("#core-content").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
         let grid = grids[$(this).attr("rel")];
         let $filter = grid.$element.find(".table-filter");
-
         if ($filter.css("height") === "0px") {
             $filter.css("height", "auto");
             let h = $filter.css("height");
             $filter.css("height", 0);
             $filter.css("height", h);
             setTimeout(function () {
-                $filter.css("height", "auto");
-            }, 300);
+                $filter.css("height", "auto")
+            }, 300)
         } else {
             $filter.css("height", $filter.css("height"));
             $filter.css("height", 0);
             $filter.find(".table-filter-operator, .table-filter-value, .table-filter-btn").addClass("hide");
             $filter.find(".table-filter-operator").val("");
-            $filter.find(".table-filter-value").val("");
+            $filter.find(".table-filter-value").val("")
         }
-
-        //column filter options
         $filter.find(".table-filter-columns").html("<option disabled='disabled' class='color-text-gray' selected='selected' value=''>coluna...</option>");
         dbLocal.exeRead("__dicionario", 1).then(dicionarios => {
             $.each(dicionarios[grid.entity], function (col, meta) {
-                $filter.find(".table-filter-columns").append("<option value='" + col + "' >" + meta.nome + "</option>");
-            });
+                $filter.find(".table-filter-columns").append("<option value='" + col + "' >" + meta.nome + "</option>")
+            })
         })
-
     }).off("click", ".table-reload").on("click", ".table-reload", function () {
         let grid = grids[$(this).attr("rel")];
-        grid.readData();
-
+        grid.readData()
     }).off("change", ".table-filter-columns").on("change", ".table-filter-columns", function () {
         if ($(this).val() !== "") {
-            $(this).siblings(".table-filter-operator").removeClass("hide");
+            $(this).siblings(".table-filter-operator").removeClass("hide")
         }
     }).off("change", ".table-filter-operator").on("change", ".table-filter-operator", function () {
         if ($(this).val() !== "")
-            $(this).siblings(".table-filter-value").removeClass("hide").focus();
-
+            $(this).siblings(".table-filter-value").removeClass("hide").focus()
     }).off("change keyup", ".table-filter-value").on("change keyup", ".table-filter-value", function (e) {
         if ($(this).val() !== "") {
             if (e.which === 13)
-                $(this).siblings(".table-filter-btn").find(".btn-table-filter-apply").trigger("click");
-            else
-                $(this).siblings(".table-filter-btn").removeClass("hide");
+                $(this).siblings(".table-filter-btn").find(".btn-table-filter-apply").trigger("click"); else $(this).siblings(".table-filter-btn").removeClass("hide")
         } else {
-            $(this).siblings(".table-filter-btn").addClass("hide");
+            $(this).siblings(".table-filter-btn").addClass("hide")
         }
-
     }).off("click", ".btn-new-filter").on("click", ".btn-new-filter", function () {
         let grid = grids[$(this).attr("rel")];
-        grid.$element.find(".modal-filter").removeClass("hide");
-
+        grid.$element.find(".modal-filter").removeClass("hide")
     }).off("click", ".btn-close-modal").on("click", ".btn-close-modal", function () {
         let grid = grids[$(this).attr("rel")];
-        grid.$element.find(".modal-filter").addClass("hide");
-
+        grid.$element.find(".modal-filter").addClass("hide")
     }).off("click", ".btn-table-filter-apply").on("click", ".btn-table-filter-apply", function () {
         let grid = grids[$(this).attr("rel")];
         let $filter = grid.$element.find(".table-filter");
@@ -88,79 +76,63 @@ $(function () {
             identificador: grid.identificador,
             id: Date.now()
         };
-
-        //covert valores de data no formato correto para comparação no javascript
         let rDataHora = new RegExp("\\d\\d\\/\\d\\d\\/\\d\\d\\d\\d\\s\\d\\d", "i");
         let rData = new RegExp("\\d\\d\\/\\d\\d\\/\\d\\d\\d\\d", "i");
-        if(rDataHora.test(filter.value)) {
+        if (rDataHora.test(filter.value)) {
             let t = filter.value.split(' ');
             let d = t[0].split('/');
-            filter.value = d[2] + "-" + d[1] + "-" + d[0] + "T" + t[1];
-
-        } else if(rData.test(filter.value)) {
+            filter.value = d[2] + "-" + d[1] + "-" + d[0] + "T" + t[1]
+        } else if (rData.test(filter.value)) {
             let d = filter.value.split('/');
-            filter.value = d[2] + "-" + d[1] + "-" + d[0];
+            filter.value = d[2] + "-" + d[1] + "-" + d[0]
         }
-
         $filter.find(".table-filter-operator, .table-filter-value, .table-filter-btn").addClass("hide");
         $filter.find(".table-filter-columns, .table-filter-operator, .table-filter-value").val("");
         grid.filter.push(filter);
         dbLocal.exeRead('__template', 1).then(templates => {
-            return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter));
+            return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter))
         }).then(d => {
-            //close modal
             grid.$element.find(".modal-filter").addClass("hide");
-            grid.readData();
-        });
-
+            grid.readData()
+        })
     }).off("click", ".grid-order-by").on("click", ".grid-order-by", function () {
         let grid = grids[$(this).attr("rel")];
         grid.$element.find(".grid-order-by-arrow").remove();
-
         if (grid.order === $(this).attr("data-column")) {
-            grid.orderPosition = !grid.orderPosition;
+            grid.orderPosition = !grid.orderPosition
         } else {
             grid.order = $(this).attr("data-column");
-            grid.orderPosition = false;
+            grid.orderPosition = !1
         }
-
-        if(grid.orderPosition)
-            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>");
-        else
-            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
-
-        grid.readData();
-
+        if (grid.orderPosition)
+            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>"); else $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
+        grid.readData()
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
         grid.destroy();
-        form.header = true;
+        form.header = !0;
         form.show();
-
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
         grid.destroy();
-        form.header = true;
-        form.show(parseInt($(this).attr("data-id")));
-
+        form.header = !0;
+        form.show(parseInt($(this).attr("data-id")))
     }).off("change", ".autor-switch-form").on("change", ".autor-switch-form", function () {
         let $this = $(this);
         let valor = $this.val();
         let grid = grids[$this.attr("rel")];
-
         dbLocal.exeRead("__info", 1).then(info => {
             if (grid.$content.find(".table-select:checked").length > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
-                    changeAutor(grid.entity, info[grid.entity]['autor'], parseInt($(this).attr("rel")), valor);
-                    grid.$element.find(".autor-switch-form[data-id='" + $(this).attr("rel") + "']").val(valor);
+                    changeAutor(grid.entity, info[grid.entity].autor, parseInt($(this).attr("rel")), valor);
+                    grid.$element.find(".autor-switch-form[data-id='" + $(this).attr("rel") + "']").val(valor)
                 })
             } else {
-                changeAutor(grid.entity, info[grid.entity]['autor'], parseInt($this.attr("data-id")), valor);
+                changeAutor(grid.entity, info[grid.entity].autor, parseInt($this.attr("data-id")), valor)
             }
-        });
-
+        })
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
         let $this = $(this);
         let grid = grids[$this.attr("rel")];
@@ -204,31 +176,28 @@ $(function () {
                 }
             }
         });
-
     }).off("change keyup", ".table-campo-geral").on("change keyup", ".table-campo-geral", function () {
         let $this = $(this);
         if (tempoDigitacao)
             clearTimeout(tempoDigitacao);
-
         tempoDigitacao = setTimeout(function () {
             let grid = grids[$this.attr("data-id")];
             let valor = $this.val();
             grid.page = 1;
-
-            let achou = false;
+            let achou = !1;
             $.each(grid.filter, function (i, e) {
                 if (e.operator === "por") {
                     if (valor === "") {
                         deleteBadge(e.id);
                         grid.filter.splice(i, 1);
-                        grid.readData();
+                        grid.readData()
                     } else if (e.value !== valor) {
                         e.value = valor;
                         $("#" + e.id).find(".value").html(valor);
-                        grid.readData();
+                        grid.readData()
                     }
-                    achou = true;
-                    return false;
+                    achou = !0;
+                    return !1
                 }
             });
             if (!achou && valor !== "") {
@@ -239,16 +208,14 @@ $(function () {
                     identificador: grid.identificador,
                     id: Date.now()
                 };
-
                 grid.filter.push(filter);
                 dbLocal.exeRead('__template', 1).then(templates => {
-                    return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter));
+                    return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter))
                 }).then(d => {
-                    grid.readData();
-                });
+                    grid.readData()
+                })
             }
-        }, 350);
-
+        }, 350)
     }).off("click", ".btn-badge-remove").on("click", ".btn-badge-remove", function () {
         let grid = grids[$(this).attr("rel")];
         let id = $(this).attr("data-badge");
@@ -257,26 +224,22 @@ $(function () {
             if (typeof badge === "object" && badge.id == id) {
                 if (badge.operator === 'por')
                     grid.$element.find(".table-campo-geral").val("");
-
                 del = i;
-                return false;
+                return !1
             }
         });
         if (del > -1) {
             deleteBadge(id);
             grid.filter.splice(del, 1);
-            grid.readData();
+            grid.readData()
         }
-
     }).off("change", ".tableLimit").on("change", ".tableLimit", function () {
         let grid = grids[$(this).attr("data-id")];
         localStorage.limitGrid = parseInt($(this).val());
         grid.readDataConfigAltered(localStorage.limitGrid)
-
     }).off("change", ".table-select-all").on("change", ".table-select-all", function () {
         let grid = grids[$(this).attr("data-id")];
         grid.$content.find(".table-select").prop("checked", $(this).is(":checked"))
-
     }).off("change", ".table-select").on("change", ".table-select", function () {
         let all = !0;
         let $this = $(this);
@@ -286,31 +249,27 @@ $(function () {
                 all = !1
         });
         grid.$element.find(".table-select-all").prop("checked", (all && $this.is(":checked")))
-
     }).off("click", ".btn-grid-delete").on("click", ".btn-grid-delete", function () {
-        let grid = grids[$(this).attr("rel")];
-        let cont = grid.$content.find(".table-select:checked").length;
-        console.log(cont);
+        let grid = grids[$(this).attr("data-id")];
+        var cont = grid.$content.find(".table-select:checked").length;
         if (confirm(cont > 1 ? "Remover os " + cont + " Registros?" : "Remover este Registro? ")) {
-            let allDel = [];
+            let ids = [];
             if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
-                    console.log(parseInt($(this).attr("rel")));
-                    allDel.push(db.exeDelete(grid.entity, parseInt($(this).attr("rel"))))
-                })
+                    ids.push(parseInt($(this).attr("rel")));
+                });
             } else {
-                allDel.push(db.exeDelete(grid.entity, parseInt($(this).attr("rel"))))
+                ids.push(parseInt($(this).attr("rel")));
             }
-            Promise.all(allDel).then(d => {
+            db.exeDelete(grid.entity, ids).then(() => {
                 dbLocal.keys(grid.entity).then(registros => {
                     grid.total = registros.length;
                     grid.readDataConfigAltered(grid.limit)
                 })
             })
         }
-    });
+    })
 });
-
 (function ($, window, document) {
     var MaterializePagination = function (elem, options) {
         this.$elem = $(elem);

@@ -13,7 +13,7 @@
 
     <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}">
         {{#button.delete}}
-            <button data-id="{{id}}" rel="{{identificador}}"
+            <button rel="{{id}}" data-id="{{identificador}}"
                     class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
                 <i class="material-icons">delete</i>
             </button>
