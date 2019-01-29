@@ -60,7 +60,7 @@
                     <div class="col padding-medium margin-bottom hide s-show">
                         <div class="col right padding-right sub-header-table">
                             <div class="col sub-header-table-limit">
-                                <select class="col tableLimit font-small theme-text-aux theme-d1" data-id="{{identificador}}">
+                                <select class="col tableLimit font-small theme-text-aux theme-l1" data-id="{{identificador}}">
                                     <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">
                                         15
                                     </option>
