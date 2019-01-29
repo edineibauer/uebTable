@@ -21,7 +21,7 @@
 
                     <div class="col right padding-right sub-header-table s-hide">
                         <div class="col sub-header-table-limit">
-                            <select class="col tableLimit font-small" data-id="{{identificador}}">
+                            <select class="col tableLimit font-small theme-text-aux theme-d1" data-id="{{identificador}}">
                                 <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">
                                     15
                                 </option>
@@ -40,8 +40,8 @@
                                 <option {{#limits.f}}selected="selected" {{/limits.f}}value="500">
                                     500
                                 </option>
-                                <option {{#limits.g}}selected="selected" {{/limits.g}}value="1000"
-                                >1000
+                                <option {{#limits.g}}selected="selected" {{/limits.g}}value="1000">
+                                    1000
                                 </option>
                             </select>
                         </div>
