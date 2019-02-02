@@ -1,6 +1,6 @@
 <div class="responsive tableList col" id="tableList-{{entity}}" data-entity="{{entity}}" data-id="{{identificador}}">
 
-    <div class="container padding-24" style="display: flow-root">
+    <div class="container padding-24 s-padding-0" style="display: flow-root">
         <div class="col z-depth-2 grid-form-body">
             <div class="col theme-d1 loadindTableSpace">
                 <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
