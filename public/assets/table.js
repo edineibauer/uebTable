@@ -113,7 +113,6 @@ $(function () {
         grid.destroy();
         form.header = !0;
         form.show();
-        console.log(form);
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
