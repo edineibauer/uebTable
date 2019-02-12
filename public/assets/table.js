@@ -113,6 +113,7 @@ $(function () {
         grid.destroy();
         form.header = !0;
         form.show();
+        console.log(form);
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
@@ -139,43 +140,41 @@ $(function () {
         let dicionarios = dbLocal.exeRead("__dicionario", 1);
         let info = dbLocal.exeRead('__info', 1);
         let valor = $this.attr("data-status") === "false";
-
         Promise.all([dicionarios, info]).then(r => {
             dicionarios = r[0];
             info = r[1];
 
-            //obtém o nome da coluna de status
-            let column = "";
-            $.each(dicionarios[grid.entity], function (col, meta) {
+            $.each(dicionarios[grid.entity], function (column, meta) {
                 if (meta.id === info[grid.entity].status) {
-                    column = col;
-                    return false;
+
+                    //aplica a alteração no switch clicado
+                    $this.attr("data-status", valor);
+                    dbLocal.exeRead(grid.entity, parseInt($this.attr("data-id"))).then(data => {
+                        data[column] = valor ? 1 : 0;
+                        db.exeCreate(grid.entity, data);
+                    });
+
+                    //aplica alteração nos switch selecionados
+                    if (grid.$content.find(".table-select:checked").length > 0) {
+                        $.each(grid.$content.find(".table-select:checked"), function () {
+                            let id = parseInt($(this).attr("rel"));
+                            let $switch = grid.$element.find(".switch-status-table[data-id='" + id + "']");
+
+                            $switch.attr("data-status", valor).prop("checked", valor)
+                            dbLocal.exeRead(grid.entity, id).then(data => {
+                                data[column] = valor ? 1 : 0;
+                                db.exeCreate(grid.entity, data);
+                            });
+                        })
+                    }
+
+                    if(AUTOSYNC)
+                        dbRemote.syncPost(grid.entity);
+
+                    return !1
                 }
             });
-
-            //se achou a coluna status
-            if(column !== "") {
-                dbLocal.exeRead(grid.entity, parseInt($this.attr("data-id"))).then(data => {
-                    //unica alteração
-                    data[column] = valor;
-                    db.exeCreate(grid.entity, data);
-                    $this.attr("data-status", valor);
-                });
-                if (grid.$content.find(".table-select:checked").length > 0) {
-
-                    //multiplas alterações
-                    $.each(grid.$content.find(".table-select:checked"), function () {
-                        let id = parseInt($(this).attr("rel"));
-                        let $switch = grid.$element.find(".switch-status-table[data-id='" + id + "']");
-                        dbLocal.exeRead(grid.entity, id).then(data => {
-                            data[column] = valor;
-                            db.exeCreate(grid.entity, data);
-                            $switch.attr("data-status", valor).prop("checked", valor);
-                        });
-                    })
-                }
-            }
-        });
+        })
     }).off("change keyup", ".table-campo-geral").on("change keyup", ".table-campo-geral", function () {
         let $this = $(this);
         if (tempoDigitacao)
@@ -256,10 +255,10 @@ $(function () {
             let ids = [];
             if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
-                    ids.push(parseInt($(this).attr("rel")));
-                });
+                    ids.push(parseInt($(this).attr("rel")))
+                })
             } else {
-                ids.push(parseInt($(this).attr("rel")));
+                ids.push(parseInt($(this).attr("rel")))
             }
             db.exeDelete(grid.entity, ids).then(() => {
                 dbLocal.keys(grid.entity).then(registros => {
