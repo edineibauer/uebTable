@@ -142,38 +142,43 @@ $(function () {
         Promise.all([dicionarios, info]).then(r => {
             dicionarios = r[0];
             info = r[1];
-
             $.each(dicionarios[grid.entity], function (column, meta) {
                 if (meta.id === info[grid.entity].status) {
-
-                    //aplica a alteração no switch clicado
                     $this.attr("data-status", valor);
+                    let sys = AUTOSYNC;
+                    let proccessPromisses = [];
+                    AUTOSYNC = !1;
                     dbLocal.exeRead(grid.entity, parseInt($this.attr("data-id"))).then(data => {
                         data[column] = valor ? 1 : 0;
-                        db.exeCreate(grid.entity, data);
+                        proccessPromisses.push(db.exeCreate(grid.entity, data));
                     });
-
-                    //aplica alteração nos switch selecionados
                     if (grid.$content.find(".table-select:checked").length > 0) {
                         $.each(grid.$content.find(".table-select:checked"), function () {
                             let id = parseInt($(this).attr("rel"));
                             let $switch = grid.$element.find(".switch-status-table[data-id='" + id + "']");
-
                             $switch.attr("data-status", valor).prop("checked", valor)
-                            dbLocal.exeRead(grid.entity, id).then(data => {
+                            proccessPromisses.push(dbLocal.exeRead(grid.entity, id).then(data => {
                                 data[column] = valor ? 1 : 0;
-                                db.exeCreate(grid.entity, data);
-                            });
+                                return db.exeCreate(grid.entity, data)
+                            }));
                         })
                     }
 
-                    if(AUTOSYNC)
-                        dbRemote.syncPost(grid.entity);
+                    return Promise.all(proccessPromisses).then(() => {
+                        grid.$element.find(".table-select, .table-select-all").prop("checked", !1);
+                        AUTOSYNC = sys;
+                        setTimeout(function () {
+                            if (AUTOSYNC)
+                                dbRemote.syncPost(grid.entity);
+                        },300);
 
-                    return !1
+                        return !1
+                    })
+
                 }
-            });
-        })
+            })
+        });
+
     }).off("change keyup", ".table-campo-geral").on("change keyup", ".table-campo-geral", function () {
         let $this = $(this);
         if (tempoDigitacao)
@@ -259,6 +264,7 @@ $(function () {
             } else {
                 ids.push(parseInt($(this).attr("rel")))
             }
+            grid.$element.find(".table-select, .table-select-all").prop("checked", !1);
             db.exeDelete(grid.entity, ids).then(() => {
                 dbLocal.keys(grid.entity).then(registros => {
                     grid.total = registros.length;

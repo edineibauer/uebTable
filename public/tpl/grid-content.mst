@@ -2,12 +2,15 @@
     {{#fields}}
         <td class="padding-16 {{class}}" style="{{style}}">
             {{#first}}
-                <label class="left">
-                    <input type="checkbox" class="table-select" rel="{{id}}" data-id="{{identificador}}"
-                           style="margin: 15px 2rem 11px 0px;"/>
+                <label class="left pointer">
+                    <input type="checkbox"{{#checked}} checked="checked"{{/checked}} class="table-select" rel="{{id}}" data-id="{{identificador}}"
+                           style="margin: 15px 1.5rem 11px 0px;"/>
+                    {{value}}
                 </label>
             {{/first}}
-            {{value}}
+            {{^first}}
+                {{value}}
+            {{/first}}
         </td>
     {{/fields}}
 
@@ -29,7 +32,7 @@
 
         {{#button.status.have}}
             <label class="right">
-                <div class="switch switch-squad margin-0 margin-right">
+                <div class="switch switch-squad" style="margin:0 7px 0 0">
                     <input type="checkbox" class="switch-status-table switchCheck"
                            data-status="{{button.status.status}}"
                            data-entity="{{entity}}" data-id="{{id}}"
