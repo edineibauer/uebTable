@@ -256,6 +256,7 @@ $(function () {
         let grid = grids[$(this).attr("data-id")];
         var cont = grid.$content.find(".table-select:checked").length;
         if (confirm(cont > 1 ? "Remover os " + cont + " Registros?" : "Remover este Registro? ")) {
+            toast("Removendo Registros...", 2000);
             let ids = [];
             if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
