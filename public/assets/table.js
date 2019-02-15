@@ -277,7 +277,7 @@ $(function () {
         form_data.append('file', 'import-file');
         form_data.append('entity', grid.entity);
         let t = setTimeout(function () {
-            toast("Salvando dados no banco...", 9000);
+            toast("Salvando dados no banco...", 3500);
         }, 2500);
         $.ajax({
             url: HOME + 'set',
@@ -291,7 +291,7 @@ $(function () {
                 $('#import-file-crud').val("");
                 clearTimeout(t);
 
-                if(data.response === 1) {
+                if(data.response == 1) {
                     toast("Importado " + data.data + " registros!", 3500, "toast-success");
                     grid.readData();
                 } else {

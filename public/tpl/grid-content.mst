@@ -11,7 +11,7 @@
         </td>
     {{/fields}}
 
-    <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}">
+    <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}" style="min-width: 185px;">
         {{#button.delete}}
             <button rel="{{id}}" data-id="{{identificador}}"
                     class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
