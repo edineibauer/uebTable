@@ -266,6 +266,41 @@ $(function () {
                 })
             })
         }
+
+    }).off("change", "#import-file-crud").on("change", "#import-file-crud", function() {
+        toast("Enviando Arquivo...", 2500);
+        let input = $(this);
+        let grid = grids[input.attr("rel")];
+        let form_data = new FormData();
+        form_data.append('file', input.prop('files')[0]);
+        form_data.append('lib', 'table');
+        form_data.append('file', 'import-file');
+        form_data.append('entity', grid.entity);
+        let t = setTimeout(function () {
+            toast("Salvando dados no banco...", 9000);
+        }, 2500);
+        $.ajax({
+            url: HOME + 'set',
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function (data) {
+                $('#import-file-crud').val("");
+                clearTimeout(t);
+
+                if(data.response === 1) {
+                    toast("Importado " + data.data + " registros!", 3500, "toast-success");
+                    grid.readData();
+                } else {
+                    toast(data.error, 2500);
+                }
+            }, error: function () {
+                toast("Conexão Perdida");
+            }
+        });
     })
 });
 (function ($, window, document) {
