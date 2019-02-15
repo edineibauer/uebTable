@@ -281,7 +281,7 @@ $(function () {
         }, 2500);
         $.ajax({
             url: HOME + 'set',
-            dataType: 'text',
+            dataType: 'json',
             cache: false,
             contentType: false,
             processData: false,
@@ -291,7 +291,7 @@ $(function () {
                 $('#import-file-crud').val("");
                 clearTimeout(t);
 
-                if(data.response == 1) {
+                if(data.response === 1) {
                     toast("Importado " + data.data + " registros!", 3500, "toast-success");
                     grid.readData();
                 } else {
