@@ -300,12 +300,23 @@ $(function () {
 
                 if(data.response === 1) {
                     toast("Importado " + data.data + " registros!", 3500, "toast-success");
-                    dbLocal.exeRead("__historic", 1).then(hist => {
-                        hist[grid.entity] = 0;
-                        return dbLocal.exeCreate(hist, 1);
-                    }).then(() => {
-                        grid.readData();
-                    });
+                    setTimeout(function () {
+                        dbLocal.exeRead("__historic", 1).then(hist => {
+                            hist[grid.entity] = 0;
+                            dbLocal.exeCreate(hist, 1).then(() => {
+                                grid.readData();
+                            })
+                        });
+                    },1000);
+
+                    setTimeout(function () {
+                        dbLocal.exeRead("__historic", 1).then(hist => {
+                            hist[grid.entity] = 0;
+                            dbLocal.exeCreate(hist, 1).then(() => {
+                                grid.readData();
+                            })
+                        });
+                    },4000);
                 } else {
                     toast(data.error, 2500);
                 }
