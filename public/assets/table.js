@@ -38,10 +38,8 @@ $(function () {
             $filter.find(".table-filter-value").val("")
         }
         $filter.find(".table-filter-columns").html("<option disabled='disabled' class='color-text-gray' selected='selected' value=''>coluna...</option>");
-        dbLocal.exeRead("__dicionario", 1).then(dicionarios => {
-            $.each(dicionarios[grid.entity], function (col, meta) {
-                $filter.find(".table-filter-columns").append("<option value='" + col + "' >" + meta.nome + "</option>")
-            })
+        $.each(dicionarios[grid.entity], function (col, meta) {
+            $filter.find(".table-filter-columns").append("<option value='" + col + "' >" + meta.nome + "</option>")
         })
     }).off("click", ".table-reload").on("click", ".table-reload", function () {
         let grid = grids[$(this).attr("rel")];
@@ -136,12 +134,8 @@ $(function () {
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
         let $this = $(this);
         let grid = grids[$this.attr("rel")];
-        let dicionarios = dbLocal.exeRead("__dicionario", 1);
-        let info = dbLocal.exeRead('__info', 1);
         let valor = $this.attr("data-status") === "false";
-        Promise.all([dicionarios, info]).then(r => {
-            dicionarios = r[0];
-            info = r[1];
+        dbLocal.exeRead('__info', 1).then(info => {
             $.each(dicionarios[grid.entity], function (column, meta) {
                 if (meta.id === info[grid.entity].status) {
                     $this.attr("data-status", valor);
