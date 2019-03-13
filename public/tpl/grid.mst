@@ -172,7 +172,7 @@
                     </span>
                     </th>
                 {{/fields}}
-                <th class="align-right" style="padding-right: 20px;">Ações</th>
+                <th class="align-right" style="padding-right: 20px;padding-top: 14px;width: 100px;">Ações</th>
             </tr>
             </thead>
             <tbody class="relative"></tbody>
