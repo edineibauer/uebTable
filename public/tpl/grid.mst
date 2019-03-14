@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="col">
-                    <div class="col right padding-4" style="width: 60px">
+                    <div class="col right padding-4 hide adminShow" style="width: 60px">
                         <label for="import-file-crud" title="importar registros Excel" class="right btn-floating hover-shadow opacity hover-opacity-off theme-aux">
                             <i class="material-icons left theme-text-d">cloud_upload</i>
                         </label>
