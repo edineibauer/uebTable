@@ -48,14 +48,15 @@ if (0 < $_FILES['file']['error']) {
 
             foreach ($dicionario as $meta) {
                 if ($meta['key'] === "relation") {
-                    $relations[$meta['column']] = $meta['relation'];
+                    $relations[$meta['column']] = $meta;
 
                 } elseif ($meta['key'] !== "information") {
                     //para cada dado encontrado no arquivo
                     foreach ($dados as $i => $dado) {
                         //para cada campo do dado
                         foreach ($dado as $col => $val) {
-                            if ($meta['column'] === $col) {
+                            if ($meta['column'] === $col || $entity . "->" . $meta['column'] === $col) {
+                                $col = ($meta['column'] === $col ? $col : str_replace($entity . "->", "", $col));
                                 $dadosDistribuidos[$i][$col] = $val;
                                 unset($dados[$i][$col]);
                                 if (empty($dados[$i]))
@@ -69,14 +70,25 @@ if (0 < $_FILES['file']['error']) {
             }
 
             if (!empty($relations) && !empty($dados)) {
-                foreach ($relations as $col => $relation) {
-
+                foreach ($relations as $col => $meta) {
                     if (!empty($dados)) {
                         //para cada dado encontrado no arquivo
-                        list($result, $dados) = addDataToEntity($relation, $dados);
+                        list($result, $dados) = addDataToEntity($meta['relation'], $dados);
                         if (!empty($result)) {
-                            foreach ($result as $e => $item)
-                                $dadosDistribuidos[$e][$col] = $item;
+                            foreach ($result as $e => $item) {
+                                if ($meta['format'] === "list") {
+                                    $d = \Entity\Entity::read($meta['relation'], $item);
+                                    if(!empty($d)) {
+                                        $dadosDistribuidos[$e][$col] = $d['id'];
+                                    } else {
+                                        $add = \Entity\Entity::add($meta['relation'], $item);
+                                        if(is_numeric($add))
+                                            $dadosDistribuidos[$e][$col] = $add;
+                                    }
+                                } else {
+                                    $dadosDistribuidos[$e][$col] = $item;
+                                }
+                            }
                         }
                     }
                 }
@@ -91,7 +103,7 @@ if (0 < $_FILES['file']['error']) {
         $import = 0;
         foreach ($dadosDistribuidos as $item) {
             $id = \Entity\Entity::add($entity, $item);
-            if(is_numeric($id))
+            if (is_numeric($id))
                 $import++;
         }
 
