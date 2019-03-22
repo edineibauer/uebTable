@@ -13,29 +13,63 @@ if (0 < $_FILES['file']['error']) {
     $extensao = pathinfo($file, PATHINFO_EXTENSION);
     $name = pathinfo($file, PATHINFO_FILENAME);
 
-    if (in_array($extensao, ["xlsx", "xls"])) {
-
-        //Prepara variáveis
-        $spreadsheet = new Spreadsheet();
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['file']['tmp_name']);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+    if (in_array($extensao, ["xlsx", "xls", "csv"])) {
 
         //Obtém os dados do excel
         $columns = [];
         $dados = [];
         $count = -1;
-        foreach ($sheetData as $linha => $sheetDatum) {
-            foreach ($sheetDatum as $column => $valor) {
-                if ($linha === 1) {
-                    //obtém colunas
-                    $columns[$column] = str_replace("-", "_", Check::name(trim(strip_tags($valor))));
-                } elseif (isset($columns[$column])) {
-                    //obtém dados
-                    $dados[$count][$columns[$column]] = trim(strip_tags($valor ?? null));
+
+        if ($extensao === "csv") {
+            if (($handle = fopen($_FILES['file']['tmp_name'], "r")) !== !1) {
+                while (($data = fgets($handle, 1000)) !== !1) {
+
+                    $data = explode(",", $data);
+                    $totalColumns = count($data);
+                    if ($count === -1) {
+                        //obtém nome das colunas
+                        for ($c = 0; $c < $totalColumns; $c++)
+                            $columns[$c] = str_replace("-", "_", Check::name(trim(strip_tags($data[$c]))));
+                    } else {
+                        //obtém dados
+                        $ponteiro = 0;
+                        for ($c = 0; $c < $totalColumns; $c++) {
+                            if (isset($columns[$ponteiro])) {
+                                if (preg_match('/"$/', $data[$c])) {
+                                    $ponteiro--;
+                                    $data[$c] = $dados[$count][$columns[$ponteiro]] . "," . $data[$c];
+                                }
+
+                                $dados[$count][$columns[$ponteiro]] = str_replace(["'", '"'], "", trim(strip_tags($data[$c])));
+                                $ponteiro++;
+                            }
+                        }
+                    }
+                    $count++;
                 }
+                fclose($handle);
             }
-            $count++;
+        } else {
+
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['file']['tmp_name']);
+            $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+            foreach ($sheetData as $linha => $sheetDatum) {
+                foreach ($sheetDatum as $column => $valor) {
+                    if ($linha === 1) {
+                        //obtém colunas
+                        if (!empty($column) && !empty($valor))
+                            $columns[$column] = str_replace("-", "_", Check::name(trim(strip_tags($valor))));
+                    } elseif (isset($columns[$column])) {
+                        //obtém dados
+                        $dados[$count][$columns[$column]] = trim(strip_tags($valor ?? null));
+                    }
+                }
+                $count++;
+            }
         }
+
         $dadosDistribuidos = [];
 
         //para cada campo no dicionário
@@ -78,11 +112,11 @@ if (0 < $_FILES['file']['error']) {
                             foreach ($result as $e => $item) {
                                 if ($meta['format'] === "list") {
                                     $d = \Entity\Entity::read($meta['relation'], $item);
-                                    if(!empty($d)) {
+                                    if (!empty($d)) {
                                         $dadosDistribuidos[$e][$col] = $d['id'];
                                     } else {
                                         $add = \Entity\Entity::add($meta['relation'], $item);
-                                        if(is_numeric($add))
+                                        if (is_numeric($add))
                                             $dadosDistribuidos[$e][$col] = $add;
                                     }
                                 } else {
