@@ -106,12 +106,14 @@ $(function () {
             $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>"); else $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
         grid.readData()
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
+        history.pushState(null, null, "#formulario");
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
         grid.destroy();
         form.header = !0;
         form.show();
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
+        history.pushState(null, null, "#formulario");
         let grid = grids[$(this).attr("rel")];
         let form = formCrud(grid.entity, grid.$element);
         grid.destroy();
