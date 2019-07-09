@@ -161,7 +161,12 @@
             <thead>
             <tr class="no-select">
                 {{#fields}}
-                    <th>
+                    {{#first}}
+                        <th style="width: 105px;">
+                    {{/first}}
+                    {{^first}}
+                        <th>
+                    {{/first}}
                         {{#first}}
                             <label class="left" style="margin-left: -8px;">
                                 <input type="checkbox" class="table-select-all" data-id="{{identificador}}"/>
