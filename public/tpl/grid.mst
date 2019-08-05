@@ -101,6 +101,11 @@
                         </label>
                         <input type="file" id="import-file-crud" rel="{{identificador}}" accept=".xlsx, .xls" class="hide"/>
                     </div>
+                    <div class="col right padding-4 hide adminShow" style="width: 60px">
+                        <label id="export-file-crud" rel="{{identificador}}" title="exportar registros Csv" class="right btn-floating hover-shadow opacity hover-opacity-off theme-aux">
+                            <i class="material-icons left theme-text-d">get_app</i>
+                        </label>
+                    </div>
                     <div class="rest table-filter-list padding-medium color-text-gray">
                         <div class="font-light font-large left padding-small theme-text-aux">Filtros</div>
                         <button class="btn-small left radius padding-4 color-white hover-shadow btn-new-filter"
