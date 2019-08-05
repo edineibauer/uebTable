@@ -278,6 +278,7 @@ $(function () {
         let offset = (grid.page * grid.limit) - grid.limit;
 
         exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
+            clearToast();
             if(result.total > 0) {
                 let dd = [];
                 $.each(result.data, function(i, e) {
@@ -285,7 +286,6 @@ $(function () {
                     dd.push(e);
                 });
                 let d = new Date();
-                clearToast();
                 toast(result.total + " registros exportados", 3000, "toast-success");
                 download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() +  ".csv", CSV(dd));
             } else {
