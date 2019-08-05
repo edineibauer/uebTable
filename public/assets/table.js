@@ -270,6 +270,29 @@ $(function () {
             })
         }
 
+    }).off("click", "#export-file-crud").on("click", "#export-file-crud", function () {
+        toast("Preparando Download...", 1500);
+        let input = $(this);
+        let grid = grids[input.attr("rel")];
+
+        let offset = (grid.page * grid.limit) - grid.limit;
+
+        exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
+            if(result.total > 0) {
+                let dd = [];
+                $.each(result.data, function(i, e) {
+                    delete e.db_action;
+                    dd.push(e);
+                });
+                let d = new Date();
+                clearToast();
+                toast(result.total + " registros exportados", 3000, "toast-success");
+                download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() +  ".csv", CSV(dd));
+            } else {
+                toast("Nenhum registro selecionado", 2000, "toast-warning");
+            }
+        });
+
     }).off("change", "#import-file-crud").on("change", "#import-file-crud", function() {
         toast("Enviando Arquivo...", 2500);
         let input = $(this);
