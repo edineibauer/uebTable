@@ -5,11 +5,11 @@ use Helpers\Check;
 
 $entity = filter_input(INPUT_POST, 'entity', FILTER_DEFAULT);
 
-if (0 < $_FILES['file']['error']) {
-    $data['error'] = 'Error: ' . $_FILES['file']['error'] . '<br>';
+if (0 < $_FILES['anexo']['error']) {
+    $data['error'] = 'Error: ' . $_FILES['anexo']['error'] . '<br>';
     $data['response'] = 2;
 } else {
-    $file = $_FILES['file']['name'];
+    $file = $_FILES['anexo']['name'];
     $extensao = pathinfo($file, PATHINFO_EXTENSION);
     $name = pathinfo($file, PATHINFO_FILENAME);
 
@@ -21,26 +21,29 @@ if (0 < $_FILES['file']['error']) {
         $count = -1;
 
         if ($extensao === "csv") {
-            if (($handle = fopen($_FILES['file']['tmp_name'], "r")) !== !1) {
-                while (($data = fgets($handle, 1000)) !== !1) {
+            if (($handle = fopen($_FILES['anexo']['tmp_name'], "r")) !== !1) {
+                while (($data0 = fgets($handle, 1000)) !== !1) {
 
-                    $data = explode(",", $data);
-                    $totalColumns = count($data);
+                    $data1 = explode(",", $data0);
+                    $data2 = explode(";", $data0);
+                    $data3 = (count($data2) > count($data1) ? $data2 : $data1);
+
+                    $totalColumns = count($data3);
                     if ($count === -1) {
                         //obtém nome das colunas
                         for ($c = 0; $c < $totalColumns; $c++)
-                            $columns[$c] = str_replace("-", "_", Check::name(trim(strip_tags($data[$c]))));
+                            $columns[$c] = str_replace("-", "_", Check::name(trim(strip_tags($data3[$c]))));
                     } else {
                         //obtém dados
                         $ponteiro = 0;
                         for ($c = 0; $c < $totalColumns; $c++) {
                             if (isset($columns[$ponteiro])) {
-                                if (preg_match('/"$/', $data[$c])) {
+                                if (preg_match('/"$/', $data3[$c])) {
                                     $ponteiro--;
-                                    $data[$c] = $dados[$count][$columns[$ponteiro]] . "," . $data[$c];
+                                    $data3[$c] = $dados[$count][$columns[$ponteiro]] . "," . $data3[$c];
                                 }
 
-                                $dados[$count][$columns[$ponteiro]] = str_replace(["'", '"'], "", trim(strip_tags($data[$c])));
+                                $dados[$count][$columns[$ponteiro]] = str_replace(["'", '"'], "", trim(strip_tags($data3[$c])));
                                 $ponteiro++;
                             }
                         }
@@ -52,7 +55,7 @@ if (0 < $_FILES['file']['error']) {
         } else {
 
             $spreadsheet = new Spreadsheet();
-            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['file']['tmp_name']);
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['anexo']['tmp_name']);
             $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
             foreach ($sheetData as $linha => $sheetDatum) {

@@ -298,51 +298,39 @@ $(function () {
         let input = $(this);
         let grid = grids[input.attr("rel")];
         let form_data = new FormData();
-        form_data.append('file', input.prop('files')[0]);
+        form_data.append('anexo', input.prop('files')[0]);
         form_data.append('lib', 'table');
         form_data.append('file', 'import-file');
         form_data.append('entity', grid.entity);
         let t = setTimeout(function () {
-            toast("Salvando dados no banco...", 3500);
+            toast("Salvando dados no banco...", 3500)
         }, 2500);
         $.ajax({
             url: HOME + 'set',
             dataType: 'json',
-            cache: false,
-            contentType: false,
-            processData: false,
+            cache: !1,
+            contentType: !1,
+            processData: !1,
             data: form_data,
             type: 'post',
             success: function (data) {
                 $('#import-file-crud').val("");
                 clearTimeout(t);
-
-                if(data.response === 1) {
-                    toast("Importado " + data.data + " registros!", 3500, "toast-success");
-                    setTimeout(function () {
-                        dbLocal.exeRead("__historic", 1).then(hist => {
-                            hist[grid.entity] = 0;
-                            dbLocal.exeCreate(hist, 1).then(() => {
-                                grid.readData();
-                            })
-                        });
-                    },1000);
-
-                    setTimeout(function () {
-                        dbLocal.exeRead("__historic", 1).then(hist => {
-                            hist[grid.entity] = 0;
-                            dbLocal.exeCreate(hist, 1).then(() => {
-                                grid.readData();
-                            })
-                        });
-                    },4000);
+                clearToast();
+                if (data.response === 1) {
+                    toast(data.data + " registros Importados!", 3500, "toast-success");
+                    updateCacheUser().then(() => {
+                        grid.reload();
+                    });
                 } else {
-                    toast(data.error, 2500);
+                    toast(data.error, 2500)
                 }
-            }, error: function () {
+            },
+            error: function () {
+                clearToast();
                 toast("Conexão Perdida");
             }
-        });
+        })
     })
 });
 (function ($, window, document) {
