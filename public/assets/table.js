@@ -278,7 +278,6 @@ $(function () {
         let offset = (grid.page * grid.limit) - grid.limit;
 
         exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
-            clearToast();
             if(result.total > 0) {
                 let dd = [];
                 $.each(result.data, function(i, e) {
@@ -316,7 +315,6 @@ $(function () {
             success: function (data) {
                 $('#import-file-crud').val("");
                 clearTimeout(t);
-                clearToast();
                 if (data.response === 1) {
                     toast(data.data + " registros Importados!", 3500, "toast-success");
                     updateCacheUser().then(() => {
@@ -327,7 +325,6 @@ $(function () {
                 }
             },
             error: function () {
-                clearToast();
                 toast("Conexão Perdida");
             }
         })
