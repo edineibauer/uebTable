@@ -252,7 +252,7 @@ $(function () {
         let grid = grids[$(this).attr("data-id")];
         var cont = grid.$content.find(".table-select:checked").length;
         if (confirm(cont > 1 ? "Remover os " + cont + " Registros?" : "Remover este Registro? ")) {
-            toast("Removendo Registros...", 2000);
+            toast("Requisitando remoção...", 15000);
             let ids = [];
             if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
@@ -263,6 +263,7 @@ $(function () {
             }
             grid.$element.find(".table-select, .table-select-all").prop("checked", !1);
             db.exeDelete(grid.entity, ids).then(() => {
+                toast("Registros excluídos", 1500, "toast-success");
                 dbLocal.keys(grid.entity).then(registros => {
                     grid.total = registros.length;
                     grid.readDataConfigAltered(grid.limit)
