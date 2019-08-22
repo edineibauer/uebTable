@@ -8,9 +8,18 @@
                         rel="{{identificador}}">
                     <i class="material-icons left">list</i>
                 </button>
-                <h4 class="left" style="padding: 5px 0 0 7px;">{{#goodName}}{{entity}}{{/goodName}}
-                    <small class="total padding-medium font-small">{{total}}</small>
-                </h4>
+                <div class="left no-padding">
+                    {{#sync}}
+                        <button title="atualizar tabela" onclick="syncDataBtn('{{entity}}')"
+                                class="left btn-floating color-white color-hover-text-blue hover-shadow">
+                            <i class="material-icons">update</i>
+                        </button>
+                    {{/sync}}
+                    <h4 class="left" style="padding: 5px 0 0 7px;">
+                        {{#goodName}}{{entity}}{{/goodName}}
+                    </h4>
+                    <small class="total padding-large padding-left left">{{total}}</small>
+                </div>
 
                 {{#novo}}
                     <button class="btb radius right color-white hover-shadow btn-table-novo"
