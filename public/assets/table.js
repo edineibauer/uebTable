@@ -105,6 +105,17 @@ $(function () {
         if (grid.orderPosition)
             $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>"); else $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
         grid.readData()
+    }).off("click", ".btn-grid-sync").on("click", ".btn-grid-sync", function () {
+        if(navigator.onLine) {
+            let id = parseInt($(this).attr("rel"));
+            let grid = grids[$(this).attr("data-id")];
+            dbRemote.sync(grid.entity, id, !0).then(() => {
+                grid.readData();
+            });
+        } else {
+            toast("Precisa estar ONLINE", 3000, 'toast-warning');
+        }
+
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         history.pushState(null, null, "#formulario");
         let grid = grids[$(this).attr("rel")];

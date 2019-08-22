@@ -1,6 +1,6 @@
 <tr id="row-{{entity}}-{{id}}" style="border: none;">
     {{#fields}}
-        <td class="padding-16 {{class}}" style="{{style}}">
+        <td class="padding-16 {{class}}" style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}{{style}}">
             {{#first}}
                 <label class="left pointer">
                     <input type="checkbox"{{#checked}} checked="checked"{{/checked}} class="table-select" rel="{{id}}" data-id="{{identificador}}"
@@ -15,7 +15,7 @@
     {{/fields}}
 
     <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}"
-            style="min-width: {{^button.status.have}}120px;{{/button.status.have}}{{#button.status.have}}185px;{{/button.status.have}}">
+            style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}min-width: {{^button.status.have}}120px;{{/button.status.have}}{{#button.status.have}}185px;{{/button.status.have}}">
         {{#button.delete}}
             <button rel="{{id}}" data-id="{{identificador}}"
                     class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
@@ -67,5 +67,12 @@
                 </label>
             {{/button.autor.id}}
         {{/button.autor.have}}
+
+        {{^db_status}}
+            <button rel="{{id}}" data-id="{{identificador}}" title="atualizar"
+                    class="btn-grid-sync right btn-floating color-white color-hover-text-blue hover-shadow opacity hover-opacity-off">
+                <i class="material-icons">update</i>
+            </button>
+        {{/db_status}}
     </td>
 </tr>
