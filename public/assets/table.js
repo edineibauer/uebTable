@@ -250,15 +250,38 @@ $(function () {
     }).off("change", ".table-select-all").on("change", ".table-select-all", function () {
         let grid = grids[$(this).attr("data-id")];
         grid.$content.find(".table-select").prop("checked", $(this).is(":checked"))
-    }).off("change", ".table-select").on("change", ".table-select", function () {
+
+    }).off("click", ".table-select").on("click", ".table-select", function (evt) {
         let all = !0;
         let $this = $(this);
         let grid = grids[$this.attr("data-id")];
+        let action = $this.is(":checked");
+
+        /**
+         * Ctrl ou Shift pressionado, seleciona os checkbox no intervalo
+         * */
+        if((evt.ctrlKey || evt.shiftKey) && grid.$content.find(".table-select:checked").length > 1) {
+            let first = grid.$content.find(".table-select").index(grid.$content.find(".table-select:checked").first());
+            let last = grid.$content.find(".table-select").index($this);
+
+            if(action) {
+                for (let i = first + 1; i < last; i++)
+                    grid.$content.find(".table-select:eq(" + i + ")").prop("checked", !0);
+            } else {
+                for (let i = last + 1; i < grid.$content.find(".table-select").length; i++)
+                    grid.$content.find(".table-select:eq(" + i + ")").prop("checked", !1);
+            }
+        }
+
+        /**
+         * Verifica se todos foram marcados para marcar a caixa de todos, e vice-versa
+         * */
         $.each(grid.$content.find(".table-select"), function () {
             if (all && $(this).is(":checked") !== $this.is(":checked"))
                 all = !1
         });
-        grid.$element.find(".table-select-all").prop("checked", (all && $this.is(":checked")))
+        grid.$element.find(".table-select-all").prop("checked", (all && $this.is(":checked")));
+
     }).off("click", ".btn-grid-delete").on("click", ".btn-grid-delete", function () {
         let grid = grids[$(this).attr("data-id")];
         var cont = grid.$content.find(".table-select:checked").length;
