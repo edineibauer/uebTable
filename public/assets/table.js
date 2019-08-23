@@ -106,14 +106,32 @@ $(function () {
             $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>"); else $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
         grid.readData()
     }).off("click", ".btn-grid-sync").on("click", ".btn-grid-sync", function () {
-        if(navigator.onLine) {
-            let id = parseInt($(this).attr("rel"));
-            let grid = grids[$(this).attr("data-id")];
-            dbRemote.sync(grid.entity, id, !0).then(() => {
-                grid.readData();
-            });
+        if (navigator.onLine) {
+            let $this = $(this);
+            let grid = grids[$this.attr("data-id")];
+
+            if(grid.$content.find(".table-select:checked").length) {
+                /**
+                 * Checkbox checked, mult sync
+                 * */
+                if(confirm("Sincronizar os " + grid.$content.find(".table-select:checked").length + " registros selecionados?")) {
+                    $.each(grid.$content.find(".table-select:checked"), function (i, e) {
+                        dbRemote.sync(grid.entity, parseInt($(e).attr("rel")), !0).then(() => {
+                            grid.readData()
+                        })
+                    });
+                }
+            } else {
+
+                /**
+                 * Single sync click
+                 * */
+                dbRemote.sync(grid.entity, parseInt($this.attr("rel")), !0).then(() => {
+                    grid.readData()
+                })
+            }
         } else {
-            toast("Precisa estar ONLINE", 3000, 'toast-warning');
+            toast("Sem Conexão", 3000, 'toast-warning')
         }
 
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
