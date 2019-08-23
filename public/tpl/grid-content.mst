@@ -15,7 +15,7 @@
     {{/fields}}
 
     <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}"
-            style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}min-width: {{^button.status.have}}160px;{{/button.status.have}}{{#button.status.have}}225px;{{/button.status.have}}">
+            style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}min-width: {{^button.status.have}}170px;{{/button.status.have}}{{#button.status.have}}225px;{{/button.status.have}}">
         {{#button.delete}}
             <button rel="{{id}}" data-id="{{identificador}}"
                     class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
