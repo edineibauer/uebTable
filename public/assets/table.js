@@ -18,6 +18,49 @@ function changeAutor(entity, autor, id, valor) {
     })
 }
 
+
+function getDataExtended(entity, dados) {
+    let data = [];
+    let promessas = [];
+    $.each(dados, function (i, e) {
+        if(typeof e === "object" && e !== null) {
+            if(typeof e.db_action !== "undefined")
+                delete e.db_action;
+            if(typeof e.db_status !== "undefined")
+                delete e.db_status;
+
+            data.push(e);
+
+            /**
+             * Verifica relacionamento de dados
+             * */
+            $.each(e, function (j, d) {
+                if (typeof dicionarios[entity][j] === "object" && dicionarios[entity][j] !== null && dicionarios[entity][j].key === 'relation' && d !== null) {
+                    if (!isNaN(d)) {
+                        promessas.push(db.exeRead(dicionarios[entity][j].relation, parseInt(d)).then(dadosRelation => {
+                            let dadosRelations = [];
+                            dadosRelations.push(dadosRelation);
+                            return getDataExtended(dicionarios[entity][j].relation, dadosRelations).then(ret => {
+                                e[j] = ret[0];
+                            });
+                        }));
+                    } else if (d.constructor === Object) {
+                        let dadosRelations = [];
+                        dadosRelations.push(d);
+                        promessas.push(getDataExtended(dicionarios[entity][j].relation, dadosRelations).then(ret => {
+                            e[j] = ret[0];
+                        }));
+                    }
+                }
+            });
+        }
+    });
+
+    return Promise.all(promessas).then(() => {
+        return data;
+    });
+}
+
 $(function () {
     $("#core-content").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
         let grid = grids[$(this).attr("rel")];
@@ -116,6 +159,7 @@ $(function () {
                  * */
                 if(confirm("Sincronizar os " + grid.$content.find(".table-select:checked").length + " registros selecionados?")) {
                     $.each(grid.$content.find(".table-select:checked"), function (i, e) {
+                        $(e).prop("checked", !1);
                         dbRemote.sync(grid.entity, parseInt($(e).attr("rel")), !0).then(() => {
                             grid.readData()
                         })
@@ -324,24 +368,22 @@ $(function () {
         }
 
     }).off("click", "#export-file-crud").on("click", "#export-file-crud", function () {
-        toast("Preparando Download...", 1500);
         let input = $(this);
         let grid = grids[input.attr("rel")];
-
         let offset = (grid.page * grid.limit) - grid.limit;
 
+        toast("Preparando Download...", 1500);
         exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
-            if(result.total > 0) {
-                let dd = [];
-                $.each(result.data, function(i, e) {
-                    delete e.db_action;
-                    dd.push(e);
-                });
-                let d = new Date();
-                toast(result.total + " registros exportados", 3000, "toast-success");
-                download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() +  ".csv", CSV(dd));
+            if (result.total > 0) {
+                toast("Processando dados para exportar", 5000);
+
+                getDataExtended(grid.entity, result.data).then(dd => {
+                    toast(result.total + " registros exportados", 3000, "toast-success");
+                    let d = new Date();
+                    download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() + ".csv", CSV(dd))
+                })
             } else {
-                toast("Nenhum registro selecionado", 2000, "toast-warning");
+                toast("Nenhum registro selecionado", 2000, "toast-warning")
             }
         });
 
