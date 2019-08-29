@@ -3,30 +3,36 @@
     <div class="col z-depth-2 grid-form-body">
         <div class="col theme-d1 loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
+                <a href="{{home}}dashboard" data-animation="back" class="margin-bottom left color-white hover-shadow btn-floating"
+                   rel="{{identificador}}">
+                    <i class="material-icons left">keyboard_arrow_left</i>
+                </a>
                 <button title="filtro"
-                        class="btn-floating left color-white hover-shadow btn-table-filter"
+                        class="margin-bottom btn-floating left color-white hover-shadow btn-table-filter"
                         rel="{{identificador}}">
                     <i class="material-icons left">list</i>
                 </button>
-                <div class="left no-padding">
-                    {{#sync}}
-                        <button title="atualizar tabela" onclick="syncDataBtn('{{entity}}')"
-                                class="left btn-floating color-white color-hover-text-blue hover-shadow">
-                            <i class="material-icons">update</i>
-                        </button>
-                    {{/sync}}
-                    <h4 class="left" style="padding: 5px 0 0 7px;">
-                        {{#goodName}}{{entity}}{{/goodName}}
-                    </h4>
-                    <small class="total padding-large padding-left left">{{total}}</small>
-                </div>
+                {{#sync}}
+                    <button title="atualizar tabela" onclick="syncDataBtn('{{entity}}')"
+                            class="margin-bottom left btn-floating color-white color-hover-text-blue hover-shadow">
+                        <i class="material-icons">update</i>
+                    </button>
+                {{/sync}}
 
                 {{#novo}}
-                    <button class="btb radius right color-white hover-shadow btn-table-novo"
+                    <button class="btb radius right color-white hover-shadow btn-table-novo" style="margin: 4px 0 18px 0"
                             rel="{{identificador}}">
                         <i class="material-icons left">add</i><span class="left">Novo</span>
                     </button>
                 {{/novo}}
+
+                <small class="margin-bottom total right color-text-gray-dark" style="height:40px; padding:12px 5px 6px 10px">{{total}}</small>
+
+                <div class="left no-padding">
+                    <h4 class="left" style="padding: 5px 0 0 7px;">
+                        {{#goodName}}{{entity}}{{/goodName}}
+                    </h4>
+                </div>
 
                 <div class="col right padding-right sub-header-table s-hide">
                     <div class="col sub-header-table-limit">
@@ -104,13 +110,13 @@
                 </div>
 
                 <div class="col">
-                    <div class="col right padding-4 hide adminShow" style="width: 60px">
+                    <div class="col right padding-4 hide adminShow" style="width: 50px">
                         <label for="import-file-crud" title="importar registros Excel" class="right btn-floating hover-shadow opacity hover-opacity-off theme-aux">
                             <i class="material-icons left theme-text-d">cloud_upload</i>
                         </label>
                         <input type="file" id="import-file-crud" rel="{{identificador}}" accept=".xlsx, .xls, .csv" class="hide"/>
                     </div>
-                    <div class="col right padding-4 hide adminShow" style="width: 60px">
+                    <div class="col right padding-4 hide adminShow" style="width: 50px">
                         <label id="export-file-crud" rel="{{identificador}}" title="exportar registros Csv" class="right btn-floating hover-shadow opacity hover-opacity-off theme-aux">
                             <i class="material-icons left theme-text-d">get_app</i>
                         </label>
