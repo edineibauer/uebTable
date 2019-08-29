@@ -180,16 +180,12 @@ $(function () {
 
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         history.pushState(null, null, "#formulario");
-        let grid = grids[$(this).attr("rel")];
-        let form = formCrud(grid.entity, grid.$element);
-        grid.destroy();
+        let form = formCrud(grids[$(this).attr("rel")].entity, animateForward("#dashboard"));
         form.header = !0;
         form.show();
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
         history.pushState(null, null, "#formulario");
-        let grid = grids[$(this).attr("rel")];
-        let form = formCrud(grid.entity, grid.$element);
-        grid.destroy();
+        let form = formCrud(grids[$(this).attr("rel")].entity, animateForward("#dashboard"));
         form.header = !0;
         form.show(parseInt($(this).attr("data-id")))
     }).off("change", ".autor-switch-form").on("change", ".autor-switch-form", function () {
