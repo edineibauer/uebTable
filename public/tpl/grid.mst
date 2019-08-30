@@ -3,10 +3,9 @@
     <div class="col z-depth-2 grid-form-body">
         <div class="col theme-d1 loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
-                <button data-animation="back" data-action="page" data-atributo="panel" class="menu-li margin-bottom left color-white hover-shadow btn-floating"
-                        rel="{{identificador}}">
+                <a href="#back" class="margin-bottom left color-white hover-shadow btn-floating">
                     <i class="material-icons left">keyboard_arrow_left</i>
-                </button>
+                </a>
                 <button title="filtro"
                         class="margin-bottom btn-floating left color-white hover-shadow btn-table-filter"
                         rel="{{identificador}}">
