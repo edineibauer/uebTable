@@ -60,7 +60,7 @@
                         </select>
                     </div>
 
-                    <div class="rest">
+                    <div class="rest" style="margin-top: 2px">
                         <input type="text" class="table-campo-geral theme-text-aux" autocomplete="off"
                                data-id="{{identificador}}"
                                placeholder="busca..."/>
