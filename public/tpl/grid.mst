@@ -1,6 +1,6 @@
-<div class="responsive tableList col padding-8 s-padding-0" id="tableList-{{entity}}" data-entity="{{entity}}"
+<div class="responsive tableList col padding-24 s-padding-0" id="tableList-{{entity}}" data-entity="{{entity}}"
      data-id="{{identificador}}">
-    <div class="col z-depth-2 grid-form-body">
+    <div class="col z-depth-2 grid-form-body radius border overflow-hidden">
         <div class="col theme-d1 loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
                 <a href="#back" class="margin-bottom left color-white hover-shadow btn-floating">
