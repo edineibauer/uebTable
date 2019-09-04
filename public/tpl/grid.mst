@@ -25,7 +25,7 @@
                     </button>
                 {{/novo}}
 
-                <small class="margin-bottom total right color-text-gray-dark" style="height:40px; padding:12px 5px 6px 10px">{{total}}</small>
+                <small class="margin-bottom total right" style="height:40px; padding:12px 10px 6px 10px">{{total}}</small>
 
                 <div class="left no-padding">
                     <h4 class="left" style="padding: 5px 0 0 7px;">
