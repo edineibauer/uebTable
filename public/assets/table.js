@@ -181,7 +181,7 @@ $(function () {
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         pageTransition(grids[$(this).attr("rel")].entity, 'form', 'forward', "#dashboard");
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
-        pageTransition(grids[$(this).attr("rel")].entity, 'form', 'forward', "#dashboard", $(this).attr("data-id"));
+        pageTransition(grids[$(this).attr("rel")].entity, 'form', 'forward', "#dashboard", {id: $(this).attr("data-id")})
     }).off("change", ".autor-switch-form").on("change", ".autor-switch-form", function () {
         let $this = $(this);
         let valor = $this.val();
