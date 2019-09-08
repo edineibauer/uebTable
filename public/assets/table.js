@@ -18,47 +18,104 @@ function changeAutor(entity, autor, id, valor) {
     })
 }
 
+function getDataRelation(entity, dados, pretty) {
+    return Promise.all([]).then(() => {
+        if (dados !== null && dados !== "") {
+            let dadosRelation = [];
+            if (typeof dados === "object" && dados.constructor === Object) {
+                delete dados.id;
+                delete dados.columnStatus;
+                delete dados.columnName;
+                delete dados.columnRelation;
+                delete dados.formIdentificador;
+                delete dados.columnTituloExtend;
+                dadosRelation.push(dados);
+            } else {
+                $.each(dados, function (i, e) {
+                    delete e.id;
+                    delete e.columnStatus;
+                    delete e.columnName;
+                    delete e.columnRelation;
+                    delete e.formIdentificador;
+                    delete e.columnTituloExtend;
+                    dadosRelation.push(e);
+                })
+            }
 
-function getDataExtended(entity, dados) {
+            return getDataExtended(entity, dadosRelation, pretty);
+        }
+    });
+}
+
+function getDataExtended(entity, dados, pretty) {
+    pretty = typeof pretty !== "undefined" && [!0, "true", "1", 1].indexOf(pretty) > -1;
     let data = [];
     let promessas = [];
     $.each(dados, function (i, e) {
-        if(typeof e === "object" && e !== null) {
-            if(typeof e.db_action !== "undefined")
-                delete e.db_action;
-            if(typeof e.db_status !== "undefined")
-                delete e.db_status;
+        if (typeof e === "object" && e !== null) {
+            delete e.db_action;
+            delete e.db_status;
 
             data.push(e);
-
-            /**
-             * Verifica relacionamento de dados
-             * */
             $.each(e, function (j, d) {
-                if (typeof dicionarios[entity][j] === "object" && dicionarios[entity][j] !== null && dicionarios[entity][j].key === 'relation' && d !== null) {
-                    if (!isNaN(d)) {
-                        promessas.push(db.exeRead(dicionarios[entity][j].relation, parseInt(d)).then(dadosRelation => {
-                            let dadosRelations = [];
-                            dadosRelations.push(dadosRelation);
-                            return getDataExtended(dicionarios[entity][j].relation, dadosRelations).then(ret => {
-                                e[j] = ret[0];
-                            });
-                        }));
-                    } else if (d.constructor === Object) {
-                        let dadosRelations = [];
-                        dadosRelations.push(d);
-                        promessas.push(getDataExtended(dicionarios[entity][j].relation, dadosRelations).then(ret => {
-                            e[j] = ret[0];
-                        }));
+                //existe este campo
+                if (!isEmpty(dicionarios[entity][j])) {
+                    //relação
+                    if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].format === "list") {
+                        //relação de associação
+                        delete e[j];
+                        if (d !== null && !isNaN(d)) {
+                            promessas.push(db.exeRead(dicionarios[entity][j].relation, parseInt(d)).then(dadosRelation => {
+                                let dadosRelations = [];
+                                dadosRelations.push(dadosRelation);
+                                return getDataExtended(dicionarios[entity][j].relation, dadosRelations, pretty).then(ret => {
+                                    if (pretty) {
+                                        return getDataRelation(dicionarios[entity][j].relation, ret[0], pretty).then(result => {
+                                            $.each(result, function (aa, bb) {
+                                                $.each(bb, function (bbb, ccc) {
+                                                    e[j + " " + bbb] = ccc;
+                                                })
+                                            });
+                                        });
+                                    } else {
+                                        e[j] = ret[0];
+                                    }
+                                })
+                            }))
+                        }
+
+                    } else if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].type === "json") {
+                        //relação de importação do registro Json format
+                        delete e[j];
+                        if(d !== null && typeof d === "object" && !isEmpty(d)) {
+                            if (pretty) {
+                                promessas.push(getDataRelation(dicionarios[entity][j].relation, d, pretty).then(result => {
+                                    let moreThanOne = result.length > 1;
+                                    $.each(result, function (aa, bb) {
+                                        $.each(bb, function (bbb, ccc) {
+                                            if (moreThanOne)
+                                                e[j + " " + zeroEsquerda(aa + 1) + " " + bbb] = ccc;
+                                            else
+                                                e[j + " " + bbb] = ccc;
+                                        })
+                                    });
+                                }));
+                            } else {
+                                let dadosRelations = [];
+                                dadosRelations.push(d);
+                                promessas.push(getDataExtended(dicionarios[entity][j].relation, dadosRelations, pretty).then(ret => {
+                                    e[j] = ret[0]
+                                }))
+                            }
+                        }
                     }
                 }
-            });
+            })
         }
     });
-
     return Promise.all(promessas).then(() => {
-        return data;
-    });
+        return data
+    })
 }
 
 $(function () {
