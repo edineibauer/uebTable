@@ -420,11 +420,29 @@ $(function () {
         let offset = (grid.page * grid.limit) - grid.limit;
 
         toast("Preparando Download...", 1500);
+        let ids = [];
+        if (grid.$content.find(".table-select:checked").length) {
+            $.each(grid.$content.find(".table-select:checked"), function (i, e) {
+                $(e).prop("checked", !1);
+                ids.push(parseInt($(e).attr("rel")));
+            })
+        }
+
         exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
             if (result.total > 0) {
+                let results = [];
+                if(ids.length) {
+                    $.each(result.data, function (i, e) {
+                        if (ids.indexOf(e.id) > -1)
+                            results.push(e);
+                    });
+                } else {
+                    results = result.data;
+                }
+
                 toast("Processando dados para exportar", 5000);
 
-                getDataExtended(grid.entity, result.data).then(dd => {
+                getDataExtended(grid.entity, results).then(dd => {
                     toast(result.total + " registros exportados", 3000, "toast-success");
                     let d = new Date();
                     download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() + ".csv", CSV(dd))
