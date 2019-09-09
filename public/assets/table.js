@@ -301,40 +301,42 @@ $(function () {
             clearTimeout(tempoDigitacao);
         tempoDigitacao = setTimeout(function () {
             let grid = grids[$this.attr("data-id")];
-            let valor = $this.val();
-            grid.page = 1;
-            let achou = !1;
-            $.each(grid.filter, function (i, e) {
-                if (e.operator === "por") {
-                    if (valor === "") {
-                        deleteBadge(e.id);
-                        grid.filter.splice(i, 1);
-                        grid.readData()
-                    } else if (e.value !== valor) {
-                        e.value = valor;
-                        $("#" + e.id).find(".value").html(valor);
-                        grid.readData()
+            if(typeof grid !== "undefined") {
+                let valor = $this.val();
+                grid.page = 1;
+                let achou = !1;
+                $.each(grid.filter, function (i, e) {
+                    if (e.operator === "por") {
+                        if (valor === "") {
+                            deleteBadge(e.id);
+                            grid.filter.splice(i, 1);
+                            grid.readData()
+                        } else if (e.value !== valor) {
+                            e.value = valor;
+                            $("#" + e.id).find(".value").html(valor);
+                            grid.readData()
+                        }
+                        achou = !0;
+                        return !1
                     }
-                    achou = !0;
-                    return !1
+                });
+                if (!achou && valor !== "") {
+                    let filter = {
+                        column: 'busca',
+                        operator: "por",
+                        value: valor,
+                        identificador: grid.identificador,
+                        id: Date.now()
+                    };
+                    grid.filter.push(filter);
+                    dbLocal.exeRead('__template', 1).then(templates => {
+                        return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter))
+                    }).then(d => {
+                        grid.readData()
+                    })
                 }
-            });
-            if (!achou && valor !== "") {
-                let filter = {
-                    column: 'busca',
-                    operator: "por",
-                    value: valor,
-                    identificador: grid.identificador,
-                    id: Date.now()
-                };
-                grid.filter.push(filter);
-                dbLocal.exeRead('__template', 1).then(templates => {
-                    return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter))
-                }).then(d => {
-                    grid.readData()
-                })
             }
-        }, 350)
+        }, 350);
     }).off("click", ".btn-badge-remove").on("click", ".btn-badge-remove", function () {
         let grid = grids[$(this).attr("rel")];
         let id = $(this).attr("data-badge");
