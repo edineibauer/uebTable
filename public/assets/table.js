@@ -418,8 +418,10 @@ $(function () {
         let input = $(this);
         let grid = grids[input.attr("rel")];
         let offset = (grid.page * grid.limit) - grid.limit;
+        let pretty = confirm("Baixar modelo visual?");
 
         toast("Preparando Download...", 1500);
+
         let ids = [];
         if (grid.$content.find(".table-select:checked").length) {
             $.each(grid.$content.find(".table-select:checked"), function (i, e) {
@@ -442,7 +444,7 @@ $(function () {
 
                 toast("Processando dados para exportar", 5000);
 
-                getDataExtended(grid.entity, results).then(dd => {
+                getDataExtended(grid.entity, results, pretty).then(dd => {
                     toast(result.total + " registros exportados", 3000, "toast-success");
                     let d = new Date();
                     download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() + ".csv", CSV(dd))
