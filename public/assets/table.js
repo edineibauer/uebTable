@@ -461,6 +461,7 @@ $(function () {
 
         readFile(input.prop('files')[0]).then(d => {
             let upload = [];
+            let erros = [];
             d = d.split('\n');
             if(d.length > 1) {
                 let base = [];
@@ -479,12 +480,18 @@ $(function () {
                         upload.push(validateDicionario(dicionarios[grid.entity], form, "create").then(d => {
                             if(haveError(form.error))
                                 return db.exeCreate(grid.entity, form.data);
+                            else
+                                erros.push(form.error);
                         }));
                     }
                 });
             }
             Promise.all(upload).then(() => {
                 grid.reload();
+                if(erros.length) {
+                    toast(erros.length + " registros não importados devido a erros.", 3500, "toast-warning");
+                    console.log(erros);
+                }
             });
         });
 
