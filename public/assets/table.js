@@ -457,7 +457,7 @@ $(function () {
         let input = $(this);
         let grid = grids[input.attr("rel")];
 
-        readSingleFile(input.prop('files')[0]).then(d => {
+        readFile(input.prop('files')[0]).then(d => {
             let upload = [];
             d = d.split('\n');
             if(d.length > 1) {
