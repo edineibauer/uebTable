@@ -456,6 +456,40 @@ $(function () {
         toast("Enviando Arquivo...", 2500);
         let input = $(this);
         let grid = grids[input.attr("rel")];
+
+        readSingleFile(input.prop('files')[0]).then(d => {
+            let upload = [];
+            d = d.split('\n');
+            if(d.length > 1) {
+                let base = [];
+                $.each(d, function (i, row) {
+                    let registro = {};
+                    $.each(row.split(";"), function (ii, col) {
+                        if(i === 0) {
+                            base.pushTo(col, ii);
+                        } else {
+                            registro[base[ii]] = col;
+                        }
+                    });
+                    if(!isEmpty(registro)) {
+                        let form = formCrud(grid.entity);
+                        form.setData(registro);
+                        upload.push(validateDicionario(dicionarios[grid.entity], form, "create").then(d => {
+                            if(haveError(form.error))
+                                return db.exeCreate(grid.entity, form.data);
+                        }));
+                    }
+                });
+            }
+            Promise.all(upload).then(() => {
+                grid.reload();
+            });
+        });
+
+        /*
+
+        Old model, upload import direct on server. (new make upload local with sync)
+
         let form_data = new FormData();
         form_data.append('anexo', input.prop('files')[0]);
         form_data.append('lib', 'table');
@@ -487,7 +521,7 @@ $(function () {
             error: function () {
                 toast("Conexão Perdida");
             }
-        })
+        })*/
     })
 });
 (function ($, window, document) {
