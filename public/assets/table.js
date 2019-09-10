@@ -447,7 +447,7 @@ $(function () {
                 toast("Processando dados para exportar", 5000);
 
                 getDataExtended(grid.entity, results, pretty).then(dd => {
-                    toast(result.total + " registros exportados", 3000, "toast-success");
+                    toast(results.length + " registros exportados", 3000, "toast-success");
                     let d = new Date();
                     download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() + ".csv", CSV(dd))
                 })
