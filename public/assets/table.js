@@ -480,7 +480,7 @@ $(function () {
                         let form = formCrud(grid.entity);
                         form.setData(registro);
                         upload.push(validateDicionario(dicionarios[grid.entity], form, "create").then(d => {
-                            if(haveError(form.error))
+                            if(formNotHaveError(form.error))
                                 return db.exeCreate(grid.entity, form.data);
                             else
                                 erros.push(form.error);
