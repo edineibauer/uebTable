@@ -127,7 +127,7 @@
                     </div>
                     <div class="rest table-filter-list padding-medium color-text-gray">
                         <div class="font-light font-large left padding-small theme-text-aux">Filtros</div>
-                        <button class="btn-small left radius padding-4 color-white hover-shadow btn-new-filter"
+                        <button class="btn-small left radius padding-4 color-white hover-shadow opacity hover-opacity-off btn-new-filter" style="height: 35px"
                                 rel="{{identificador}}">
                             <i class="material-icons left">add</i>
                         </button>
