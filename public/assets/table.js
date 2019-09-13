@@ -118,6 +118,40 @@ function getDataExtended(entity, dados, pretty) {
     })
 }
 
+function downloadData(grid, pretty) {
+    let offset = (grid.page * grid.limit) - grid.limit;
+
+    toast("Preparando Download...", 1500);
+    let ids = [];
+    if (grid.$content.find(".table-select:checked").length) {
+        $.each(grid.$content.find(".table-select:checked"), function (i, e) {
+            $(e).prop("checked", !1);
+            ids.push(parseInt($(e).attr("rel")))
+        })
+    }
+    exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
+        if (result.total > 0) {
+            let results = [];
+            if (ids.length) {
+                $.each(result.data, function (i, e) {
+                    if (ids.indexOf(e.id) > -1)
+                        results.push(e)
+                })
+            } else {
+                results = result.data
+            }
+            toast("Processando dados para exportar", 5000);
+            getDataExtended(grid.entity, results, pretty).then(dd => {
+                toast(results.length + " registros exportados", 3000, "toast-success");
+                let d = new Date();
+                download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() + ".csv", CSV(dd))
+            })
+        } else {
+            toast("Nenhum registro selecionado", 2000, "toast-warning")
+        }
+    });
+}
+
 $(function () {
     $("#core-content").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
         let grid = grids[$(this).attr("rel")];
@@ -417,44 +451,12 @@ $(function () {
         }
 
     }).off("click", "#export-file-crud").on("click", "#export-file-crud", function () {
-        let input = $(this);
-        let grid = grids[input.attr("rel")];
-        let offset = (grid.page * grid.limit) - grid.limit;
-        let pretty = confirm("Baixar modelo visual?");
+        let grid = grids[$(this).attr("rel")];
+        downloadData(grid, !1);
 
-        toast("Preparando Download...", 1500);
-
-        let ids = [];
-        if (grid.$content.find(".table-select:checked").length) {
-            $.each(grid.$content.find(".table-select:checked"), function (i, e) {
-                $(e).prop("checked", !1);
-                ids.push(parseInt($(e).attr("rel")));
-            })
-        }
-
-        exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
-            if (result.total > 0) {
-                let results = [];
-                if(ids.length) {
-                    $.each(result.data, function (i, e) {
-                        if (ids.indexOf(e.id) > -1)
-                            results.push(e);
-                    });
-                } else {
-                    results = result.data;
-                }
-
-                toast("Processando dados para exportar", 5000);
-
-                getDataExtended(grid.entity, results, pretty).then(dd => {
-                    toast(results.length + " registros exportados", 3000, "toast-success");
-                    let d = new Date();
-                    download(grid.entity + "-" + zeroEsquerda(d.getDate()) + "-" + zeroEsquerda(d.getMonth() + 1) + "-" + d.getFullYear() + ".csv", CSV(dd))
-                })
-            } else {
-                toast("Nenhum registro selecionado", 2000, "toast-warning")
-            }
-        });
+    }).off("click", "#download-file-crud").on("click", "#download-file-crud", function () {
+        let grid = grids[$(this).attr("rel")];
+        downloadData(grid, !0);
 
     }).off("change", "#import-file-crud").on("change", "#import-file-crud", function() {
         toast("Enviando Arquivo...", 2500);
