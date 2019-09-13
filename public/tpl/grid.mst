@@ -71,7 +71,7 @@
 
         <div class="col theme-l1 padding-4">
             <div class="col table-filter transition-easy" style="display: flow-root">
-                <div class="col padding-medium margin-bottom hide s-show">
+                <div class="col padding-medium margin-bottom s-padding-4 s-padding-top s-margin-0 hide s-show">
                     <div class="col right padding-right sub-header-table">
                         <div class="col sub-header-table-limit">
                             <select class="col tableLimit font-small theme-text-aux theme-l1"
