@@ -459,82 +459,46 @@ $(function () {
         downloadData(grid, !0);
 
     }).off("change", "#import-file-crud").on("change", "#import-file-crud", function() {
-        toast("Enviando Arquivo...", 2500);
+        toast("Enviando Arquivo...", 60000);
         let input = $(this);
         let grid = grids[input.attr("rel")];
-
         readFile(input.prop('files')[0]).then(d => {
             let upload = [];
             let erros = [];
             d = d.split('\n');
-            if(d.length > 1) {
+            if (d.length > 1) {
                 let base = [];
                 $.each(d, function (i, row) {
-                    let registro = {};
-                    $.each(row.split(";"), function (ii, col) {
-                        if(i === 0) {
-                            base.pushTo(col, ii);
-                        } else {
-                            registro[base[ii]] = col;
+                    if (!isEmpty(row)) {
+                        let registro = {};
+                        $.each(row.split(";"), function (ii, col) {
+                            if (i === 0) {
+                                base.pushTo(col.replace(/<:::>/g, ";"), ii)
+                            } else {
+                                registro[base[ii]] = col.replace(/<:::>/g, ";");
+                            }
+                        });
+                        if (!isEmpty(registro)) {
+                            let form = formCrud(grid.entity);
+                            form.setData(registro);
+                            upload.push(validateDicionario(dicionarios[grid.entity], form, "create").then(d => {
+                                if (formNotHaveError(form.error))
+                                    return db.exeCreate(grid.entity, form.data); else erros.push(form.error)
+                            }))
                         }
-                    });
-                    if(!isEmpty(registro)) {
-                        let form = formCrud(grid.entity);
-                        form.setData(registro);
-                        upload.push(validateDicionario(dicionarios[grid.entity], form, "create").then(d => {
-                            if(formNotHaveError(form.error))
-                                return db.exeCreate(grid.entity, form.data);
-                            else
-                                erros.push(form.error);
-                        }));
                     }
-                });
+                })
             }
             Promise.all(upload).then(() => {
                 grid.reload();
-                if(erros.length) {
+                if (erros.length) {
                     toast(erros.length + " registros não importados devido a erros.", 3500, "toast-warning");
-                    console.log(erros);
-                }
-            });
-        });
-
-        /*
-
-        Old model, upload import direct on server. (new make upload local with sync)
-
-        let form_data = new FormData();
-        form_data.append('anexo', input.prop('files')[0]);
-        form_data.append('lib', 'table');
-        form_data.append('file', 'import-file');
-        form_data.append('entity', grid.entity);
-        let t = setTimeout(function () {
-            toast("Salvando dados no banco...", 3500)
-        }, 2500);
-        $.ajax({
-            url: HOME + 'set',
-            dataType: 'json',
-            cache: !1,
-            contentType: !1,
-            processData: !1,
-            data: form_data,
-            type: 'post',
-            success: function (data) {
-                $('#import-file-crud').val("");
-                clearTimeout(t);
-                if (data.response === 1) {
-                    toast(data.data + " registros Importados!", 3500, "toast-success");
-                    updateCacheUser().then(() => {
-                        grid.reload();
-                    });
+                    console.log(erros)
                 } else {
-                    toast(data.error, 2500)
+                    toast(upload.length + " registros importados com sucesso", 3500, "toast-success");
                 }
-            },
-            error: function () {
-                toast("Conexão Perdida");
-            }
-        })*/
+            })
+        });
     })
 });
 (function ($, window, document) {
