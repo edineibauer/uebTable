@@ -60,8 +60,9 @@ function getDataExtended(entity, dados, pretty) {
             $.each(e, function (j, d) {
                 //existe este campo
                 if (!isEmpty(dicionarios[entity][j])) {
-                    //relação
-                    if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].format === "list") {
+
+                    //relação associação
+                    /*if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].format === "list") {
                         //relação de associação
                         delete e[j];
                         if (d !== null && !isNaN(d)) {
@@ -84,7 +85,10 @@ function getDataExtended(entity, dados, pretty) {
                             }))
                         }
 
-                    } else if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].type === "json") {
+                    } else if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].type === "json") {*/
+
+                    //relação importação
+                    if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].type === "json") {
                         //relação de importação do registro Json format
                         delete e[j];
                         if(d !== null && typeof d === "object" && !isEmpty(d)) {
