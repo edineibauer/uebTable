@@ -492,10 +492,10 @@ $(function () {
             Promise.all(upload).then(() => {
                 grid.reload();
                 if (erros.length) {
-                    toast(erros.length + " registros não importados devido a erros.", 3500, "toast-warning");
+                    toast(erros.length + " registro" + (erros.length > 1 ? "s" : "") + " não importado devido a erros.", 3500, "toast-warning");
                     console.log(erros)
                 } else {
-                    toast(upload.length + " registros importados com sucesso", 3500, "toast-success");
+                    toast(upload.length + " registro" + (upload.length > 1 ? "s" : "") + " importado com sucesso", 3500, "toast-success");
                 }
             })
         });
