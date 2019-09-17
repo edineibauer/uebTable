@@ -111,7 +111,7 @@ function getDataExtended(entity, dados, pretty) {
                     } else if(pretty && dicionarios[entity][j].key === 'source') {
                         e[j] = "";
                         $.each(d, function(i, source) {
-                            e[j] += (e[j] !== "" ? ", ": "") + HOME + "imageoutput/bmp/" + source.url;
+                            e[j] += (e[j] !== "" ? ", ": "") + HOME + "imageoutput/bmp/" + source.url.replace(HOME, '');
                         })
                     }
                 }
