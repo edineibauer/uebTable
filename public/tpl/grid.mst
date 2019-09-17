@@ -12,7 +12,7 @@
                     <i class="material-icons left">list</i>
                 </button>
                 {{#sync}}
-                    <button title="{{sync}} registros para enviar" onclick="syncDataBtn('{{entity}}')"
+                    <button title="enviar todos ({{sync}})" onclick="syncDataBtn('{{entity}}')"
                             class="margin-bottom left btn-floating color-white color-hover-text-blue hover-shadow">
                         <i class="material-icons">update</i>
                     </button>
