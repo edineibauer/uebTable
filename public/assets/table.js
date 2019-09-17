@@ -73,7 +73,7 @@ function getDataExtended(entity, dados, pretty) {
                                         return getDataRelation(dicionarios[entity][j].relation, ret[0], pretty).then(result => {
                                             $.each(result, function (aa, bb) {
                                                 $.each(bb, function (bbb, ccc) {
-                                                    e[j + " " + bbb] = ccc;
+                                                    e[j + " 01 " + bbb] = ccc;
                                                 })
                                             });
                                         });
@@ -90,13 +90,9 @@ function getDataExtended(entity, dados, pretty) {
                         if(d !== null && typeof d === "object" && !isEmpty(d)) {
                             if (pretty) {
                                 promessas.push(getDataRelation(dicionarios[entity][j].relation, d, pretty).then(result => {
-                                    let moreThanOne = result.length > 1;
                                     $.each(result, function (aa, bb) {
                                         $.each(bb, function (bbb, ccc) {
-                                            if (moreThanOne)
-                                                e[j + " " + zeroEsquerda(aa + 1) + " " + bbb] = ccc;
-                                            else
-                                                e[j + " " + bbb] = ccc;
+                                            e[j + " " + zeroEsquerda(aa + 1) + " " + bbb] = ccc;
                                         })
                                     });
                                 }));
