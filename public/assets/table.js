@@ -300,9 +300,7 @@ $(function () {
             $.each(dicionarios[grid.entity], function (column, meta) {
                 if (meta.id === info[grid.entity].status) {
                     $this.attr("data-status", valor);
-                    let sys = AUTOSYNC;
                     let proccessPromisses = [];
-                    AUTOSYNC = !1;
                     dbLocal.exeRead(grid.entity, parseInt($this.attr("data-id"))).then(data => {
                         data[column] = valor ? 1 : 0;
                         proccessPromisses.push(db.exeCreate(grid.entity, data));
@@ -321,12 +319,9 @@ $(function () {
 
                     return Promise.all(proccessPromisses).then(() => {
                         grid.$element.find(".table-select, .table-select-all").prop("checked", !1);
-                        AUTOSYNC = sys;
                         setTimeout(function () {
-                            if (AUTOSYNC)
-                                dbRemote.syncPost(grid.entity);
+                            dbRemote.syncPost(grid.entity);
                         },300);
-
                         return !1
                     })
 
