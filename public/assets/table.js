@@ -110,8 +110,23 @@ function getDataExtended(entity, dados, pretty) {
                         }
                     } else if(pretty && dicionarios[entity][j].key === 'source') {
                         e[j] = "";
-                        $.each(d, function(i, source) {
-                            e[j] += (e[j] !== "" ? ", ": "") + HOME + "imageoutput/bmp/" + source.url.replace(HOME, '');
+
+                        //obtém column title to set in image name
+                        let title = null;
+                        $.each(dicionarios['teste'], function (iii, h) {
+                            if(h.format === "title") {
+                                title = h.column;
+                                return;
+                            }
+                        })
+                        $.each(d, function (ii, source) {
+                            if(title) {
+                                let a = source.url.split("/");
+                                a = a[a.length - 1].split(".");
+                                let titulo = slug(e[title]) + (d.length > 1 ? "-" + ii : "");
+                                source.url = source.url.replace(a[0], titulo);
+                            }
+                            e[j] += (e[j] !== "" ? ", " : "") + HOME + "imageoutput/bmp/" + source.url.replace(HOME, '')
                         })
                     }
                 }
