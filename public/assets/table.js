@@ -118,14 +118,10 @@ function getDataExtended(entity, dados, pretty) {
                                 title = h.column;
                                 return;
                             }
-                        })
+                        });
                         $.each(d, function (ii, source) {
-                            if(title) {
-                                let a = source.url.split("/");
-                                a = a[a.length - 1].split(".");
-                                let titulo = slug(e[title]) + (d.length > 1 ? "-" + ii : "");
-                                source.url = source.url.replace(a[0], titulo);
-                            }
+                            if(title)
+                                source.url += "?title=" + slug(e[title]) + (d.length > 1 ? "-" + ii : "");
                             e[j] += (e[j] !== "" ? ", " : "") + HOME + "imageoutput/bmp/" + source.url.replace(HOME, '')
                         })
                     }
