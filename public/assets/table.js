@@ -113,7 +113,7 @@ function getDataExtended(entity, dados, pretty) {
 
                         //obtém column title to set in image name
                         let title = null;
-                        $.each(dicionarios['teste'], function (iii, h) {
+                        $.each(dicionarios[entity], function (iii, h) {
                             if(h.format === "title") {
                                 title = h.column;
                                 return;
