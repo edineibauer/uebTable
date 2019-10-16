@@ -119,6 +119,8 @@ function getDataExtended(entity, dados, pretty) {
                                 return;
                             }
                         });
+                        if(typeof d === "string" && isJson(d))
+                            d = JSON.parse(d);
                         $.each(d, function (ii, source) {
                             if(title)
                                 source.url += "&title=" + slug(e[title]) + (d.length > 1 ? "-" + ii : "");
@@ -150,7 +152,7 @@ function downloadData(grid, pretty) {
             let results = [];
             if (ids.length) {
                 $.each(result.data, function (i, e) {
-                    if (ids.indexOf(e.id) > -1)
+                    if (ids.indexOf(parseInt(e.id)) > -1)
                         results.push(e)
                 })
             } else {
