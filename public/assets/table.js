@@ -486,7 +486,7 @@ $(function () {
                         let registro = {};
                         $.each(row.split(";"), function (ii, col) {
                             if (i === 0) {
-                                base.pushTo(col.replace(/<:::>/g, ";"), ii)
+                                pushToArrayIndex(base, col.replace(/<:::>/g, ";"), ii);
                             } else {
                                 registro[base[ii]] = col.replace(/<:::>/g, ";");
                             }
