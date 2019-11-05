@@ -72,7 +72,7 @@
             {{#online}}
                 <button rel="{{id}}" data-id="{{identificador}}" title="enviar este registro"
                         class="btn-grid-sync right btn-floating color-white color-hover-text-blue hover-shadow opacity hover-opacity-off">
-                    <i class="material-icons">update</i>
+                    <i class="material-icons">backup</i>
                 </button>
             {{/online}}
         {{/db_status}}
