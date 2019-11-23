@@ -8,7 +8,7 @@ if(typeof loadListagem === "undefined") {
 
         for(var i in dicionarios) {
             if(i === entityListagem) {
-                $("#listagem").html("").grid(entityListagem);
+                $("#dashboard").html("").grid(entityListagem);
                 return false;
             }
         }

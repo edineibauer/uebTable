@@ -171,7 +171,7 @@ function downloadData(grid, pretty) {
 }
 
 $(function () {
-    $("#core-content").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
+    $("#app").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
         let grid = grids[$(this).attr("rel")];
         let $filter = grid.$element.find(".table-filter");
         if ($filter.css("height") === "0px") {
