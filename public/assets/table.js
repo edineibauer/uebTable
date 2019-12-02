@@ -91,6 +91,10 @@ function getDataExtended(entity, dados, pretty) {
                     if (dicionarios[entity][j].key === 'relation' && dicionarios[entity][j].type === "json") {
                         //relação de importação do registro Json format
                         delete e[j];
+
+                        if(typeof d === "string" && isJson(d))
+                            d = JSON.parse(d);
+
                         if(d !== null && typeof d === "object" && !isEmpty(d)) {
                             if (pretty) {
                                 promessas.push(getDataRelation(dicionarios[entity][j].relation, d, pretty).then(result => {
