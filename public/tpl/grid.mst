@@ -110,18 +110,18 @@
 
                 <div class="col">
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
-                        <label for="import-file-crud" title="Recuperar backup dos registros" class="right btn-floating hover-shadow opacity hover-opacity-off theme-aux">
+                        <label for="import-file-crud" title="Recuperar backup dos registros" class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">cloud_upload</i>
                         </label>
                         <input type="file" id="import-file-crud" rel="{{identificador}}" accept=".xlsx, .xls, .csv" class="hide"/>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
-                        <label id="export-file-crud" rel="{{identificador}}" title="Backup dos registros" class="right btn-floating hover-shadow opacity hover-opacity-off theme-aux">
+                        <label id="export-file-crud" rel="{{identificador}}" title="Backup dos registros" class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">cloud_download</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
-                        <label id="download-file-crud" rel="{{identificador}}" title="Download dos registros Csv" style="margin: 3px 15px 4px 0;" class="right btn radius hover-shadow opacity hover-opacity-off theme-aux">
+                        <label id="download-file-crud" rel="{{identificador}}" title="Download dos registros Csv" style="margin: 3px 15px 4px 0;" class="right btn radius hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">get_app</i>
                         </label>
                     </div>
