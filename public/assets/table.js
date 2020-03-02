@@ -175,8 +175,7 @@ function downloadData(grid, pretty) {
 }
 
 function readGraficosTable(id) {
-    return get("readEntityGraficos/" + grids[id].entity).then(graficos => {
-        graficos = graficos.reverse();
+    return getGraficos().then(graficos => {
         $("#list-graficos").htmlTemplate('graficos-list', {graficos: graficos, identificador: id});
     });
 }
