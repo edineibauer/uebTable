@@ -120,9 +120,14 @@
                             <i class="material-icons left theme-text-d">cloud_download</i>
                         </label>
                     </div>
-                    <div class="col right padding-4 hide adminShow" style="width: 50px">
+                    <div class="col right padding-4 hide adminShow" style="width: 70px">
                         <label id="download-file-crud" rel="{{identificador}}" title="Download dos registros Csv" style="margin: 3px 15px 4px 0;" class="right btn radius hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">get_app</i>
+                        </label>
+                    </div>
+                    <div class="col right padding-4 hide adminShow" style="width: 70px">
+                        <label id="gerar-grafico" rel="{{identificador}}" title="Gerar gráfico na dashboard" style="margin: 3px 15px 4px 0;" class="right btn radius hover-shadow opacity hover-opacity-off color-white">
+                            <i class="material-icons left theme-text-d">assessment</i>
                         </label>
                     </div>
                     <div class="rest table-filter-list padding-medium color-text-gray">
@@ -133,11 +138,11 @@
                         </button>
                     </div>
                 </div>
-                <div class="modal-filter modal-filter-opacity btn-close-modal hide color-black opacity"
+                <div class="modal-filter modal-grafico modal-filter-opacity btn-close-modal hide color-black opacity"
                      rel="{{identificador}}"></div>
                 <div class="modal-filter modal-filter-content hide">
                     <div class="panel">
-                        <div class="display-container radius animate-zoom card-4">
+                        <div class="display-container radius animate-top card-4">
                             <header class="container theme">
                         <span class="theme-d3 padding-large opacity hover-opacity-off button margin-0 display-topright btn-close-modal"
                               rel="{{identificador}}">
@@ -178,6 +183,67 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal-grafico modal-filter-content hide">
+                    <div class="panel">
+                        <div class="display-container radius animate-top card-4">
+                            <header class="container theme">
+                        <span class="theme-d3 padding-large opacity hover-opacity-off button margin-0 display-topright btn-close-modal"
+                              rel="{{identificador}}">
+                            &times;
+                        </span>
+                                <h4 class="padding-8">Gráficos na Dashboard</h4>
+                            </header>
+                            <div class="panel padding-24">
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Coluna Y</div>
+                                    <select class="col table-grafico-columns-y"></select>
+                                </label>
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Coluna X</div>
+                                    <select class="col table-grafico-columns-x"></select>
+                                </label>
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Tipo do gráfico</div>
+                                    <select class="col table-grafico-columns-type">
+                                        <option value='line'>Linha</option>
+                                        <option value='area'>Linha Suave com preenchimento</option>
+                                        <option value='column' selected='selected'>Colunas</option>
+                                        <option value='bar'>Colunas Horizontais</option>
+                                        <option value='timeline'>Linha do Tempo</option>
+                                        <option value='scatter'>Mapa de Pontos</option>
+                                        <option value='bubble'>Bolhas</option>
+                                        <option value='heatmap'>Mapa de Calor</option>
+                                        <option value='pie'>Pizza</option>
+                                        <option value='radialbar'>Barra Redonda</option>
+                                        <option value='radar'>Radar</option>
+                                    </select>
+                                </label>
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Operação</div>
+                                    <select class="col table-grafico-columns-operacao">
+                                        <option value='soma' selected='selected'>Soma</option>
+                                        <option value='media'>Média</option>
+                                        <option value='marioria'>Maioria</option>
+                                        <option value='registros'>Registros</option>
+                                    </select>
+                                </label>
+                                <div class="col s12 m4 table-grafico-btn">
+                                    <button title="aplicar filtro"
+                                            class="btb left radius color-white hover-shadow opacity hover-opacity-off btn-table-grafico-apply"
+                                            rel="{{identificador}}">
+                                        <i class="material-icons left">add</i>
+                                        <span class="left padding-left">Adicionar</span>
+                                    </button>
+                                </div>
+                                <div class="col padding-12"></div>
+                            </div>
+
+                            <table class="table-all color-text-gray-dark" id="list-graficos"></table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 

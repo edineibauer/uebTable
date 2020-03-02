@@ -174,6 +174,13 @@ function downloadData(grid, pretty) {
     });
 }
 
+function readGraficosTable(id) {
+    return get("readEntityGraficos/" + grids[id].entity).then(graficos => {
+        graficos = graficos.reverse();
+        $("#list-graficos").htmlTemplate('graficos-list', {graficos: graficos, identificador: id});
+    });
+}
+
 $(function () {
     $("#app").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
         let grid = grids[$(this).attr("rel")];
@@ -197,16 +204,19 @@ $(function () {
         $.each(dicionarios[grid.entity], function (col, meta) {
             $filter.find(".table-filter-columns").append("<option value='" + col + "' >" + meta.nome + "</option>")
         })
+
     }).off("click", ".table-reload").on("click", ".table-reload", function () {
         let grid = grids[$(this).attr("rel")];
         grid.readData()
+
     }).off("change", ".table-filter-columns").on("change", ".table-filter-columns", function () {
-        if ($(this).val() !== "") {
+        if ($(this).val() !== "")
             $(this).siblings(".table-filter-operator").removeClass("hide")
-        }
+
     }).off("change", ".table-filter-operator").on("change", ".table-filter-operator", function () {
         if ($(this).val() !== "")
             $(this).siblings(".table-filter-value").removeClass("hide").focus()
+
     }).off("change keyup", ".table-filter-value").on("change keyup", ".table-filter-value", function (e) {
         if ($(this).val() !== "") {
             if (e.which === 13)
@@ -214,12 +224,60 @@ $(function () {
         } else {
             $(this).siblings(".table-filter-btn").addClass("hide")
         }
+
     }).off("click", ".btn-new-filter").on("click", ".btn-new-filter", function () {
         let grid = grids[$(this).attr("rel")];
         grid.$element.find(".modal-filter").removeClass("hide")
+
     }).off("click", ".btn-close-modal").on("click", ".btn-close-modal", function () {
         let grid = grids[$(this).attr("rel")];
-        grid.$element.find(".modal-filter").addClass("hide")
+        grid.$element.find(".modal-filter, .modal-grafico").addClass("hide")
+
+    }).off("click", "#gerar-grafico").on("click", "#gerar-grafico", function () {
+        let id = $(this).attr("rel");
+        let grid = grids[id];
+        grid.$element.find(".modal-grafico").removeClass("hide");
+
+        let contentY = "";
+        let contentX = "";
+        for(let column in dicionarios[grid.entity]) {
+            let meta = dicionarios[grid.entity][column];
+            if(meta.key !== "publisher" && meta.key !== "information" && meta.key !== "identifier" && meta.key !== "relation"){
+                contentY += "<option value='" + column + "'>" + meta.nome + "</option>";
+                contentX += "<option value='" + column + "'" + (meta.format === "datetime" || meta.format === "date" ? " selected='selected'" : "") + ">" + meta.nome + "</option>";
+            }
+        }
+
+        readGraficosTable(id);
+        $(".table-grafico-columns-y").attr("data-id", id).html("<option disabled='disabled' selected='selected'>Selecione o Y</option>" + contentY);
+        $(".table-grafico-columns-x").html("<option disabled='disabled' selected='selected'>Selecione o X</option>" + contentX);
+
+    }).off("click", ".btn-table-grafico-apply").on("click", ".btn-table-grafico-apply", function () {
+        let y = $(".table-grafico-columns-y").val();
+        let x = $(".table-grafico-columns-x").val();
+        let type = $(".table-grafico-columns-type").val();
+        let operacao = $(".table-grafico-columns-operacao").val();
+        let id = $(".table-grafico-columns-y").attr("data-id");
+
+        if(!isEmpty(y) && !isEmpty(x)) {
+            post("table", "addGrafico", {x: x, y: y, entity: grids[id].entity, type: type, operacao: operacao}, function (g) {
+                if(g) {
+                    readGraficosTable(id);
+                    toast("Salvo com sucesso", 3500, "toast-success");
+                } else {
+                    toast("erro ao enviar", 3000, "toast-error");
+                }
+            });
+        } else {
+            toast("selecione o campo Y e X", 3500, "toast-warning");
+        }
+
+    }).off("click", ".btn-grafico-delete").on("click", ".btn-grafico-delete", function () {
+        let id = $(this).attr("data-id");
+        post("table", "deleteGrafico", {id: $(this).attr("rel")}, function (g) {
+            readGraficosTable(id);
+        });
+
     }).off("click", ".btn-table-filter-apply").on("click", ".btn-table-filter-apply", function () {
         let grid = grids[$(this).attr("rel")];
         let $filter = grid.$element.find(".table-filter");
@@ -249,6 +307,7 @@ $(function () {
             grid.$element.find(".modal-filter").addClass("hide");
             grid.readData()
         })
+
     }).off("click", ".grid-order-by").on("click", ".grid-order-by", function () {
         let grid = grids[$(this).attr("rel")];
         grid.$element.find(".grid-order-by-arrow").remove();
@@ -261,6 +320,7 @@ $(function () {
         if (grid.orderPosition)
             $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>"); else $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
         grid.readData()
+
     }).off("click", ".btn-grid-sync").on("click", ".btn-grid-sync", function () {
         if (navigator.onLine) {
             let $this = $(this);
@@ -293,8 +353,10 @@ $(function () {
 
     }).off("click", ".btn-table-novo").on("click", ".btn-table-novo", function () {
         pageTransition(grids[$(this).attr("rel")].entity, 'form', 'forward', "#dashboard");
+
     }).off("click", ".btn-table-edit").on("click", ".btn-table-edit", function () {
         pageTransition(grids[$(this).attr("rel")].entity, 'form', 'forward', "#dashboard", {id: $(this).attr("data-id")})
+
     }).off("change", ".autor-switch-form").on("change", ".autor-switch-form", function () {
         let $this = $(this);
         let valor = $this.val();
@@ -309,6 +371,7 @@ $(function () {
                 changeAutor(grid.entity, info[grid.entity].autor, parseInt($this.attr("data-id")), valor)
             }
         })
+
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
         let $this = $(this);
         let grid = grids[$this.attr("rel")];
@@ -350,6 +413,7 @@ $(function () {
         let $this = $(this);
         if (tempoDigitacao)
             clearTimeout(tempoDigitacao);
+
         tempoDigitacao = setTimeout(function () {
             let grid = grids[$this.attr("data-id")];
             if(typeof grid !== "undefined") {
