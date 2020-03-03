@@ -261,7 +261,9 @@ $(function () {
         if(!isEmpty(y) && !isEmpty(x)) {
             post("table", "addGrafico", {x: x, y: y, entity: grids[id].entity, type: type, operacao: operacao}, function (g) {
                 if(g) {
-                    readGraficosTable(id);
+                    updateGraficos().then(() => {
+                        readGraficosTable(id);
+                    });
                     toast("Salvo com sucesso", 3500, "toast-success");
                 } else {
                     toast("erro ao enviar", 3000, "toast-error");
@@ -274,7 +276,9 @@ $(function () {
     }).off("click", ".btn-grafico-delete").on("click", ".btn-grafico-delete", function () {
         let id = $(this).attr("data-id");
         post("table", "deleteGrafico", {id: $(this).attr("rel")}, function (g) {
-            readGraficosTable(id);
+            updateGraficos().then(() => {
+                readGraficosTable(id);
+            });
         });
 
     }).off("click", ".btn-table-filter-apply").on("click", ".btn-table-filter-apply", function () {
