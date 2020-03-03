@@ -175,7 +175,7 @@ function downloadData(grid, pretty) {
 }
 
 function readGraficosTable(id) {
-    return getGraficos().then(graficos => {
+    return dbLocal.exeRead("__graficos").then(graficos => {
         $("#list-graficos").htmlTemplate('graficos-list', {graficos: graficos, identificador: id});
     });
 }
