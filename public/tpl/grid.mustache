@@ -196,42 +196,44 @@
                             </header>
                             <div class="panel padding-24">
                                 <label class="col s12 m3 padding-right">
-                                    <div class="col color-text-gray">Coluna Y</div>
-                                    <select class="col table-grafico-columns-y"></select>
-                                </label>
-                                <label class="col s12 m3 padding-right">
-                                    <div class="col color-text-gray">Coluna X</div>
-                                    <select class="col table-grafico-columns-x"></select>
-                                </label>
-                                <label class="col s12 m3 padding-right">
-                                    <div class="col color-text-gray">Tipo do gráfico</div>
-                                    <select class="col table-grafico-columns-type">
+                                    <div class="col color-text-gray">Modelo do gráfico</div>
+                                    <select class="col table-grafico-columns table-grafico-columns-type">
                                         <option value='line'>Linha</option>
-                                        <option value='area'>Linha Suave com preenchimento</option>
-                                        <option value='column' selected='selected'>Colunas</option>
-                                        <option value='bar'>Colunas Horizontais</option>
+                                        <option value='area' selected='selected'>Linha Suave com preenchimento</option>
+                                        <option value='bar'>Colunas</option>
                                         <option value='timeline'>Linha do Tempo</option>
                                         <option value='scatter'>Mapa de Pontos</option>
                                         <option value='bubble'>Bolhas</option>
                                         <option value='heatmap'>Mapa de Calor</option>
                                         <option value='pie'>Pizza</option>
-                                        <option value='radialbar'>Barra Redonda</option>
-                                        <option value='radar'>Radar</option>
+                                        <option value='donut'>Bolacha</option>
+                                        <option value='radialBar'>Barra Circular</option>
+                                        <option value='radar'>Radar Pentágono</option>
                                     </select>
                                 </label>
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Operação</div>
-                                    <select class="col table-grafico-columns-operacao">
+                                    <select class="col table-grafico-columns table-grafico-columns-operacao">
                                         <option value='soma' selected='selected'>Soma</option>
                                         <option value='media'>Média</option>
                                         <option value='marioria'>Maioria</option>
-                                        <option value='registros'>Registros</option>
+                                        <option value='soma%'>Soma em %</option>
+                                        <option value='media%'>Média em %</option>
+                                        <option value='maioria%'>Maioria em %</option>
                                     </select>
+                                </label>
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Coluna Y</div>
+                                    <select class="col table-grafico-columns table-grafico-columns-y"></select>
+                                </label>
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Coluna X</div>
+                                    <select class="col table-grafico-columns table-grafico-columns-x"></select>
                                 </label>
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Agrupamento dos dados</div>
-                                    <select class="col table-grafico-columns-group">
+                                    <select class="col table-grafico-columns table-grafico-columns-group">
                                         <option value='hour'>Hora</option>
                                         <option value='day' selected="selected">Dia</option>
                                         <option value='week'>Semana</option>
@@ -242,16 +244,17 @@
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Ordenação</div>
-                                    <select class="col table-grafico-columns-order">
-                                        <option value='0' selected='selected'>X Decrescente</option>
-                                        <option value='1'>X Crecente</option>
-                                        <option value='2'>Y Decrescente</option>
-                                        <option value='3'>Y Crecente</option>
+                                    <select class="col table-grafico-columns table-grafico-columns-order">
+                                        <option value='x_decrescente' selected='selected'>X Decrescente</option>
+                                        <option value='x_crecente'>X Crecente</option>
+                                        <option value='y_decrescente'>Y Decrescente</option>
+                                        <option value='y_crecente'>Y Crecente</option>
                                     </select>
                                 </label>
+
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Precisão</div>
-                                    <select class="col table-grafico-columns-precision">
+                                    <select class="col table-grafico-columns table-grafico-columns-precision">
                                         <option value='0' selected='selected'>Inteiro</option>
                                         <option value='1'>1 casa</option>
                                         <option value='2'>2 casas</option>
@@ -259,6 +262,51 @@
                                     </select>
                                 </label>
 
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Tamanho do gráfico</div>
+                                    <select class="col table-grafico-columns table-grafico-columns-size">
+                                        <option value='100%'>100%</option>
+                                        <option value='50%' selected='selected'>50%</option>
+                                        <option value='33%'>33%</option>
+                                    </select>
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Posição na dashboar</div>
+                                    <select class="col table-grafico-columns table-grafico-columns-posicao">
+                                        <option value='0' selected='selected'>auto</option>
+                                        <option value='1'>1</option>
+                                        <option value='2'>2</option>
+                                        <option value='3'>3</option>
+                                        <option value='4'>4</option>
+                                        <option value='5'>5</option>
+                                        <option value='6'>6</option>
+                                        <option value='7'>7</option>
+                                        <option value='8'>8</option>
+                                        <option value='9'>9</option>
+                                        <option value='10'>10</option>
+                                        <option value='11'>11</option>
+                                        <option value='12'>12</option>
+                                        <option value='13'>13</option>
+                                        <option value='14'>14</option>
+                                        <option value='15'>15</option>
+                                    </select>
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Valor Máximo</div>
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-maximo" />
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Label Coluna Y</div>
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-label-y" />
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Label Coluna X</div>
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-label-x" />
+                                </label>
 
                                 <div class="col s12 m3 table-grafico-btn" style="padding: 15px 16px 0;">
                                     <button title="aplicar filtro"
