@@ -2,6 +2,16 @@
 <tr class="no-select">
     <th>
         <div>
+            <span class="left padding-small padding-8">Coluna Y</span>
+        </div>
+    </th>
+    <th>
+        <div>
+            <span class="left padding-small padding-8">Coluna X</span>
+        </div>
+    </th>
+    <th>
+        <div>
             <span class="left padding-small padding-8">Tipo</span>
         </div>
     </th>
@@ -12,12 +22,17 @@
     </th>
     <th>
         <div>
-            <span class="left padding-small padding-8">Coluna Y</span>
+            <span class="left padding-small padding-8">Agrupamento</span>
         </div>
     </th>
     <th>
         <div>
-            <span class="left padding-small padding-8">Coluna X</span>
+            <span class="left padding-small padding-8">Ordenação</span>
+        </div>
+    </th>
+    <th>
+        <div>
+            <span class="left padding-small padding-8">Precisão</span>
         </div>
     </th>
     <th class="align-right" style="padding-right: 20px;padding-top: 14px;width: 100px;">Ações</th>
@@ -37,6 +52,15 @@
         </td>
         <td class="padding-16 td-list " style="">
             <span class="td-value"><span style="padding: 1px 5px" class="left padding-right font-medium td-title">{{x}}</span></span>
+        </td>
+        <td class="padding-16 td-list " style="">
+            <span class="td-value"><span style="padding: 1px 5px" class="left padding-right font-medium td-title">{{group}}</span></span>
+        </td>
+        <td class="padding-16 td-list " style="">
+            <span class="td-value"><span style="padding: 1px 5px" class="left padding-right font-medium td-title">{{order}}</span></span>
+        </td>
+        <td class="padding-16 td-list " style="">
+            <span class="td-value"><span style="padding: 1px 5px" class="left padding-right font-medium td-title">{{precision}}</span></span>
         </td>
         <td class="tableActions" style="min-width: 170px;">
             <button rel="{{id}}" data-id="{{identificador}}" class="btn-grafico-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">

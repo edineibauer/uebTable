@@ -228,12 +228,44 @@
                                         <option value='registros'>Registros</option>
                                     </select>
                                 </label>
-                                <div class="col s12 m4 table-grafico-btn">
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Agrupamento dos dados</div>
+                                    <select class="col table-grafico-columns-group">
+                                        <option value='hour'>Hora</option>
+                                        <option value='day' selected="selected">Dia</option>
+                                        <option value='week'>Semana</option>
+                                        <option value='month'>Mês</option>
+                                        <option value='year'>Ano</option>
+                                    </select>
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Ordenação</div>
+                                    <select class="col table-grafico-columns-order">
+                                        <option value='0' selected='selected'>X Decrescente</option>
+                                        <option value='1'>X Crecente</option>
+                                        <option value='2'>Y Decrescente</option>
+                                        <option value='3'>Y Crecente</option>
+                                    </select>
+                                </label>
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Precisão</div>
+                                    <select class="col table-grafico-columns-precision">
+                                        <option value='0' selected='selected'>Inteiro</option>
+                                        <option value='1'>1 casa</option>
+                                        <option value='2'>2 casas</option>
+                                        <option value='3'>3 casas</option>
+                                    </select>
+                                </label>
+
+
+                                <div class="col s12 m3 table-grafico-btn" style="padding: 15px 16px 0;">
                                     <button title="aplicar filtro"
-                                            class="btb left radius color-white hover-shadow opacity hover-opacity-off btn-table-grafico-apply"
+                                            class="btb right radius theme hover-shadow opacity hover-opacity-off btn-table-grafico-apply" style="padding: 10px 20px;"
                                             rel="{{identificador}}">
                                         <i class="material-icons left">add</i>
-                                        <span class="left padding-left">Adicionar</span>
+                                        <span class="left" style="padding-left: 5px">Adicionar</span>
                                     </button>
                                 </div>
                             </div>
@@ -251,20 +283,20 @@
             <tr class="no-select">
                 {{#fields}}
                     {{#first}}
-                        <th style="width: 105px;">
+                    <th style="width: 105px;">
                     {{/first}}
                     {{^first}}
-                        <th>
+                    <th>
                     {{/first}}
-                        {{#first}}
-                            <label class="left" style="margin-left: -8px;">
-                                <input type="checkbox" class="table-select-all" data-id="{{identificador}}"/>
-                            </label>
-                        {{/first}}
-                        <span class="pointer grid-order-by" data-column="{{column}}" rel="{{identificador}}">
+                    {{#first}}
+                        <label class="left" style="margin-left: -8px;">
+                            <input type="checkbox" class="table-select-all" data-id="{{identificador}}"/>
+                        </label>
+                    {{/first}}
+                    <span class="pointer grid-order-by" data-column="{{column}}" rel="{{identificador}}">
                         <span class="left padding-small padding-8">{{nome}}</span>
                     </span>
-                    </th>
+                </th>
                 {{/fields}}
                 <th class="align-right" style="padding-right: 20px;padding-top: 14px;width: 100px;">Ações</th>
             </tr>

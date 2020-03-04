@@ -256,22 +256,29 @@ $(function () {
         let x = $(".table-grafico-columns-x").val();
         let type = $(".table-grafico-columns-type").val();
         let operacao = $(".table-grafico-columns-operacao").val();
+        let group = $(".table-grafico-columns-group").val();
+        let order = $(".table-grafico-columns-order").val();
+        let precision = $(".table-grafico-columns-precision").val();
         let id = $(".table-grafico-columns-y").attr("data-id");
-
-        if(!isEmpty(y) && !isEmpty(x)) {
-            post("table", "addGrafico", {x: x, y: y, entity: grids[id].entity, type: type, operacao: operacao}, function (g) {
-                if(g) {
-                    updateGraficos().then(() => {
-                        readGraficosTable(id);
-                    });
-                    toast("Salvo com sucesso", 3500, "toast-success");
-                } else {
-                    toast("erro ao enviar", 3000, "toast-error");
-                }
-            });
-        } else {
-            toast("selecione o campo Y e X", 3500, "toast-warning");
-        }
+        post("table", "addGrafico", {
+            x: x,
+            y: y,
+            entity: grids[id].entity,
+            type: type,
+            group: group,
+            order: order,
+            precision: precision,
+            operacao: operacao
+        }, function (g) {
+            if (g) {
+                updateGraficos().then(() => {
+                    readGraficosTable(id)
+                });
+                toast("Salvo com sucesso", 3500, "toast-success")
+            } else {
+                toast("erro ao enviar", 3000, "toast-error")
+            }
+        })
 
     }).off("click", ".btn-grafico-delete").on("click", ".btn-grafico-delete", function () {
         let id = $(this).attr("data-id");
