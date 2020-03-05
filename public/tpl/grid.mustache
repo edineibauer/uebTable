@@ -199,12 +199,13 @@
                                     <div class="col color-text-gray">Modelo do gráfico</div>
                                     <select class="col table-grafico-columns table-grafico-columns-type">
                                         <option value='line'>Linha</option>
-                                        <option value='area' selected='selected'>Linha Suave com preenchimento</option>
+                                        <option value='area' selected='selected'>Linha com Área</option>
                                         <option value='bar'>Colunas</option>
-                                        <option value='timeline'>Linha do Tempo</option>
-                                        <option value='scatter'>Mapa de Pontos</option>
-                                        <option value='bubble'>Bolhas</option>
-                                        <option value='heatmap'>Mapa de Calor</option>
+                                        <option value='barHorizontal'>Colunas Horizontais</option>
+                                        <!--                                        <option value='timeline'>Linha do Tempo</option>-->
+                                        <option value='scatter'>Gráfico de Pontos</option>
+                                        <!--                                        <option value='bubble'>Bolhas</option>-->
+                                        <!--                                        <option value='heatmap'>Mapa de Calor</option>-->
                                         <option value='pie'>Pizza</option>
                                         <option value='donut'>Bolacha</option>
                                         <option value='radialBar'>Barra Circular</option>
@@ -274,7 +275,7 @@
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Posição na dashboar</div>
                                     <select class="col table-grafico-columns table-grafico-columns-posicao">
-                                        <option value='0' selected='selected'>auto</option>
+                                        <option value='20' selected='selected'>auto</option>
                                         <option value='1'>1</option>
                                         <option value='2'>2</option>
                                         <option value='3'>3</option>
@@ -294,8 +295,12 @@
                                 </label>
 
                                 <label class="col s12 m3 padding-right">
-                                    <div class="col color-text-gray">Valor Máximo</div>
-                                    <input type="text" class="col table-grafico-columns table-grafico-columns-maximo" />
+                                    <div class="col color-text-gray">Arredondamento das pontas</div>
+                                    <select class="col table-grafico-columns table-grafico-columns-rounded">
+                                        <option value='smooth' selected='selected'>Arredondado</option>
+                                        <option value='straight'>pontiagudo</option>
+                                        <option value='stepline'>quadrado</option>
+                                    </select>
                                 </label>
 
                                 <label class="col s12 m3 padding-right">
@@ -306,6 +311,28 @@
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Label Coluna X</div>
                                     <input type="text" class="col table-grafico-columns table-grafico-columns-label-x" />
+                                </label>
+
+                                <div class="col"></div>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Valor Mínimo Y</div>
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-minimo-y" />
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Valor Máximo Y</div>
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-maximo-y" />
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Valor Mínimo X</div>
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-minimo-x" />
+                                </label>
+
+                                <label class="col s12 m3 padding-right">
+                                    <div class="col color-text-gray">Valor Máximo X</div>
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-maximo-x" />
                                 </label>
 
                                 <div class="col s12 m3 table-grafico-btn" style="padding: 15px 16px 0;">

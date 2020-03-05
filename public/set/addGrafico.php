@@ -10,9 +10,13 @@ $order = filter_input(INPUT_POST, 'order', FILTER_DEFAULT);
 $precision = filter_input(INPUT_POST, 'precision', FILTER_VALIDATE_INT);
 $size = filter_input(INPUT_POST, 'size', FILTER_DEFAULT);
 $posicao = filter_input(INPUT_POST, 'posicao', FILTER_VALIDATE_INT);
-$maximo = filter_input(INPUT_POST, 'maximo', FILTER_VALIDATE_INT);
 $labely = filter_input(INPUT_POST, 'labely', FILTER_DEFAULT);
 $labelx = filter_input(INPUT_POST, 'labelx', FILTER_DEFAULT);
+$rounded = filter_input(INPUT_POST, 'rounded', FILTER_DEFAULT);
+$minimoY = filter_input(INPUT_POST, 'minimoY', FILTER_DEFAULT);
+$maximoY = filter_input(INPUT_POST, 'maximoY', FILTER_DEFAULT);
+$minimoX = filter_input(INPUT_POST, 'minimoX', FILTER_DEFAULT);
+$maximoX = filter_input(INPUT_POST, 'maximoX', FILTER_DEFAULT);
 
 $graficos = [];
 if(file_exists(PATH_HOME . "_config/graficos.json"))
@@ -30,9 +34,13 @@ $graficos[] = [
     "precision" => $precision,
     "size" => $size,
     "posicao" => $posicao,
-    "maximo" => $maximo,
+    "minimoY" => $minimoY,
+    "maximoY" => $maximoY,
+    "minimoX" => $minimoX,
+    "maximoX" => $maximoX,
     "labely" => $labely,
-    "labelx" => $labelx
+    "labelx" => $labelx,
+    "corner" => $rounded
 ];
 
 $f = fopen(PATH_HOME . "_config/graficos.json", "w+");

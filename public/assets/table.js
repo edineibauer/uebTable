@@ -268,9 +268,13 @@ $(function () {
         let precision = $(".table-grafico-columns-precision").val();
         let size = $(".table-grafico-columns-size").val();
         let posicao = $(".table-grafico-columns-posicao").val();
-        let maximo = $(".table-grafico-columns-maximo").val();
         let labely = $(".table-grafico-columns-label-y").val();
         let labelx = $(".table-grafico-columns-label-x").val();
+        let rounded = $(".table-grafico-columns-rounded").val();
+        let minimoY = $(".table-grafico-columns-minimo-y").val();
+        let maximoY = $(".table-grafico-columns-maximo-y").val();
+        let minimoX = $(".table-grafico-columns-minimo-x").val();
+        let maximoX = $(".table-grafico-columns-maximo-x").val();
         let id = $(".table-grafico-columns-y").attr("data-id");
 
         /**
@@ -320,9 +324,13 @@ $(function () {
             operacao: operacao,
             size: size,
             posicao: posicao,
-            maximo: maximo,
+            minimoY: minimoY,
+            maximoY: maximoY,
+            minimoX: minimoX,
+            maximoX: maximoX,
             labely: labely,
             labelx: labelx,
+            rounded: rounded,
         }, function (g) {
             if (g) {
                 updateGraficos().then(() => {
@@ -341,6 +349,7 @@ $(function () {
                 readGraficosTable(id)
             })
         })
+
     }).off("click", ".btn-table-filter-apply").on("click", ".btn-table-filter-apply", function () {
         let grid = grids[$(this).attr("rel")];
         let $filter = grid.$element.find(".table-filter");
