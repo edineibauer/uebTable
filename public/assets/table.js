@@ -241,6 +241,38 @@ $(function () {
             $(".table-grafico-columns-label-x").addClass("disabled").attr("disabled", "disabled").val("").trigger("change");
         }
 
+    }).off("click", "#gerar-relatorio").on("click", "#gerar-relatorio", function () {
+        let id = $(this).attr("rel");
+        let grid = grids[id];
+        let filter = [];
+
+        function getDataListExtend(data, title, column, relation) {
+            data.id = Date.now() + Math.floor((Math.random() * 1000));
+            data.columnTituloExtend = "<small class='color-gray left opacity padding-tiny radius'>" + column + "</small><span style='padding: 1px 5px' class='left padding-right font-medium td-title'> " + title + "</span>";
+            data.columnName = column;
+            data.columnRelation = relation;
+            data.columnStatus = {column: '', have: !1, value: !1};
+
+            return data;
+        }
+
+        for(let i in grid.filter) {
+            let ff = {
+                coluna: grid.filter[i].column,
+                operador: grid.filter[i].operator,
+                valor: grid.filter[i].value,
+                ordem: grid.order,
+                decrescente: grid.orderPosition
+            };
+            ff = getDataListExtend(ff, ff.coluna + " " + ff.operador + " " + ff.valor ,"coluna", "relatorios_filtro");
+
+            filter.push(ff);
+        }
+
+        db.exeCreate("relatorios", {entidade: grid.entity, filtros: JSON.stringify(filter)}).then(result => {
+            toast("Relatório Criado", 2500, "toast-success");
+        })
+
     }).off("click", "#gerar-grafico").on("click", "#gerar-grafico", function () {
         let id = $(this).attr("rel");
         let grid = grids[id];
