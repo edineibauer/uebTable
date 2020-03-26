@@ -260,16 +260,14 @@ $(function () {
             let ff = {
                 coluna: grid.filter[i].column,
                 operador: grid.filter[i].operator,
-                valor: grid.filter[i].value,
-                ordem: grid.order,
-                decrescente: grid.orderPosition
+                valor: grid.filter[i].value
             };
             ff = getDataListExtend(ff, ff.coluna + " " + ff.operador + " " + ff.valor ,"coluna", "relatorios_filtro");
 
             filter.push(ff);
         }
 
-        db.exeCreate("relatorios", {entidade: grid.entity, filtros: JSON.stringify(filter)}).then(result => {
+        db.exeCreate("relatorios", {entidade: grid.entity, filtros: JSON.stringify(filter), ordem: grid.order, decrescente: grid.orderPosition}).then(result => {
             toast("Relatório Criado", 2500, "toast-success");
         })
 
