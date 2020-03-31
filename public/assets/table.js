@@ -151,8 +151,9 @@ function downloadData(grid, pretty) {
             ids.push(parseInt($(e).attr("rel")))
         })
     }
-    exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, 10000, offset).then(result => {
-        if (result.total > 0) {
+    
+    exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, (grid.limit > LIMITOFFLINE ? LIMITOFFLINE : grid.limit), offset).then(result => {
+        if (result.data.length > 0) {
             let results = [];
             if (ids.length) {
                 $.each(result.data, function (i, e) {
