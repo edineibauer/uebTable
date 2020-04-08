@@ -413,7 +413,7 @@ $(function () {
         $filter.find(".table-filter-operator, .table-filter-value, .table-filter-btn").addClass("hide");
         $filter.find(".table-filter-columns, .table-filter-operator, .table-filter-value").val("");
         grid.filter.push(filter);
-        dbLocal.exeRead('__template', 1).then(templates => {
+        getTemplates().then(templates => {
             return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter))
         }).then(d => {
             grid.$element.find(".modal-filter").addClass("hide");
@@ -556,7 +556,7 @@ $(function () {
                         id: Date.now()
                     };
                     grid.filter.push(filter);
-                    dbLocal.exeRead('__template', 1).then(templates => {
+                    getTemplates().then(templates => {
                         return grid.$element.find(".table-filter-list").append(Mustache.render(templates['filter-badge'], filter))
                     }).then(d => {
                         grid.readData()
