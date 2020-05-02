@@ -1,9 +1,10 @@
 <div class="responsive tableList col padding-24 s-padding-0" id="tableList-{{entity}}" data-entity="{{entity}}"
      data-id="{{identificador}}">
     <div class="col z-depth-2 grid-form-body radius border">
-        <div class="col theme-d1 loadindTableSpace">
+        <div class="col no-select theme-d1 loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
-                <a href="dashboard" data-animation="back" class="margin-bottom left color-white hover-shadow btn-floating">
+                <a href="dashboard" data-animation="back"
+                   class="margin-bottom left color-white hover-shadow btn-floating">
                     <i class="material-icons left">keyboard_arrow_left</i>
                 </a>
                 <button title="filtro"
@@ -19,13 +20,15 @@
                 {{/sync}}
 
                 {{#novo}}
-                    <button class="btb radius right color-white hover-shadow btn-table-novo" style="margin: 4px 0 18px 0"
+                    <button class="btb radius right color-white hover-shadow btn-table-novo"
+                            style="margin: 4px 0 18px 0"
                             rel="{{identificador}}">
                         <i class="material-icons left">add</i><span class="left">Novo</span>
                     </button>
                 {{/novo}}
 
-                <small class="margin-bottom total right" style="height:40px; padding:12px 10px 6px 10px">{{total}}</small>
+                <small class="margin-bottom total right"
+                       style="height:40px; padding:12px 10px 6px 10px">{{total}}</small>
 
                 <div class="left no-padding">
                     <h4 class="left" style="padding: 5px 0 0 7px;">
@@ -69,7 +72,7 @@
             </div>
         </div>
 
-        <div class="col theme-l1 padding-4">
+        <div class="col theme-l1 padding-4 no-select">
             <div class="col table-filter transition-easy" style="display: flow-root">
                 <div class="col padding-medium margin-bottom s-padding-4 s-padding-top s-margin-0 hide s-show">
                     <div class="col right padding-right sub-header-table">
@@ -110,34 +113,58 @@
 
                 <div class="col">
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
-                        <label for="import-file-crud" title="Recuperar backup dos registros" class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
+                        <label for="import-file-crud" title="Recuperar backup dos registros"
+                               class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">cloud_upload</i>
                         </label>
-                        <input type="file" id="import-file-crud" rel="{{identificador}}" accept=".xlsx, .xls, .csv" class="hide"/>
+                        <input type="file" id="import-file-crud" rel="{{identificador}}" accept=".xlsx, .xls, .csv"
+                               class="hide"/>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
-                        <label id="export-file-crud" rel="{{identificador}}" title="Backup dos registros" class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
+                        <label id="export-file-crud" rel="{{identificador}}" title="Backup dos registros"
+                               class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">cloud_download</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
-                        <label id="download-file-crud" rel="{{identificador}}" title="Download dos registros Csv" style="margin: 3px 15px 4px 0;" class="right btn radius hover-shadow opacity hover-opacity-off color-white">
+                        <label id="download-file-crud" rel="{{identificador}}" title="Download dos registros Csv"
+                               style="margin: 3px 15px 4px 0;"
+                               class="right btn radius hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">get_app</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
-                        <label id="gerar-relatorio" rel="{{identificador}}" title="Gerar Relatório" style="margin: 3px 15px 4px 0;" class="right btn radius hover-shadow opacity hover-opacity-off color-white">
+                        <label id="gerar-relatorio" rel="{{identificador}}" title="Gerar Relatório"
+                               style="margin: 3px 15px 4px 0;"
+                               class="right btn radius hover-shadow opacity hover-opacity-off color-white">
                             <i class="material-icons left theme-text-d">assessment</i>
                         </label>
                     </div>
                     <div class="rest table-filter-list padding-medium color-text-gray">
-                        <div class="font-light font-large left padding-small theme-text-aux">Filtros</div>
-                        <button class="btn-small left radius padding-4 color-white hover-shadow opacity hover-opacity-off btn-new-filter" style="height: 35px"
-                                rel="{{identificador}}">
-                            <i class="material-icons left">add</i>
+                        <div class="font-light font-large left padding-small theme-text-aux">Filtros:</div>
+                        <button class="left theme-aux pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
+                                rel="{{identificador}}" data-rel="group"
+                                style="height: 26px;margin: 5px;">
+                            <i class="material-icons left font-large theme-text">add</i>
+                            <span class="left theme-text">grupo</span>
+                        </button>
+                        <button class="left disabled theme-aux pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
+                                rel="{{identificador}}" data-rel="inner_join" disabled="disabled"
+                                style="height: 26px;margin: 5px;">
+                            <i class="material-icons left font-large theme-text">add</i>
+                            <span class="left theme-text">inner join</span>
+                        </button>
+                        <button class="left disabled theme-aux pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
+                                rel="{{identificador}}" data-rel="outer_join" disabled="disabled"
+                                style="height: 26px;margin: 5px;">
+                            <i class="material-icons left font-large theme-text">add</i>
+                            <span class="left theme-text">outer join</span>
                         </button>
                     </div>
                 </div>
+
+                <div class="col padding-medium" id="filter-logic"></div>
+
                 <div class="modal-filter modal-grafico modal-filter-opacity btn-close-modal hide color-black opacity"
                      rel="{{identificador}}"></div>
                 <div class="modal-filter modal-filter-content hide">
@@ -151,7 +178,7 @@
                                 <h4 class="padding-8">Novo Filtro</h4>
                             </header>
                             <div class="panel padding-24">
-                                <select class="col s12 m3 table-filter-columns"></select>
+                                <select class="col s12 m3 table-filter-columns" data-entity="{{entity}}" data-rel="0" rel="{{identificador}}"></select>
                                 <select class="col s12 m3 table-filter-operator hide">
                                     <option disabled="disabled" class="color-text-gray" selected="selected"
                                             value="">
@@ -167,7 +194,7 @@
                                     <option value="menor que">menor que</option>
                                     <option value="menor igual a">menor igual a</option>
                                 </select>
-                                <input type="text" placeholder="valor..."
+                                <input type="text" placeholder="valor..." style="margin-top: 1px"
                                        class="col s12 m3 table-filter-value hide"/>
 
                                 <div class="col s12 m2 hide table-filter-btn">
@@ -175,7 +202,7 @@
                                             class="btb left radius color-white hover-shadow opacity hover-opacity-off btn-table-filter-apply"
                                             rel="{{identificador}}">
                                         <i class="material-icons left">done</i><span
-                                            class="left padding-left">Aplicar</span>
+                                            class="left" style="padding-left: 5px">aplicar</span>
                                     </button>
                                 </div>
                                 <div class="col padding-12"></div>
@@ -305,39 +332,44 @@
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Label Coluna Y</div>
-                                    <input type="text" class="col table-grafico-columns table-grafico-columns-label-y" />
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-label-y"/>
                                 </label>
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Label Coluna X</div>
-                                    <input type="text" class="col table-grafico-columns table-grafico-columns-label-x" />
+                                    <input type="text" class="col table-grafico-columns table-grafico-columns-label-x"/>
                                 </label>
 
                                 <div class="col"></div>
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Valor Mínimo Y</div>
-                                    <input type="text" class="col table-grafico-columns table-grafico-columns-minimo-y" />
+                                    <input type="text"
+                                           class="col table-grafico-columns table-grafico-columns-minimo-y"/>
                                 </label>
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Valor Máximo Y</div>
-                                    <input type="text" class="col table-grafico-columns table-grafico-columns-maximo-y" />
+                                    <input type="text"
+                                           class="col table-grafico-columns table-grafico-columns-maximo-y"/>
                                 </label>
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Valor Mínimo X</div>
-                                    <input type="text" class="col table-grafico-columns table-grafico-columns-minimo-x" />
+                                    <input type="text"
+                                           class="col table-grafico-columns table-grafico-columns-minimo-x"/>
                                 </label>
 
                                 <label class="col s12 m3 padding-right">
                                     <div class="col color-text-gray">Valor Máximo X</div>
-                                    <input type="text" class="col table-grafico-columns table-grafico-columns-maximo-x" />
+                                    <input type="text"
+                                           class="col table-grafico-columns table-grafico-columns-maximo-x"/>
                                 </label>
 
                                 <div class="col s12 m3 table-grafico-btn" style="padding: 15px 16px 0;">
                                     <button title="aplicar filtro"
-                                            class="btb right radius theme hover-shadow opacity hover-opacity-off btn-table-grafico-apply" style="padding: 10px 20px;"
+                                            class="btb right radius theme hover-shadow opacity hover-opacity-off btn-table-grafico-apply"
+                                            style="padding: 10px 20px;"
                                             rel="{{identificador}}">
                                         <i class="material-icons left">add</i>
                                         <span class="left" style="padding-left: 5px">Adicionar</span>

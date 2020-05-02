@@ -1,0 +1,13 @@
+<div class='padding-small padding-left transition-easy radius-jumbo color-white z-depth-2 left filter_badge' id="{{id}}" style='margin: 2px; height: 30px; overflow: hidden;'>
+    {{#showOperador}}
+        <span class='left theme-text padding-right'>{{operadorName}}</span>
+    {{/showOperador}}
+    <span class="left">{{coluna}}</span>
+    <small class="left" style="padding: 3px 8px">{{operador}}</small>
+    <span class="value">{{valor}}</span>
+    <span class="right padding-left color-gray pointer hover-shadow radius-circle padding-small font-small btn-badge-remove"
+          style="height: 22px;width: 22px;float: right;margin: 0 0 0 10px;"
+          data-badge="{{id}}" rel="{{identificador}}">
+        <i class="material-icons left font-medium" style="margin-left: -12px;">close</i>
+    </span>
+</div>
