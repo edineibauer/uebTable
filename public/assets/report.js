@@ -391,6 +391,9 @@ $(function () {
                 if(["int", "double", "decimal", "float", "smallint"].indexOf(dicionarios[grid.entity][i].type) > -1 && ["identifier", "relation", "publisher"].indexOf(dicionarios[grid.entity][i].key) === -1)
                     $sum.append("<div class='left relative padding-right' style='margin-top: -5px'><span class='theme-text-aux left' style='position: absolute;top: -6px;font-size: 11px;'> " + dicionarios[grid.entity][i].nome + "</span><span class='theme-text-aux left' style='position: absolute;top: 27px;font-size:9px'>soma</span><span class='theme-text-aux left' style='position: absolute;top: 27px;font-size:9px; left:25px'>média</span><input type='checkbox' rel='" + identificador + "' value='" + i + "' class='sum-aggroup-col' style='margin: 22px 4px 0 2px' /><input type='checkbox' rel='" + identificador + "' value='" + i + "' class='media-aggroup-col' /></div>");
             }
+        } else {
+            grid.filterAggroupSum = [];
+            grid.filterAggroupMedia = [];
         }
 
         grid.readData();
