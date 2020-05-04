@@ -72,6 +72,21 @@ function deleteBadge(id, identificador) {
 }
 
 $(function () {
+
+    /**
+     * Adiciona os campos da entidade ao filtro de agrupamento
+     */
+    if(USER.setor === "admin") {
+        for (let i in grids) {
+            let $this = grids[i];
+            if(!$this.$element.find(".aggroup").find("option").length) {
+                let $aggroup = $this.$element.find(".aggroup").html("<option value='' selected='selected'>agrupar por...</option>");
+                for (let col in dicionarios[$this.entity])
+                    $aggroup.append("<option value='" + col + "'>" + dicionarios[$this.entity][col].nome + "</option>");
+            }
+        }
+    }
+
     $("#app").off("click", ".btn-table-filter").on("click", ".btn-table-filter", function () {
         let grid = grids[$(this).attr("rel")];
         let $filter = grid.$element.find(".table-filter");
@@ -367,43 +382,62 @@ $(function () {
 
     }).off("change", ".aggroup").on("change", ".aggroup", function () {
         let identificador = $(this).attr("rel");
-        let val = $(this).val();
         let grid = grids[identificador];
+        grid.filterAggroup = $(this).val();
         let $sum = grid.$element.find(".sum-aggroup").html("");
 
-        if(val !== "") {
+        if(grid.filterAggroup !== "") {
             for(let i in dicionarios[grid.entity]) {
                 if(["int", "double", "decimal", "float", "smallint"].indexOf(dicionarios[grid.entity][i].type) > -1 && ["identifier", "relation", "publisher"].indexOf(dicionarios[grid.entity][i].key) === -1)
-                    $sum.append("<div class='left relative padding-right' style='margin-top: -5px'><span class='theme-text-aux left' style='position: absolute;top: -6px;font-size: 11px;'> " + dicionarios[grid.entity][i].nome + "</span><span class='theme-text-aux left' style='position: absolute;top: 27px;font-size:9px'>soma</span><span class='theme-text-aux left' style='position: absolute;top: 27px;font-size:9px; left:25px'>média</span><input type='checkbox' value='" + i + "' class='sum-aggroup-col' style='margin: 22px 4px 0 2px' /><input type='checkbox' value='" + i + "' class='media-aggroup-col' /></div>");
+                    $sum.append("<div class='left relative padding-right' style='margin-top: -5px'><span class='theme-text-aux left' style='position: absolute;top: -6px;font-size: 11px;'> " + dicionarios[grid.entity][i].nome + "</span><span class='theme-text-aux left' style='position: absolute;top: 27px;font-size:9px'>soma</span><span class='theme-text-aux left' style='position: absolute;top: 27px;font-size:9px; left:25px'>média</span><input type='checkbox' rel='" + identificador + "' value='" + i + "' class='sum-aggroup-col' style='margin: 22px 4px 0 2px' /><input type='checkbox' rel='" + identificador + "' value='" + i + "' class='media-aggroup-col' /></div>");
             }
         }
 
+        grid.readData();
+
     }).off("click", ".sum-aggroup-col").on("click", ".sum-aggroup-col", function () {
+        let identificador = $(this).attr("rel");
+        let grid = grids[identificador];
         let val = $(this).val();
         if($(".media-aggroup-col[value='" + val + "']").is(":checked"))
             $(".media-aggroup-col[value='" + val + "']").prop("checked", !1);
 
+        let soma = [];
+        grid.$element.find(".sum-aggroup-col:checked").each(function (i, e) {
+            soma.push($(e).val())
+        });
+        grid.filterAggroupSum = soma;
+
+        let media = [];
+        grid.$element.find(".media-aggroup-col:checked").each(function (i, e) {
+            media.push($(e).val());
+        });
+        grid.filterAggroupMedia = media;
+
     }).off("click", ".media-aggroup-col").on("click", ".media-aggroup-col", function () {
+        let identificador = $(this).attr("rel");
+        let grid = grids[identificador];
         let val = $(this).val();
         if($(".sum-aggroup-col[value='" + val + "']").is(":checked"))
             $(".sum-aggroup-col[value='" + val + "']").prop("checked", !1);
+
+        let media = [];
+        grid.$element.find(".media-aggroup-col:checked").each(function (i, e) {
+            media.push($(e).val());
+        });
+        grid.filterAggroupMedia = media;
+
+        let soma = [];
+        grid.$element.find(".sum-aggroup-col:checked").each(function (i, e) {
+            soma.push($(e).val())
+        });
+        grid.filterAggroupSum = soma;
 
     }).off("click", "#gerar-relatorio").on("click", "#gerar-relatorio", function () {
         let nome = "";
         if (nome = prompt("Dê um nome para o relatório:")) {
             let id = $(this).attr("rel");
             let grid = grids[id];
-            let aggroup = grid.$element.find(".aggroup").val();
-            let soma = [];
-            let media = [];
-            if(aggroup !== "") {
-                grid.$element.find(".sum-aggroup-col:checked").each(function (i, e) {
-                    soma.push($(e).val())
-                });
-                grid.$element.find(".media-aggroup-col:checked").each(function (i, e) {
-                    media.push($(e).val());
-                });
-            }
 
             db.exeCreate("relatorios", {
                 nome: nome,
@@ -411,9 +445,9 @@ $(function () {
                 regras: JSON.stringify(grid.filter),
                 ordem: grid.order,
                 decrescente: grid.orderPosition,
-                agrupamento: aggroup,
-                soma: JSON.stringify(soma),
-                media: JSON.stringify(media),
+                agrupamento: grid.filterAggroup,
+                soma: JSON.stringify(grid.filterAggroupSum),
+                media: JSON.stringify(grid.filterAggroupMedia)
             }).then(() => {
                 toast("Relatório Criado", 2500, "toast-success")
             })
