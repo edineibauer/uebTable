@@ -406,7 +406,6 @@ $(function () {
 
     }).off("click", ".table-header-option").on("click", ".table-header-option", function () {
         let $this = $(this);
-        let entity = $this.data("entity");
         let identificador = $this.data("rel");
         let grid = grids[identificador];
 
