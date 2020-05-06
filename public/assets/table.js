@@ -185,7 +185,10 @@ $(function () {
             grid.orderPosition = !1
         }
         if (grid.orderPosition)
-            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>"); else $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
+            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_down</i>");
+        else
+            $(this).append("<i class='material-icons grid-order-by-arrow left padding-8'>arrow_drop_up</i>");
+
         grid.readData()
 
     }).off("click", ".btn-grid-sync").on("click", ".btn-grid-sync", function () {
@@ -382,7 +385,45 @@ $(function () {
             })
         }
 
+    }).off("click", ".showHideField").on("click", ".showHideField", function () {
+        let $this = $(this);
+        let val = $this.val();
+        let checked = $this.is(":checked");
+        let identificador = $this.data("rel");
+        let grid = grids[identificador];
+        let th = grid.$element.find("thead").find("th[rel='" + val + "']");
+        let td = grid.$element.find("tbody").find("td[rel='" + val + "']");
+
+        grid.fields.find(s => s.column === val).show = checked;
+
+        if(checked) {
+            th.removeClass("hide");
+            td.removeClass("hide");
+        } else {
+            th.addClass("hide");
+            td.addClass("hide");
+        }
+
     }).off("click", ".table-header-option").on("click", ".table-header-option", function () {
+        let $this = $(this);
+        let entity = $this.data("entity");
+        let identificador = $this.data("rel");
+        let grid = grids[identificador];
+
+        getTemplates().then(tpl => {
+            $this.parent().append(Mustache.render(tpl.grid_content_card_header, {
+                identificador: $this.data("rel"),
+                entity: $this.data("entity"),
+                columns: grid.fields
+            }));
+            let $cardHeader = $(".grid_content_card_header");
+            $(document).on("mouseup", function(e) {
+                if (!$cardHeader.is(e.target) && $cardHeader.has(e.target).length === 0) {
+                    $cardHeader.remove();
+                    $(document).off("mouseup");
+                }
+            });
+        });
 
     }).off("click", ".table-data-option").on("click", ".table-data-option", function () {
         let $this = $(this);
