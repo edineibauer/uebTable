@@ -1,12 +1,10 @@
 <tr id="row-{{entity}}-{{id}}" style="border: none;">
     {{#fields}}
-        <td class="padding-16 {{class}}"
-            style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}{{style}}">
+        <td class="padding-16{{^show}} hide{{/show}} {{class}}" rel="{{column}}" style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}{{style}}">
             {{#first}}
                 <label class="left pointer">
-                    <input type="checkbox"{{#checked}}
-                           checked="checked"{{/checked}} class="table-select" rel="{{id}}" data-id="{{identificador}}"
-                           style="margin: 15px 1.5rem 11px 0px;"/>
+                    <input type="checkbox"{{#checked}} checked="checked"{{/checked}} class="table-select"
+                           rel="{{id}}" data-id="{{identificador}}" style="margin: 15px 1.5rem 11px 0px;"/>
                     <span class="td-value">{{{value}}}</span>
                 </label>
             {{/first}}

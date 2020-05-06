@@ -406,24 +406,19 @@
             <thead>
             <tr class="no-select">
                 {{#fields}}
-                    {{#first}}
-                    <th style="width: 113px;min-width: 113px;">
-                    {{/first}}
-                    {{^first}}
-                    <th>
-                    {{/first}}
-                    {{#first}}
-                        <label class="left" style="margin-left: -8px;">
-                            <input type="checkbox" class="table-select-all" data-id="{{identificador}}"/>
-                        </label>
-                    {{/first}}
-                    <span class="pointer grid-order-by" data-column="{{column}}" rel="{{identificador}}">
+                    <th{{^show}} class="hide"{{/show}}{{#first}} style="width: 113px;min-width: 113px;"{{/first}} rel="{{column}}">
+                        {{#first}}
+                            <label class="left" style="margin-left: -8px;">
+                                <input type="checkbox" class="table-select-all" data-id="{{identificador}}"/>
+                            </label>
+                        {{/first}}
+                        <span class="pointer grid-order-by" data-column="{{column}}" rel="{{identificador}}">
                         <span class="left padding-small padding-8">{{nome}}</span>
                     </span>
-                </th>
+                    </th>
                 {{/fields}}
-                <th class="align-right" style="padding-right: 20px;padding-top: 14px;width: 115px;">
-                    <div class="right padding-left pointer table-header-option" rel="{{identificador}}"><i class="material-icons">more_vert</i></div>
+                <th class="align-right relative" style="padding-right: 20px;padding-top: 14px;width: 115px;">
+                    <div class="right padding-left pointer table-header-option" data-entity="{{entity}}" data-rel="{{identificador}}"><i class="material-icons">more_vert</i></div>
                     <div class="right s-hide">Ações</div>
                 </th>
             </tr>
