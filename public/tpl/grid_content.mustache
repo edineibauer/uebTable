@@ -1,9 +1,11 @@
 <tr id="row-{{entity}}-{{id}}" style="border: none;">
     {{#fields}}
-        <td class="padding-16 {{class}}" style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}{{style}}">
+        <td class="padding-16 {{class}}"
+            style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}{{style}}">
             {{#first}}
                 <label class="left pointer">
-                    <input type="checkbox"{{#checked}} checked="checked"{{/checked}} class="table-select" rel="{{id}}" data-id="{{identificador}}"
+                    <input type="checkbox"{{#checked}}
+                           checked="checked"{{/checked}} class="table-select" rel="{{id}}" data-id="{{identificador}}"
                            style="margin: 15px 1.5rem 11px 0px;"/>
                     <span class="td-value">{{{value}}}</span>
                 </label>
@@ -14,67 +16,72 @@
         </td>
     {{/fields}}
 
-    <td class="tableActions{{^permission}} disabled" title="Sem Permissão{{/permission}}"
-            style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}min-width: {{^button.status.have}}170px;{{/button.status.have}}{{#button.status.have}}225px;{{/button.status.have}}">
-        {{#button.delete}}
-            <button rel="{{id}}" data-id="{{identificador}}"
-                    class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
-                <i class="material-icons">delete</i>
-            </button>
-        {{/button.delete}}
-
-        {{#button.update}}
-            <button data-id="{{id}}"
-                    class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit"
-                    rel="{{identificador}}">
-                <i class="material-icons">edit</i>
-            </button>
-        {{/button.update}}
-
-        {{#button.status.have}}
-            <label class="right" style="height: 40px;">
-                <div class="switch switch-squad" style="margin:0 7px 0 0">
-                    <input type="checkbox" class="switch-status-table switchCheck"
-                           data-status="{{button.status.status}}"
-                           data-entity="{{entity}}" data-id="{{id}}"
-                           rel="{{identificador}}"
-                           {{#button.status.status}}checked='checked'{{/button.status.status}}
-                    />
-                    <div class="slider"></div>
-                </div>
-            </label>
-        {{/button.status.have}}
-
-        {{#button.autor.have}}
-            {{#button.autor.id}}
-                <label class="right">
-                    <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}" rel="{{identificador}}">
-                        <option value="" selected="selected"></option>
-                        {{#button.autor.list}}
-                            <option value="{{id}}">{{nome}}</option>
-                        {{/button.autor.list}}
-                    </select>
-                </label>
-            {{/button.autor.id}}
-
-            {{^button.autor.id}}
-                <label class="right">
-                    <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}" rel="{{identificador}}">
-                        {{#button.autor.list}}
-                            <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{nome}}</option>
-                        {{/button.autor.list}}
-                    </select>
-                </label>
-            {{/button.autor.id}}
-        {{/button.autor.have}}
-
-        {{^db_status}}
-            {{#online}}
-                <button rel="{{id}}" data-id="{{identificador}}" title="enviar este registro"
-                        class="btn-grid-sync right btn-floating color-white color-hover-text-blue hover-shadow opacity hover-opacity-off">
-                    <i class="material-icons">sync_problem</i>
+    <td class="tableActions no-select relative{{^permission}} disabled" title="Sem Permissão{{/permission}}"
+            style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}width: {{^button.status.have}}170px;{{/button.status.have}}{{#button.status.have}}225px;{{/button.status.have}}">
+        <div class="right padding-small padding-top table-data-option pointer hide s-show" data-delete="{{button.delete}}" data-edit="{{button.update}}" data-status="{{button.status.have}}" data-statusactive="{{button.status.status}}" data-entity="{{entity}}" data-sync="{{db_status}}" rel="{{id}}" data-rel="{{identificador}}"><i class="material-icons">more_vert</i></div>
+        <div class="col s-hide">
+            {{#button.delete}}
+                <button rel="{{id}}" data-id="{{identificador}}"
+                        class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
+                    <i class="material-icons">delete</i>
                 </button>
-            {{/online}}
-        {{/db_status}}
+            {{/button.delete}}
+
+            {{#button.update}}
+                <button data-id="{{id}}"
+                        class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit"
+                        rel="{{identificador}}">
+                    <i class="material-icons">edit</i>
+                </button>
+            {{/button.update}}
+
+            {{#button.status.have}}
+                <label class="right" style="height: 40px;">
+                    <div class="switch switch-squad" style="margin:0 7px 0 0">
+                        <input type="checkbox" class="switch-status-table switchCheck"
+                               data-status="{{button.status.status}}"
+                               data-entity="{{entity}}" data-id="{{id}}"
+                               rel="{{identificador}}"
+                               {{#button.status.status}}checked='checked'{{/button.status.status}}
+                        />
+                        <div class="slider"></div>
+                    </div>
+                </label>
+            {{/button.status.have}}
+
+            {{#button.autor.have}}
+                {{#button.autor.id}}
+                    <label class="right">
+                        <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}"
+                                rel="{{identificador}}">
+                            <option value="" selected="selected"></option>
+                            {{#button.autor.list}}
+                                <option value="{{id}}">{{nome}}</option>
+                            {{/button.autor.list}}
+                        </select>
+                    </label>
+                {{/button.autor.id}}
+
+                {{^button.autor.id}}
+                    <label class="right">
+                        <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}"
+                                rel="{{identificador}}">
+                            {{#button.autor.list}}
+                                <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{nome}}</option>
+                            {{/button.autor.list}}
+                        </select>
+                    </label>
+                {{/button.autor.id}}
+            {{/button.autor.have}}
+
+            {{^db_status}}
+                {{#online}}
+                    <button rel="{{id}}" data-id="{{identificador}}" title="enviar este registro"
+                            class="btn-grid-sync right btn-floating color-white color-hover-text-blue hover-shadow opacity hover-opacity-off">
+                        <i class="material-icons">sync_problem</i>
+                    </button>
+                {{/online}}
+            {{/db_status}}
+        </div>
     </td>
 </tr>

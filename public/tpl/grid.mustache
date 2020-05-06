@@ -407,7 +407,7 @@
             <tr class="no-select">
                 {{#fields}}
                     {{#first}}
-                    <th style="width: 105px;">
+                    <th style="width: 113px;min-width: 113px;">
                     {{/first}}
                     {{^first}}
                     <th>
@@ -422,7 +422,10 @@
                     </span>
                 </th>
                 {{/fields}}
-                <th class="align-right" style="padding-right: 20px;padding-top: 14px;width: 100px;">Ações</th>
+                <th class="align-right" style="padding-right: 20px;padding-top: 14px;width: 115px;">
+                    <div class="right padding-left pointer table-header-option" rel="{{identificador}}"><i class="material-icons">more_vert</i></div>
+                    <div class="right s-hide">Ações</div>
+                </th>
             </tr>
             </thead>
             <tbody class="relative"></tbody>
