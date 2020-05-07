@@ -164,12 +164,6 @@ function downloadData(grid, pretty) {
     });
 }
 
-function readGraficosTable(id) {
-    return getGraficos().then(graficos => {
-        $("#list-graficos").htmlTemplate('graficos-list', {graficos: graficos, identificador: id});
-    });
-}
-
 $(function () {
     $("#app").off("click", ".table-reload").on("click", ".table-reload", function () {
         let grid = grids[$(this).attr("rel")];
