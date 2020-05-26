@@ -47,31 +47,6 @@
                 </label>
             {{/button.status.have}}
 
-            {{#button.autor.have}}
-                {{#button.autor.id}}
-                    <label class="right">
-                        <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}"
-                                rel="{{identificador}}">
-                            <option value="" selected="selected"></option>
-                            {{#button.autor.list}}
-                                <option value="{{id}}">{{nome}}</option>
-                            {{/button.autor.list}}
-                        </select>
-                    </label>
-                {{/button.autor.id}}
-
-                {{^button.autor.id}}
-                    <label class="right">
-                        <select class="autor-switch-form right" style="margin: 0 10px 0 0;" data-id="{{id}}"
-                                rel="{{identificador}}">
-                            {{#button.autor.list}}
-                                <option value="{{id}}" {{#selected}}selected="selected"{{/selected}}>{{nome}}</option>
-                            {{/button.autor.list}}
-                        </select>
-                    </label>
-                {{/button.autor.id}}
-            {{/button.autor.have}}
-
             {{^db_status}}
                 {{#online}}
                     <button rel="{{id}}" data-id="{{identificador}}" title="enviar este registro"
