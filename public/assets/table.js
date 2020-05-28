@@ -134,7 +134,7 @@ function downloadData(grid, pretty) {
         })
     }
     
-    exeRead(grid.entity, grid.filter, grid.order, grid.orderPosition, (grid.limit > LIMITOFFLINE ? LIMITOFFLINE : grid.limit), offset).then(result => {
+    exeRead(grid.entity, grid.search, grid.filter, grid.order, grid.orderPosition, (grid.limit > LIMITOFFLINE ? LIMITOFFLINE : grid.limit), offset).then(result => {
         if (result.data.length > 0) {
             let results = [];
             if (ids.length) {
@@ -259,39 +259,8 @@ $(function () {
         tempoDigitacao = setTimeout(function () {
             let grid = grids[$this.attr("data-id")];
             if(typeof grid !== "undefined") {
-                let valor = $this.val();
-                grid.page = 1;
-                let achou = !1;
-                $.each(grid.filter, function (i, e) {
-                    if (e.operator === "por") {
-                        if (valor === "") {
-                            deleteBadge(e.id);
-                            grid.filter.splice(i, 1);
-                            grid.readData()
-                        } else if (e.value !== valor) {
-                            e.value = valor;
-                            $("#" + e.id).find(".value").html(valor);
-                            grid.readData()
-                        }
-                        achou = !0;
-                        return !1
-                    }
-                });
-                if (!achou && valor !== "") {
-                    let filter = {
-                        column: 'busca',
-                        operator: "por",
-                        value: valor,
-                        identificador: grid.identificador,
-                        id: Date.now()
-                    };
-                    grid.filter.push(filter);
-                    getTemplates().then(templates => {
-                        return grid.$element.find(".table-filter-list").append(Mustache.render(templates.filter_badge, filter))
-                    }).then(d => {
-                        grid.readData()
-                    })
-                }
+                grid.search = $this.val();
+                grid.readData();
             }
         }, 350);
     }).off("change", ".tableLimit").on("change", ".tableLimit", function () {
