@@ -133,18 +133,27 @@ function downloadData(grid, pretty) {
             ids.push(parseInt($(e).attr("rel")))
         })
     }
-    
-    exeRead(grid.entity, grid.search, grid.filter, grid.order, grid.orderPosition, (grid.limit > LIMITOFFLINE ? LIMITOFFLINE : grid.limit), offset).then(result => {
-        if (result.data.length > 0) {
+
+    let read = new Read();
+    read.setOrderColumn(grid.order);
+    read.setLimit(grid.limit);
+    read.setOffset(offset);
+    read.setFilter(grid.search);
+    if(grid.orderPosition)
+        read.setOrderReverse();
+
+    read.exeRead(grid.entity).then(result => {
+        if (result.length > 0) {
             let results = [];
-            if (ids.length) {
-                $.each(result.data, function (i, e) {
+            if (!isEmpty(result) && ids.length) {
+                for(let e of result) {
                     if (ids.indexOf(parseInt(e.id)) > -1)
                         results.push(e)
-                })
+                }
             } else {
-                results = result.data
+                results = result
             }
+
             toast("Processando dados para exportar", 5000);
             getDataExtended(grid.entity, results, pretty).then(dd => {
                 toast(results.length + " registros exportados", 3000, "toast-success");
