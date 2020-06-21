@@ -180,7 +180,7 @@
 
                 <div class="modal-filter modal-filter-content hide">
                     <div class="panel">
-                        <div class="display-container radius animate-top card-4">
+                        <div class="display-container radius animate-top card-4" style="min-height: 200px;">
                             <header class="container theme">
                         <span class="theme-d3 padding-large opacity hover-opacity-off button margin-0 display-topright btn-close-modal"
                               rel="{{identificador}}">
@@ -228,7 +228,7 @@
             </div>
         </div>
 
-        <table class="table-all" style="border: none">
+        <table class="table-all">
             <thead>
             <tr class="no-select">
                 {{#fields}}
@@ -257,3 +257,117 @@
     <input type="hidden" class="table-pagina-{{entity}}" value="0" data-entity="{{entity}}"
            id="table-pagina-{{entity}}"/>
 </div>
+
+<style>
+    .table-all {
+        border: none
+    }
+
+    .sub-header-table {
+        width: 100%;
+    }
+
+    .sub-header-table-limit {
+        width: 55px !important;
+        margin-right: 7px;
+        margin-top: 5px;
+    }
+
+    .sub-header-table-limit select {
+        margin-bottom: 0;
+        margin-top: 2px;
+    }
+
+    .table-campo-geral {
+        margin-bottom: 0;
+        font-size: 14px
+    }
+
+    .table-select-all {
+        margin: 15px 2rem 11px 0;
+    }
+
+    .table-filter {
+        height: 0;
+        overflow: hidden
+    }
+
+    .btn-new-filter {
+        margin: 2px 2px 2px 0;
+        height: 30px;
+    }
+
+    .btn-new-filter i {
+        margin-top: -1px;
+    }
+
+    .modal-filter-content {
+        position: absolute;
+        z-index: 99999;
+        left: 0 !important;
+        width: 100% !important;
+        top: 9px;
+    }
+
+    .modal-filter-content .display-container {
+        max-width: 1100px !important;
+        float: initial;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    .modal-filter-content .display-container header {
+        padding-left: 12px;
+    }
+
+    .modal-filter-content .display-container h4 {
+        padding-bottom: 9px !important
+    }
+
+    .table-filter-columns, .table-filter-operator {
+        margin: 1px 0 7px 5px;
+    }
+
+    .table-filter-value {
+        padding-bottom: 5px;
+        margin: 0 0 7px 5px
+    }
+
+    .table-filter-btn {
+        margin: 2px 0 0 5px;
+    }
+
+    .pagination {
+        background: #f1f1f1;
+        border-top: solid 5px #ddd;
+    }
+
+    .pagination > .button {
+        padding: 0;
+    }
+
+    .tableImgTd {
+        background-repeat: no-repeat;
+        background-position: left;
+        background-size: 96%
+    }
+
+    .activeBoolean {
+        height: 16px;
+        width: 16px;
+        background: #ffabab;
+        border-radius: 15px;
+        margin: 5px 10px 0;
+    }
+
+    .activeBoolean.active {
+        background: #62BAB2;
+    }
+
+    @media only screen and (min-width: 600px) {
+        .sub-header-table {
+            width: 250px !important;
+            padding-top: 0 !important;
+        }
+    }
+</style>
