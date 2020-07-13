@@ -2,7 +2,7 @@
     {{#fields}}
         <td class="padding-16{{^show}} hide{{/show}} {{class}}" rel="{{column}}" style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}{{style}}">
             {{#first}}
-                <label class="left pointer">
+                <label class="left pointer" style="min-width: 100px">
                     <input type="checkbox"{{#checked}} checked="checked"{{/checked}} class="table-select"
                            rel="{{id}}" data-id="{{identificador}}" style="margin: 14px 30px 20px 0"/>
                     <span class="td-value">{{{value}}}</span>
