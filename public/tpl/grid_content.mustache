@@ -20,17 +20,16 @@
         <div class="col s-hide">
             {{#button.delete}}
                 <button rel="{{id}}" data-id="{{identificador}}"
-                        class="btn-grid-delete right btn-floating color-white color-hover-text-red hover-shadow opacity hover-opacity-off">
+                        class="btn-grid-delete right btn-floating color-hover-text-red hover-shadow opacity hover-opacity-off">
                     <i class="material-icons">delete</i>
                 </button>
             {{/button.delete}}
 
             {{#button.update}}
-                <button data-id="{{id}}"
-                        class="right btn-floating color-white hover-shadow opacity hover-opacity-off btn-table-edit"
+                <a href="form-maestru/{{entity}}/{{id}}" target="dashboardContent" class="right btn-floating hover-shadow opacity hover-opacity-off btn-table-edit"
                         rel="{{identificador}}">
                     <i class="material-icons">edit</i>
-                </button>
+                </a>
             {{/button.update}}
 
             {{#button.status.have}}
@@ -50,7 +49,7 @@
             {{^db_status}}
                 {{#online}}
                     <button rel="{{id}}" data-id="{{identificador}}" title="enviar este registro"
-                            class="btn-grid-sync right btn-floating color-white color-hover-text-blue hover-shadow opacity hover-opacity-off">
+                            class="btn-grid-sync right btn-floating color-hover-text-blue hover-shadow opacity hover-opacity-off">
                         <i class="material-icons">sync_problem</i>
                     </button>
                 {{/online}}

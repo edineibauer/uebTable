@@ -1,30 +1,30 @@
 <div class="responsive tableList col padding-24 s-padding-0" id="tableList-{{entity}}" data-entity="{{entity}}"
      data-id="{{identificador}}">
-    <div class="col z-depth-2 grid-form-body radius border s-border-0 s-radius-0">
-        <div class="col no-select theme-d1 loadindTableSpace">
+    <div class="col z-depth-2 grid-form-body radius mode-border-colorLine mode-background-colorba mode-text-colorText mode-border-colorLine overflow-hidden border s-border-0 s-radius-0">
+        <div class="col mode-background-colorLine no-select loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
                 <a href="dashboard" data-animation="back"
-                   class="margin-bottom left color-white hover-shadow btn-floating">
+                   class="margin-bottom left mode-background-colorBox hover-shadow btn-floating">
                     <i class="material-icons left">keyboard_arrow_left</i>
                 </a>
                 <button title="filtro"
-                        class="margin-bottom btn-floating left color-white hover-shadow btn-table-filter hide"
+                        class="margin-bottom btn-floating left mode-background-colorBox hover-shadow btn-table-filter hide"
                         rel="{{identificador}}">
                     <i class="material-icons left">list</i>
                 </button>
                 {{#sync}}
                     <button title="enviar todos ({{sync}})" onclick="_syncDataBtn('{{entity}}')"
-                            class="margin-bottom btn-sync-all left btn-floating color-white color-hover-text-blue hover-shadow">
+                            class="margin-bottom btn-sync-all left btn-floating mode-background-colorBox color-hover-text-blue hover-shadow">
                         <i class="material-icons">sync_problem</i>
                     </button>
                 {{/sync}}
 
                 {{#novo}}
-                    <button class="btb radius right color-white hover-shadow btn-table-novo"
-                            style="margin: 4px 0 18px 0"
+                    <a href="form-maestru/{{entity}}" target="dashboardContent" class="btb radius right mode-background-colorBox mode-text-colorText hover-shadow"
+                            style="margin: 4px 0 18px 0;padding: 7px 10px 6px 5px;"
                             rel="{{identificador}}">
                         <i class="material-icons left">add</i><span class="left">Novo</span>
-                    </button>
+                    </a>
                 {{/novo}}
 
                 <small class="margin-bottom total right"
@@ -38,7 +38,7 @@
 
                 <div class="col right padding-right sub-header-table s-hide">
                     <div class="col sub-header-table-limit">
-                        <select class="col tableLimit font-small theme-text-aux theme-d1 theme-border-l" data-id="{{identificador}}">
+                        <select class="col tableLimit font-small mode-text-colorText mode-background-colorBackground mode-border-colorLine" data-id="{{identificador}}">
                             <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">
                                 15
                             </option>
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="rest" style="margin-top: 2px">
-                        <input type="text" class="table-campo-geral theme-text-aux" autocomplete="off"
+                        <input type="text" class="table-campo-geral mode-text-colorText" autocomplete="off"
                                data-id="{{identificador}}"
                                placeholder="busca..."/>
                     </div>
@@ -72,12 +72,12 @@
             </div>
         </div>
 
-        <div class="col theme-l1 padding-4 no-select">
+        <div class="col mode-background-colorBackground padding-4 no-select">
             <div class="col table-filter transition-easy" style="display: flow-root">
                 <div class="col padding-medium margin-bottom s-padding-4 s-padding-top s-margin-0 hide s-show">
                     <div class="col right padding-right sub-header-table">
                         <div class="col sub-header-table-limit">
-                            <select class="col tableLimit font-small theme-text-aux theme-l1"
+                            <select class="col tableLimit font-small mode-text-colorText mode-background-colorBackground mode-border-colorLine"
                                     data-id="{{identificador}}">
                                 <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">
                                     15
@@ -104,7 +104,7 @@
                         </div>
 
                         <div class="rest">
-                            <input type="text" class="table-campo-geral theme-text-aux" autocomplete="off"
+                            <input type="text" class="table-campo-geral mode-text-colorText" autocomplete="off"
                                    data-id="{{identificador}}"
                                    placeholder="busca..."/>
                         </div>
@@ -114,41 +114,41 @@
                 <div class="col">
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
                         <label for="import-file-crud" title="Recuperar backup dos registros"
-                               class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
-                            <i class="material-icons left theme-text-d">cloud_upload</i>
+                               class="right btn-floating hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                            <i class="material-icons left">cloud_upload</i>
                         </label>
                         <input type="file" id="import-file-crud" rel="{{identificador}}" accept=".xlsx, .xls, .csv"
                                class="hide"/>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
                         <label id="export-file-crud" rel="{{identificador}}" title="Backup dos registros"
-                               class="right btn-floating hover-shadow opacity hover-opacity-off color-white">
-                            <i class="material-icons left theme-text-d">cloud_download</i>
+                               class="right btn-floating hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                            <i class="material-icons left">cloud_download</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
                         <label id="download-file-crud" rel="{{identificador}}" title="Download dos registros Csv"
                                style="margin: 3px 15px 4px 0;"
-                               class="right btn radius hover-shadow opacity hover-opacity-off color-white">
-                            <i class="material-icons left theme-text-d">get_app</i>
+                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                            <i class="material-icons left">get_app</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
                         <label id="gerar-card-informativo" rel="{{identificador}}" title="Gerar Card Informativo"
                                style="margin: 3px 15px 4px 0;"
-                               class="right btn radius hover-shadow opacity hover-opacity-off color-white">
-                            <i class="material-icons left theme-text-d">view_agenda</i>
+                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                            <i class="material-icons left">view_agenda</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
                         <label id="gerar-relatorio" rel="{{identificador}}" title="Gerar Relatório"
                                style="margin: 3px 15px 4px 0;"
-                               class="right btn radius hover-shadow opacity hover-opacity-off color-white">
-                            <i class="material-icons left theme-text-d">assessment</i>
+                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                            <i class="material-icons left">assessment</i>
                         </label>
                     </div>
                     <div class="rest table-filter-list padding-medium color-text-gray">
-                        <div class="font-light font-large left padding-small theme-text-aux">Filtros:</div>
+                        <div class="font-light font-large left padding-small">Filtros:</div>
                         <button class="left theme-aux pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
                                 rel="{{identificador}}" data-rel="group"
                                 style="height: 26px;margin: 5px;">
@@ -168,7 +168,7 @@
                             <span class="left theme-text">grupo de exlusão</span>
                         </button>
                         <label class="left padding-tiny padding-4 font-small" style="height: 36px;margin: 0 5px;">
-                            <select class="col font-small theme-text-aux theme-l1 aggroup padding-4 radius margin-0"
+                            <select class="col font-small theme-l1 aggroup padding-4 radius margin-0"
                                     rel="{{identificador}}">
                             </select>
                         </label>
@@ -217,7 +217,7 @@
 
                                 <div class="col s12 m2 hide table-filter-btn">
                                     <button title="aplicar filtro"
-                                            class="btb left radius color-white hover-shadow opacity hover-opacity-off btn-table-filter-apply"
+                                            class="btb left radius mode-background-colorBox hover-shadow opacity hover-opacity-off btn-table-filter-apply"
                                             rel="{{identificador}}">
                                         <i class="material-icons left">done</i><span
                                             class="left" style="padding-left: 5px">aplicar</span>
@@ -231,7 +231,7 @@
             </div>
         </div>
 
-        <table class="table-all">
+        <table class="table-all mode-background-colorBox">
             <thead>
             <tr class="no-select">
                 {{#fields}}
@@ -337,6 +337,10 @@
 
     .table-filter-btn {
         margin: 2px 0 0 5px;
+    }
+
+    .tableLimit {
+        padding-left: 10px!important;
     }
 
     .pagination {
