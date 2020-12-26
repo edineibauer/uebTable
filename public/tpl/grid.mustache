@@ -1,26 +1,26 @@
 <div class="responsive tableList col padding-24 s-padding-0" id="tableList-{{entity}}" data-entity="{{entity}}"
      data-id="{{identificador}}">
-    <div class="col z-depth-2 grid-form-body radius mode-border-colorLine mode-background-colorba mode-text-colorText mode-border-colorLine overflow-hidden border s-border-0 s-radius-0">
-        <div class="col mode-background-colorLine no-select loadindTableSpace">
+    <div class="col z-depth-2 grid-form-body radius mode-border-colorLine mode-background-colorBox mode-text-colorText border s-border-0 s-radius-0">
+        <div class="col no-select loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
                 <a href="dashboard" data-animation="back"
                    class="margin-bottom left mode-background-colorBox hover-shadow btn-floating">
                     <i class="material-icons left">keyboard_arrow_left</i>
                 </a>
                 <button title="filtro"
-                        class="margin-bottom btn-floating left mode-background-colorBox hover-shadow btn-table-filter hide"
+                        class="margin-bottom btn-floating left mode-background-colorLine hover-shadow btn-table-filter hide"
                         rel="{{identificador}}">
                     <i class="material-icons left">list</i>
                 </button>
                 {{#sync}}
                     <button title="enviar todos ({{sync}})" onclick="_syncDataBtn('{{entity}}')"
-                            class="margin-bottom btn-sync-all left btn-floating mode-background-colorBox color-hover-text-blue hover-shadow">
+                            class="margin-bottom btn-sync-all left btn-floating mode-background-colorLine color-hover-text-blue hover-shadow">
                         <i class="material-icons">sync_problem</i>
                     </button>
                 {{/sync}}
 
                 {{#novo}}
-                    <a href="form-maestru/{{entity}}" target="dashboardContent" class="btb radius right mode-background-colorBox mode-text-colorText hover-shadow"
+                    <a href="form-maestru/{{entity}}" target="dashboardContent" class="btb radius right mode-background-colorLine mode-text-colorText hover-shadow"
                             style="margin: 4px 0 18px 0;padding: 7px 10px 6px 5px;"
                             rel="{{identificador}}">
                         <i class="material-icons left">add</i><span class="left">Novo</span>
@@ -38,7 +38,7 @@
 
                 <div class="col right padding-right sub-header-table s-hide">
                     <div class="col sub-header-table-limit">
-                        <select class="col tableLimit font-small mode-text-colorText mode-background-colorBackground mode-border-colorLine" data-id="{{identificador}}">
+                        <select class="col tableLimit font-small mode-text-colorText mode-background-colorBox mode-border-colorLine" data-id="{{identificador}}">
                             <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">
                                 15
                             </option>
@@ -72,12 +72,12 @@
             </div>
         </div>
 
-        <div class="col mode-background-colorBackground padding-4 no-select">
+        <div class="col mode-background-colorBox padding-4 no-select">
             <div class="col table-filter transition-easy" style="display: flow-root">
                 <div class="col padding-medium margin-bottom s-padding-4 s-padding-top s-margin-0 hide s-show">
                     <div class="col right padding-right sub-header-table">
                         <div class="col sub-header-table-limit">
-                            <select class="col tableLimit font-small mode-text-colorText mode-background-colorBackground mode-border-colorLine"
+                            <select class="col tableLimit font-small mode-text-colorText mode-background-colorBox mode-border-colorLine"
                                     data-id="{{identificador}}">
                                 <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">
                                     15
