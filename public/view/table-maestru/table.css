@@ -93,8 +93,8 @@
     background-color: #BBBBBB !important;
 }
 
-@html.darkmode .loadindTableSpace > div.col:not(.form-header) {
-    padding-bottom: 10px !important;
+@html.darkmode .loadindTableSpace .btn-floating, @html.darkmode .loadindTableSpace .btb {
+    background: #444!important;
 }
 
 @html.darkmode .loadindTableSpace > div.col:not(.form-header) button {

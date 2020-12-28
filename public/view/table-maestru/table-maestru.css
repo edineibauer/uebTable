@@ -2,10 +2,16 @@
     padding: 0 30px;
 }
 
-@html.darkmode .loadindTableSpace .btn-floating, @html.darkmode .loadindTableSpace .btb {
-    background: #444!important;
-}
-
 .table-campo-geral {
     padding-left: 10px!important;
+}
+
+.loadindTableSpace > div.col:not(.form-header) {
+    padding-bottom: 10px !important;
+}
+
+.w3-css .table-all {
+    border-bottom: none!important;
+    border-left: none!important;
+    border-right: none!important;
 }
