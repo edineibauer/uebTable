@@ -4,7 +4,7 @@
         <div class="col no-select loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
                 <a href="#" data-preventDefault="true" onclick="parent.pageTransitionOnIframe('dashboardContent', 'dashboard')"
-                   class="margin-bottom left mode-background-colorLine mode-text-colorText hover-shadow btn-floating">
+                   class="margin-bottom left mode-background-colorLine mode-text-colorText hover-shadow btn-floating" id="btn-back">
                     <i class="material-icons left">keyboard_arrow_left</i>
                 </a>
                 {{#sync}}
@@ -385,3 +385,15 @@
         }
     }
 </style>
+
+<script>
+    function inIframe () {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
+    }
+    if(!inIframe())
+        $("#btn-back").remove();
+</script>
