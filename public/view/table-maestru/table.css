@@ -1,0 +1,120 @@
+@html.darkmode .grid-form-body, @html.darkmode .form-control > .card {
+    border-color: #111 !important;
+    background-color: #444444;
+}
+
+@html.darkmode .extend_register, @html.darkmode .extend_register > .col {
+    padding: 0;
+}
+
+@html.darkmode .extend_register:nth-child(odd) {
+    background-color: #333333 !important;
+    border-color: #555555!important;
+}
+
+@html.darkmode .color-white, @html.darkmode .form-crud, @html.darkmode .file_gallery > .mock-file{
+    background-color: #444444 !important;
+    color: #eeeeee !important;
+    border-color: #333333 !important;
+}
+
+@html.darkmode .border-top {
+    border-color: #666666!important;
+}
+
+@html.darkmode .form-crud input, @html.darkmode .form-crud select, @html.darkmode .w3-css input, @html.darkmode .form-crud textarea {
+    color: #FFFFFF !important;
+    background-color: #444444 !important;
+}
+
+@html.darkmode .form-crud select {
+    border-bottom-color: #999999 !important;
+}
+
+@html.darkmode .input-bar:before, @html.darkmode .form-crud .input-bar:after, @html.darkmode .form-crud button, @html.darkmode .switch input:checked + .slider:after {
+    background-color: #208cd2 !important;
+}
+
+@html.darkmode label span.col, @html.darkmode select option[disabled], @html.darkmode label.formLabel {
+    color: #BBBBBB !important;
+}
+
+@html.darkmode .table-all {
+    border-color: #555555 !important;
+}
+
+@html.darkmode input[type=checkbox]:before {
+    border-color: #777777 !important;
+}
+
+@html.darkmode .table-all tr > td:first-child > label {
+    margin: 0;
+    height: 22px;
+}
+
+@html.darkmode .table-all tr {
+    background-color: #3c3c3c !important;
+    border-color: #555 !important;
+    color: #eeeeee !important;
+}
+
+@html.darkmode .table-all tr:nth-child(odd) {
+    background-color: #444444 !important;
+}
+
+@html.darkmode .table-all tr:nth-child(odd) button, @html.darkmode .pagination {
+    background-color: #333333 !important;
+}
+
+@html.darkmode .grid_content_card_header > ul.col {
+    padding: 0 !important;
+}
+
+@html.darkmode .grid_content_card_header {
+    color: #999999 !important;
+}
+
+@html.darkmode .pagination {
+    color: #FFFFFF;
+    border-top: 0 !important;
+}
+
+@html.darkmode .pagination > li {
+    height: 45px;
+    padding-top: 11px;
+    border-radius: 7px;
+}
+
+@html.darkmode .switch .slider {
+    background-color: #353535 !important;
+}
+
+@html.darkmode .switch-squad .slider:after {
+    background-color: #BBBBBB !important;
+}
+
+@html.darkmode .loadindTableSpace > div.col:not(.form-header) {
+    padding-bottom: 10px !important;
+}
+
+@html.darkmode .loadindTableSpace > div.col:not(.form-header) button {
+    margin-left: 10px !important;
+}
+
+@html.darkmode .loadindTableSpace > div.col:not(.form-header) button > i {
+    padding-right: 7px;
+}
+
+@html.darkmode .list-input > .col {
+    padding: 0!important;
+    color: #333333!important;
+}
+
+@html.darkmode .form-control.color-text-gray-dark {
+    padding-top: 100px!important;
+    font-size: 20px;
+}
+
+@html.darkmode button.opacity {
+    opacity: .9
+}

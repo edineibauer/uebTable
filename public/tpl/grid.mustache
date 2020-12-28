@@ -3,18 +3,13 @@
     <div class="col z-depth-2 grid-form-body radius mode-border-colorLine mode-background-colorBox mode-text-colorText border s-border-0 s-radius-0">
         <div class="col no-select loadindTableSpace">
             <div class="col padding-large padding-24 s-padding-medium s-padding-16" style="display: flow-root">
-                <a href="dashboard" data-animation="back"
-                   class="margin-bottom left mode-background-colorBox hover-shadow btn-floating">
+                <a href="dashboardContent" target="dashboardContent" data-animation="back"
+                   class="margin-bottom left mode-background-colorLine mode-text-colorText hover-shadow btn-floating">
                     <i class="material-icons left">keyboard_arrow_left</i>
                 </a>
-                <button title="filtro"
-                        class="margin-bottom btn-floating left mode-background-colorLine hover-shadow btn-table-filter hide"
-                        rel="{{identificador}}">
-                    <i class="material-icons left">list</i>
-                </button>
                 {{#sync}}
                     <button title="enviar todos ({{sync}})" onclick="_syncDataBtn('{{entity}}')"
-                            class="margin-bottom btn-sync-all left btn-floating mode-background-colorLine color-hover-text-blue hover-shadow">
+                            class="margin-bottom btn-sync-all left btn-floating mode-background-colorLine mode-text-colorText color-hover-text-blue hover-shadow">
                         <i class="material-icons">sync_problem</i>
                     </button>
                 {{/sync}}
@@ -27,14 +22,14 @@
                     </a>
                 {{/novo}}
 
-                <small class="margin-bottom total right"
-                       style="height:40px; padding:12px 10px 6px 10px">{{total}}</small>
-
                 <div class="left no-padding">
                     <h4 class="left" style="padding: 5px 0 0 7px;">
                         {{#goodName}}{{entity}}{{/goodName}}
                     </h4>
                 </div>
+
+                <small class="margin-bottom total left padding-left-8"
+                       style="height:40px; padding:12px 10px 6px 10px">{{total}}</small>
 
                 <div class="col right padding-right sub-header-table s-hide">
                     <div class="col sub-header-table-limit">
@@ -69,6 +64,12 @@
                                placeholder="busca..."/>
                     </div>
                 </div>
+
+                <button title="filtro"
+                        class="margin-bottom btn-floating right mode-background-colorLine mode-text-colorText hover-shadow btn-table-filter hide" style="margin-left: 0!important"
+                        rel="{{identificador}}">
+                    <i class="material-icons left">list</i>
+                </button>
             </div>
         </div>
 
@@ -168,7 +169,7 @@
                             <span class="left theme-text">grupo de exlusão</span>
                         </button>
                         <label class="left padding-tiny padding-4 font-small" style="height: 36px;margin: 0 5px;">
-                            <select class="col font-small theme-l1 aggroup padding-4 radius margin-0"
+                            <select class="col font-small aggroup padding-4 radius margin-0"
                                     rel="{{identificador}}">
                             </select>
                         </label>
@@ -364,6 +365,12 @@
 
     .activeBoolean.active {
         background: #62BAB2;
+    }
+
+    .btb {
+        -webkit-box-shadow: 2px 2px 7px -3px rgba(61,61,61,1);
+        -moz-box-shadow: 2px 2px 7px -3px rgba(61,61,61,1);
+        box-shadow: 2px 2px 7px -3px rgba(61,61,61,1);
     }
 
     @media only screen and (min-width: 600px) {

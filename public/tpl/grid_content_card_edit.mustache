@@ -1,13 +1,13 @@
 <div class="card col grid_content_card_edit radius animate-right" style="position: absolute;width: 140px;top: 10px;right: 0;margin-right:20px;z-index: 99;-webkit-animation-duration: .2s;animation-duration: .2s">
     <ul class="col padding-4">
         {{#editar}}
-            <li class="col padding-medium pointer theme-text-hover color-hover-gray-light transition-easy btn-table-edit" data-id="{{id}}" rel="{{identificador}}" style="margin-bottom: 3px">
+            <li class="col padding-medium pointer transition-easy btn-table-edit" data-id="{{id}}" rel="{{identificador}}" style="margin-bottom: 3px">
                 <i class="material-icons left font-large color-text-gray-dark padding-tiny" style="padding-right: 7px">edit</i>
                 <span class="left" style="padding:1px 0 0 3px">editar</span>
             </li>
         {{/editar}}
         {{#deletar}}
-            <li class="col padding-medium pointer theme-text-hover color-hover-gray-light transition-easy btn-grid-delete" rel="{{id}}" data-id="{{identificador}}" style="margin-bottom: 3px">
+            <li class="col padding-medium pointer transition-easy btn-grid-delete" rel="{{id}}" data-id="{{identificador}}" style="margin-bottom: 3px">
                 <i class="material-icons left font-large color-text-gray-dark padding-tiny" style="padding-right: 7px">delete</i>
                 <span class="left" style="padding:1px 0 0 3px">excluir</span></li>
         {{/deletar}}
@@ -28,7 +28,7 @@
             </li>
         {{/status}}
         {{^sync}}
-            <li class="col padding-medium pointer theme-text-hover color-hover-gray-light transition-easy btn-grid-sync" rel="{{id}}" data-id="{{identificador}}" style="margin-bottom: 3px">
+            <li class="col padding-medium pointer transition-easy btn-grid-sync" rel="{{id}}" data-id="{{identificador}}" style="margin-bottom: 3px">
                 <i class="material-icons left font-large color-text-gray-dark padding-tiny" style="padding-right: 7px">sync_problem</i>
                 <span class="left" style="padding:1px 0 0 3px">atualizar</span></li>
         {{/sync}}

@@ -1,0 +1,11 @@
+#table-maestru {
+    padding: 0 30px;
+}
+
+@html.darkmode .loadindTableSpace .btn-floating, @html.darkmode .loadindTableSpace .btb {
+    background: #444!important;
+}
+
+.table-campo-geral {
+    padding-left: 10px!important;
+}
