@@ -115,7 +115,7 @@
                 <div class="col">
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
                         <label for="import-file-crud" title="Recuperar backup dos registros"
-                               class="right btn-floating hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                               class="right btn-floating hover-shadow opacity hover-opacity-off mode-background-colorLine">
                             <i class="material-icons left">cloud_upload</i>
                         </label>
                         <input type="file" id="import-file-crud" rel="{{identificador}}" accept=".xlsx, .xls, .csv"
@@ -123,53 +123,53 @@
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
                         <label id="export-file-crud" rel="{{identificador}}" title="Backup dos registros"
-                               class="right btn-floating hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                               class="right btn-floating hover-shadow opacity hover-opacity-off mode-background-colorLine">
                             <i class="material-icons left">cloud_download</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
                         <label id="download-file-crud" rel="{{identificador}}" title="Download dos registros Csv"
                                style="margin: 3px 15px 4px 0;"
-                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorLine">
                             <i class="material-icons left">get_app</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
                         <label id="gerar-card-informativo" rel="{{identificador}}" title="Gerar Card Informativo"
                                style="margin: 3px 15px 4px 0;"
-                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorLine">
                             <i class="material-icons left">view_agenda</i>
                         </label>
                     </div>
                     <div class="col right padding-4 hide adminShow" style="width: 70px">
                         <label id="gerar-relatorio" rel="{{identificador}}" title="Gerar Relatório"
                                style="margin: 3px 15px 4px 0;"
-                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorBox">
+                               class="right btn radius hover-shadow opacity hover-opacity-off mode-background-colorLine">
                             <i class="material-icons left">assessment</i>
                         </label>
                     </div>
                     <div class="rest table-filter-list padding-medium color-text-gray">
                         <div class="font-light font-large left padding-small">Filtros:</div>
-                        <button class="left theme-aux pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
+                        <button class="mode-text-colorText left pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
                                 rel="{{identificador}}" data-rel="group"
                                 style="height: 26px;margin: 5px;">
-                            <i class="material-icons left font-large theme-text">add</i>
-                            <span class="left theme-text">filtro</span>
+                            <i class="material-icons left font-large">add</i>
+                            <span class="left">filtro</span>
                         </button>
-                        <button class="left disabled theme-aux pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
+                        <button class="mode-text-colorText left disabled pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
                                 rel="{{identificador}}" data-rel="inner_join" disabled="disabled"
                                 style="height: 26px;margin: 5px;">
-                            <i class="material-icons left font-large theme-text">add</i>
-                            <span class="left theme-text">grupo de inclusão</span>
+                            <i class="material-icons left font-large">add</i>
+                            <span class="left">grupo de inclusão</span>
                         </button>
-                        <button class="left disabled theme-aux pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
+                        <button class="mode-text-colorText left disabled pointer hover-shadow radius padding-tiny padding-4 font-small btn-new-group"
                                 rel="{{identificador}}" data-rel="outer_join" disabled="disabled"
                                 style="height: 26px;margin: 5px;">
-                            <i class="material-icons left font-large theme-text">add</i>
-                            <span class="left theme-text">grupo de exlusão</span>
+                            <i class="material-icons left font-large">add</i>
+                            <span class="left">grupo de exlusão</span>
                         </button>
                         <label class="left padding-tiny padding-4 font-small" style="height: 36px;margin: 0 5px;">
-                            <select class="col font-small aggroup padding-4 radius margin-0"
+                            <select class="col font-small aggroup padding-4 radius margin-0 mode-background-colorBox mode-text-colorText"
                                     rel="{{identificador}}">
                             </select>
                         </label>
@@ -181,17 +181,17 @@
 
                 <div class="modal-filter modal-filter-content hide">
                     <div class="panel">
-                        <div class="display-container radius animate-top card-4" style="min-height: 215px;">
-                            <header class="container theme">
-                        <span class="theme-d3 padding-large opacity hover-opacity-off button margin-0 display-topright btn-close-modal"
+                        <div class="display-container radius animate-top card-4 mode-background-colorBox mode-text-colorText" style="min-height: 215px;">
+                            <header class="container mode-background-colorBackground">
+                        <span class="mode-background-colorLine mode-text-colorText padding-large opacity hover-opacity-off button margin-0 display-topright btn-close-modal"
                               rel="{{identificador}}">
                             &times;
                         </span>
                                 <h4 class="padding-8">Novo Filtro</h4>
                             </header>
                             <div class="panel padding-24">
-                                <select class="col s12 m3 table-filter-columns" data-entity="{{entity}}" data-rel="0" rel="{{identificador}}"></select>
-                                <select class="col s12 m3 table-filter-operator hide">
+                                <select class="col s12 m3 table-filter-columns mode-background-colorBox mode-text-colorText" data-entity="{{entity}}" data-rel="0" rel="{{identificador}}"></select>
+                                <select class="col s12 m3 table-filter-operator mode-background-colorBox mode-text-colorText hide">
                                     <option disabled="disabled" class="color-text-gray" selected="selected"
                                             value="">
                                         regra...
@@ -214,11 +214,11 @@
                                     <option value="neste mês" class="hide dateOption">neste mês</option>
                                     <option value="neste ano" class="hide dateOption">neste ano</option>
                                 </select>
-                                <input type="text" placeholder="valor..." class="col s12 m3 table-filter-value hide"/>
+                                <input type="text" placeholder="valor..." class="col s12 m3 mode-background-colorBox mode-text-colorText table-filter-value hide"/>
 
                                 <div class="col s12 m2 hide table-filter-btn">
                                     <button title="aplicar filtro"
-                                            class="btb left radius mode-background-colorBox hover-shadow opacity hover-opacity-off btn-table-filter-apply"
+                                            class="btb left radius mode-background-colorLine mode-text-colorText hover-shadow opacity hover-opacity-off btn-table-filter-apply"
                                             rel="{{identificador}}">
                                         <i class="material-icons left">done</i><span
                                             class="left" style="padding-left: 5px">aplicar</span>
