@@ -31,10 +31,6 @@
     border-bottom-color: #999999 !important;
 }
 
-@html.darkmode .input-bar:before, @html.darkmode .form-crud .input-bar:after, @html.darkmode .form-crud button, @html.darkmode .switch input:checked + .slider:after {
-    background-color: #208cd2 !important;
-}
-
 @html.darkmode label span.col, @html.darkmode select option[disabled], @html.darkmode label.formLabel {
     color: #BBBBBB !important;
 }
