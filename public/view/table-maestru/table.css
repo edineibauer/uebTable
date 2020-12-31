@@ -85,10 +85,6 @@
     background-color: #353535 !important;
 }
 
-@html.darkmode .switch-squad .slider:after {
-    background-color: #BBBBBB !important;
-}
-
 @html.darkmode .loadindTableSpace .btn-floating, @html.darkmode .loadindTableSpace .btb {
     background: #444!important;
 }
