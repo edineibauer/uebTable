@@ -2,7 +2,7 @@
   "title": "Dashboard",
   "!setor": "0",
   "js": ["coreGrid", "coreForm", "coreReport"],
-  "css": ["w3"],
+  "css": ["w3", "w3-bootstrap"],
   "header": false,
   "navbar": false,
   "menu": false,

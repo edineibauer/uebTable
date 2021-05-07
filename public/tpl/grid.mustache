@@ -16,24 +16,24 @@
 
                 {{#novo}}
                     <a href="form-maestru/{{entity}}" class="btb radius right mode-background-colorLine mode-text-colorText hover-shadow"
-                            style="margin: 4px 0 18px 0;padding: 7px 10px 6px 5px;"
+                            style="margin: 2px 0 18px 10px;padding: 7px 10px 6px 5px;"
                             rel="{{identificador}}">
                         <i class="material-icons left">add</i><span class="left">Novo</span>
                     </a>
                 {{/novo}}
 
                 <div class="left no-padding">
-                    <h4 class="left" style="padding: 5px 0 0 7px;">
+                    <h4 class="left" style="padding: 13px 0 0 0;">
                         {{#goodName}}{{entity}}{{/goodName}}
                     </h4>
                 </div>
 
-                <small class="margin-bottom total left padding-left-8"
-                       style="height:40px; padding:12px 10px 6px 10px">{{total}}</small>
+                <small class="margin-bottom total left"
+                       style="height:40px; padding:18px 10px 6px 10px">{{total}}</small>
 
                 <div class="col right padding-right sub-header-table s-hide">
                     <div class="col sub-header-table-limit">
-                        <select class="col tableLimit font-small mode-text-colorText mode-background-colorBox mode-border-colorLine" data-id="{{identificador}}">
+                        <select class="col tableLimit font-small mode-text-colorText mode-background-colorBox mode-border-colorLine" data-id="{{identificador}}" style="padding: 9px 10px 5px">
                             <option {{#limits.a}}selected="selected" {{/limits.a}}value="15">
                                 15
                             </option>
@@ -73,8 +73,8 @@
             </div>
         </div>
 
-        <div class="col mode-background-colorBox padding-4 no-select">
-            <div class="col table-filter transition-easy" style="display: flow-root">
+        <div class="col mode-background-colorBox no-select" style="padding: 0">
+            <div class="col table-filter transition-easy" style="display: flow-root;padding: 0">
                 <div class="col padding-medium margin-bottom s-padding-4 s-padding-top s-margin-0 hide s-show">
                     <div class="col right padding-right sub-header-table">
                         <div class="col sub-header-table-limit">
@@ -112,7 +112,7 @@
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col" style="padding: 0">
                     <div class="col right padding-4 hide adminShow" style="width: 50px">
                         <label for="import-file-crud" title="Recuperar backup dos registros"
                                class="right btn-floating hover-shadow opacity hover-opacity-off mode-background-colorLine">
@@ -284,7 +284,8 @@
 
     .table-campo-geral {
         margin-bottom: 0;
-        font-size: 14px
+        font-size: 14px;
+        border-radius: 4px;
     }
 
     .table-select-all {

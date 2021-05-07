@@ -6,6 +6,10 @@
     padding-left: 10px!important;
 }
 
+.loadindTableSpace {
+    padding: 0;
+}
+
 .loadindTableSpace > div.col:not(.form-header) {
     padding-bottom: 10px !important;
 }
