@@ -1,5 +1,17 @@
 var grids = [];
 
+async function permissionToAction(entity, action) {
+    if (USER.setor === "admin")
+        return true;
+
+    let p = await dbLocal.exeRead("__allow", 1);
+
+    if (typeof p !== "undefined" && typeof p[entity] !== "undefined")
+        return p[entity][action];
+
+    return false
+}
+
 async function gridTr(identificador, entity, data, fields, info, actions, selecteds) {
     let gridContent = {
         id: data.id || 0,
