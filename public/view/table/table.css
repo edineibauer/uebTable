@@ -110,3 +110,25 @@
 @html.darkmode button.opacity {
     opacity: .9
 }
+
+#table-maestru {
+    padding: 0 30px;
+}
+
+.table-campo-geral {
+    padding-left: 10px!important;
+}
+
+.loadindTableSpace {
+    padding: 0;
+}
+
+.loadindTableSpace > div.col:not(.form-header) {
+    padding-bottom: 10px !important;
+}
+
+.w3-css .table-all {
+    border-bottom: none!important;
+    border-left: none!important;
+    border-right: none!important;
+}

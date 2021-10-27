@@ -1,0 +1,7 @@
+{
+  "title": "Tabela",
+  "css": ["w3", "w3-bootstrap"],
+  "header": false,
+  "navbar": false,
+  "menu": false
+}
