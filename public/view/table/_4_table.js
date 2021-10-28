@@ -1,3 +1,3 @@
 $(function () {
-    $("#table-maestru").grid(PARAM[0]);
+    $("#table-maestru").grid(app.param.url[0]);
 })
