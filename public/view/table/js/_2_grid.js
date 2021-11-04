@@ -208,6 +208,7 @@ function gridCrud(entity, fields, actions) {
         filterAggroupMaior: [],
         filterAggroupMenor: [],
         filterTotal: -1,
+        loadingActive: false,
         loadingTimer: null,
         loadingHtml: "",
         actions: actions || {autor: !1, create: !0, update: !0, delete: !0, status: !0},
@@ -238,6 +239,7 @@ function gridCrud(entity, fields, actions) {
         loading: function() {
             let $this = this;
             if(!$this.$element.find(".tr-loading").length) {
+                $this.loadingActive = true;
                 $this.$element.find(".table-all").css("opacity", ".5");
                 $this.loadingHtml = $("<div class='col tr-loading' style='position: relative;height: 4px;'></div>").insertBefore($this.$element.find(".table-all"));
                 $this.loadingHtml.loading();
@@ -247,6 +249,7 @@ function gridCrud(entity, fields, actions) {
             }
         },
         clearLoading: function() {
+            this.loadingActive = false;
             this.loadingHtml.remove();
             this.$element.find(".table-all").css("opacity", 1);
             clearInterval(this.loadingTimer);
@@ -264,6 +267,11 @@ function gridCrud(entity, fields, actions) {
         },
         readData: async function () {
             let $this = this;
+
+            while ($this.loadingActive)
+                await sleep(50);
+
+            $this.loading();
             $this.$content = $this.$element.find("tbody");
 
             /**
@@ -279,8 +287,6 @@ function gridCrud(entity, fields, actions) {
 
             let info = await dbLocal.exeRead("__info", 1);
             let templates = await getTemplates();
-
-            $this.loading();
 
             let selecteds = [];
             if ($this.$content.find(".table-select:checked").length > 0) {
@@ -410,6 +416,7 @@ function gridCrud(entity, fields, actions) {
         show: function ($element) {
             if (typeof $element !== "undefined")
                 this.$element = $element;
+
             if (typeof this.$element !== "undefined") {
                 this.$element.find(".grid-control").remove();
                 return this.getShow().then(data => {

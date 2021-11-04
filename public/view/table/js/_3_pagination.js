@@ -114,8 +114,7 @@
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "))
         }, updateUrlParam: function (key, value) {
-            var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
-                urlQueryString = document.location.search, newParam = key + '=' + value, params = '?' + newParam;
+            let urlQueryString = document.location.search, newParam = key + '=' + value, params = '?' + newParam;
             if (urlQueryString) {
                 keyRegex = new RegExp('([\?&])' + key + '[^&]*');
                 if (urlQueryString.match(keyRegex) !== null) {

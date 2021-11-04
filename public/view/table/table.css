@@ -1,3 +1,130 @@
+.table-all {
+    border: none
+}
+
+.sub-header-table {
+    width: 100%;
+}
+
+.sub-header-table-limit {
+    width: 55px !important;
+    margin-right: 7px;
+    margin-top: 4px;
+}
+
+.sub-header-table-limit select {
+    margin-bottom: 0;
+    margin-top: 2px;
+}
+
+.table-campo-geral {
+    margin-bottom: 0;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.table-select-all {
+    margin: 15px 2rem 11px 0;
+}
+
+.table-filter {
+    height: 0;
+    overflow: hidden
+}
+
+.btn-new-filter {
+    margin: 2px 2px 2px 0;
+    height: 30px;
+}
+
+.btn-new-filter i {
+    margin-top: -1px;
+}
+
+.modal-filter-content {
+    position: absolute;
+    z-index: 99999;
+    left: 1% !important;
+    width: 98% !important;
+    top: 16px;
+}
+
+.modal-filter-content .display-container {
+    float: initial;
+    margin: auto;
+    overflow: hidden;
+}
+
+.modal-filter-content .display-container header {
+    padding-left: 12px;
+}
+
+.modal-filter-content .display-container h4 {
+    padding-bottom: 9px !important
+}
+
+.table-filter-columns, .table-filter-operator {
+    margin: 1px 0 7px 5px;
+}
+
+.table-filter-value {
+    padding-bottom: 5px;
+    margin: 0 0 7px 5px
+}
+
+.table-filter-btn {
+    margin: 2px 0 0 5px;
+}
+
+.tableLimit {
+    padding-left: 10px!important;
+}
+
+.bar.pagination .button.active {
+    background: var(--colorLine);
+}
+
+.pagination {
+    background: #f1f1f1;
+    border-top: solid 5px #ddd;
+}
+
+.tableImgTd {
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 96%
+}
+
+.activeBoolean {
+    height: 16px;
+    width: 16px;
+    background: #ffabab;
+    border-radius: 15px;
+    margin: 5px 10px 0;
+}
+
+.activeBoolean.active {
+    background: #62BAB2;
+}
+
+.btb {
+    -webkit-box-shadow: 2px 2px 7px -3px rgba(61,61,61,1);
+    -moz-box-shadow: 2px 2px 7px -3px rgba(61,61,61,1);
+    box-shadow: 2px 2px 7px -3px rgba(61,61,61,1);
+}
+
+@media only screen and (min-width: 600px) {
+    .sub-header-table {
+        width: 250px !important;
+        padding-top: 0 !important;
+    }
+    .modal-filter-content {
+        padding: 0 10px;
+        top: 16px;
+        min-height: 380px;
+    }
+}
+
 @html.darkmode .grid-form-body, @html.darkmode .form-control > .card {
     border-color: #111 !important;
     background-color: #444444;
