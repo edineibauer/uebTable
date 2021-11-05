@@ -80,66 +80,93 @@ function getTrClass(meta, value) {
 }
 
 async function gridTdFilterValue(value, relationData, meta) {
-    if (typeof meta !== "undefined") {
-        value = !isEmpty(value) ? value : "";
-        if (['select', 'radio'].indexOf(meta.format) > -1) {
-            let allows = meta.allow.options.find(option => option.valor == value);
-            if(typeof allows === "object" && typeof allows.representacao !== "undefined")
-                value = allows.representacao;
-        } else if ('checkbox' === meta.format) {
-            let resposta = "";
-            for (let i in meta.allow.options)
-                resposta += (value.indexOf(meta.allow.options[i].valor.toString()) > -1 ? ((resposta !== "" ? ", " : "") + (!isEmpty(meta.allow.options[i]) ? meta.allow.options[i].representacao : "")) : "");
+    if (typeof meta === "undefined")
+        return value;
 
-            value = resposta;
-        } else if (meta.group === "boolean") {
-            value = "<div class='activeBoolean" + (value == 1 ? " active" : "") + "'></div>";
-        } else if (meta.key === "valor") {
-            value = "R$ " + formatMoney(value, 2, ',', '.');
-        } else if (meta.type === "float" || meta.type === "decimal") {
-            value = !isEmpty(value) ? formatMoney(value, 2, ',', '.') : 0;
-        } else if (['folder', 'extend'].indexOf(meta.format) > -1) {
-            return getRelevantTitle(meta.relation, value, 1, !1)
-        } else if (['list', 'selecao', 'checkbox_rel', 'checkbox_mult'].indexOf(meta.format) > -1) {
-            return getRelevantTitle(meta.relation, relationData[meta.column] ?? [], 1, !1)
-        } else {
-            value = applyFilterToTd(value, meta)
+    value = !isEmpty(value) ? value : "";
+    if (['select', 'radio'].indexOf(meta.format) > -1) {
+        let allows = meta.allow.options.find(option => option.valor == value);
+        if(typeof allows === "object" && typeof allows.representacao !== "undefined")
+            return allows.representacao;
+
+    } else if ('percent' === meta.format) {
+        return value;
+
+    } else if ('checkbox' === meta.format) {
+        let resposta = "";
+        for (let i in meta.allow.options)
+            resposta += (value.indexOf(meta.allow.options[i].valor.toString()) > -1 ? ((resposta !== "" ? ", " : "") + (!isEmpty(meta.allow.options[i]) ? meta.allow.options[i].representacao : "")) : "");
+
+        return resposta;
+
+    } else if (meta.group === "boolean") {
+        return "<div class='activeBoolean" + (value == 1 ? " active" : "") + "'></div>";
+
+    } else if (meta.key === "valor") {
+        return "R$ " + formatMoney(value, 2, ',', '.');
+
+    } else if (meta.type === "float" || meta.type === "decimal") {
+        return !isEmpty(value) ? formatMoney(value, 2, ',', '.') : 0;
+
+    } else if ('folder' === meta.format) {
+        return !isEmpty(value) ? value.columnTituloExtend : "";
+
+    } else if ('extend_folder' === meta.format) {
+        if(isEmpty(value))
+            return "";
+
+        let valueFinal = "";
+        for(let vv of value)
+            valueFinal += vv.columnTituloExtend;
+
+        return valueFinal;
+
+    } else if ('list' === meta.format) {
+        return !isEmpty(relationData[meta.column]) ? getRelevantTitle(meta.relation, relationData[meta.column], 1, false) : "";
+
+    } else if ('list_mult' === meta.format) {
+        if(isEmpty(relationData[meta.column]))
+            return "";
+
+        let valueFinal = "";
+        for(let e of relationData[meta.column])
+            valueFinal += (await getRelevantTitle(meta.relation, e, 1, true));
+
+        return valueFinal;
+
+    } else {
+        if (!isEmpty(meta.allow.options) && meta.key !== 'source') {
+            $.each(meta.allow.options, function (i, e) {
+                if (e.option == value) {
+                    value = e.name;
+                    return !1
+                }
+            })
         }
-    }
-    return value;
-}
-
-function applyFilterToTd(value, meta) {
-    if (!isEmpty(meta.allow.options) && meta.key !== 'source') {
-        $.each(meta.allow.options, function (i, e) {
-            if (e.option == value) {
-                value = e.name;
-                return !1
+        else if (meta.format === 'date') {
+            if (/-/.test(value)) {
+                let v = value.split('-');
+                value = v[2] + "/" + v[1] + "/" + v[0]
             }
-        })
-    } else if (meta.format === 'date') {
-        if (/-/.test(value)) {
-            let v = value.split('-');
-            value = v[2] + "/" + v[1] + "/" + v[0]
+        } else if (meta.format === 'datetime') {
+            if (/T/.test(value)) {
+                let b = value.split('T');
+                let v = b[0].split('-');
+                value = v[2] + "/" + v[1] + "/" + v[0] + " " + b[1]
+            } else if (/ /.test(value)) {
+                let b = value.split(' ');
+                let v = b[0].split('-');
+                value = v[2] + "/" + v[1] + "/" + v[0] + " " + b[1]
+            }
+        } else if (meta.key === 'source') {
+            if (meta.key === "source" && meta.size == 1 && value !== null && typeof value === "object" && typeof value[0] === "object" && typeof value[0].fileType === "string" && /^image\//.test(value[0].fileType)) {
+                value = ""
+            } else {
+                value = "<svg class='icon svgIcon' ><use xlink:href='#file'></use></svg>"
+            }
         }
-    } else if (meta.format === 'datetime') {
-        if (/T/.test(value)) {
-            let b = value.split('T');
-            let v = b[0].split('-');
-            value = v[2] + "/" + v[1] + "/" + v[0] + " " + b[1]
-        } else if (/ /.test(value)) {
-            let b = value.split(' ');
-            let v = b[0].split('-');
-            value = v[2] + "/" + v[1] + "/" + v[0] + " " + b[1]
-        }
-    } else if (meta.key === 'source') {
-        if (meta.key === "source" && meta.size == 1 && value !== null && typeof value === "object" && typeof value[0] === "object" && typeof value[0].fileType === "string" && /^image\//.test(value[0].fileType)) {
-            value = ""
-        } else {
-            value = "<svg class='icon svgIcon' ><use xlink:href='#file'></use></svg>"
-        }
+        return value
     }
-    return value
 }
 
 function reverse(s) {
@@ -164,10 +191,6 @@ function clearForm() {
         form.save()
     });
     checkUserOptions()
-}
-
-function loadMaskTable($table) {
-    maskData($table)
 }
 
 var syncGrid = null;
@@ -278,13 +301,7 @@ function gridCrud(entity, fields, actions) {
              * Get data results
              */
             let offset = ($this.page * $this.limit) - $this.limit;
-            let result = [];
-            if ((!isEmpty($this.filter) || !isEmpty($this.filterAggroup)) && typeof reportRead !== "undefined" && USER.setor === "admin") {
-                result = await reportRead(entity, !isEmpty($this.search) ? $this.search : null, $this.filter, $this.filterAggroup, $this.filterAggroupSum, $this.filterAggroupMedia, $this.filterAggroupMaior, $this.filterAggroupMenor, $this.order, $this.orderPosition, $this.limit, offset);
-            } else {
-                result = await db.exeRead(entity, !isEmpty($this.search) ? {"*": $this.search} : null, $this.limit, offset, $this.order, $this.orderPosition);
-            }
-
+            let result = await reportRead(entity, !isEmpty($this.search) ? $this.search : null, $this.filter, $this.filterAggroup, $this.filterAggroupSum, $this.filterAggroupMedia, $this.filterAggroupMaior, $this.filterAggroupMenor, $this.order, $this.orderPosition, $this.limit, offset);
             let info = await dbLocal.exeRead("__info", 1);
             let templates = await getTemplates();
 
@@ -427,7 +444,7 @@ function gridCrud(entity, fields, actions) {
         },
         posData: async function () {
             let $this = this;
-            loadMaskTable($this.$content);
+            maskData($this.$content)
             clearForm();
 
             await $this.updateTotalTable();
