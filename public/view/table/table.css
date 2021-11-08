@@ -166,10 +166,6 @@
     border-color: #555555 !important;
 }
 
-@html.darkmode input[type=checkbox]:before {
-    border-color: #777777 !important;
-}
-
 @html.darkmode .table-all tr > td:first-child > label {
     margin: 0;
     height: 22px;
