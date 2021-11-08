@@ -16,7 +16,7 @@
 
     <td class="tableActions no-select relative" style="{{^db_status}}background: rgba(239, 243, 178, 0.5);{{/db_status}}width: {{^button.status.have}}170px;{{/button.status.have}}{{#button.status.have}}225px;{{/button.status.have}}">
         <div class="right padding-small padding-top table-data-option pointer hide s-show" data-delete="{{button.delete}}" data-edit="{{button.update}}" data-status="{{button.status.have}}" data-statusactive="{{button.status.status}}" data-entity="{{entity}}" data-sync="{{db_status}}" rel="{{id}}" data-rel="{{identificador}}"><i class="material-icons">more_vert</i></div>
-        <div class="col s-hide">
+        <div class="col s-hide pr-0">
             {{#button.delete}}
                 <button rel="{{id}}" data-id="{{identificador}}"
                         class="btn-grid-delete right btn-floating color-hover-text-red hover-shadow opacity hover-opacity-off">

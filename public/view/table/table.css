@@ -6,6 +6,10 @@
     width: 100%;
 }
 
+.grid-form-body {
+    border-color: var(--colorBackground)!important;
+}
+
 .sub-header-table-limit {
     width: 55px !important;
     margin-right: 7px;
