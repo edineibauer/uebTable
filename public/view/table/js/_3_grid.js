@@ -206,6 +206,9 @@ function gridCrud(entity, fields, actions) {
             status: typeof actions.status !== "undefined" ? actions.status : !0,
         }
     }
+
+    AJAX.post("getRealtimeTotalRegister", {entity: entity});
+
     grids = [];
     let grid = grids[identificador] = {
         identificador: identificador,
@@ -279,8 +282,7 @@ function gridCrud(entity, fields, actions) {
         },
         updateTotalTable: async function() {
             let $this = this;
-            let totalReg = await dbLocal.exeRead("__totalRegisters", 1);
-            let total = (typeof totalReg[$this.entity] !== "undefined" ? totalReg[$this.entity].toString() : 0);
+            let total = await AJAX.get("totalRegistros/" + $this.entity);
             let totalFormated = "";
             let le = total.length;
             for (let i = 0; i < le; i++)
