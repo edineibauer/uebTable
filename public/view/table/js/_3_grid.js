@@ -207,8 +207,6 @@ function gridCrud(entity, fields, actions) {
         }
     }
 
-    AJAX.post("getRealtimeTotalRegister", {entity: entity});
-
     grids = [];
     let grid = grids[identificador] = {
         identificador: identificador,
