@@ -217,42 +217,26 @@ $(function () {
             toast("Sem Conexão", 3000, 'toast-warning')
         }
 
-    }).off("change", ".switch-status-table").on("change", ".switch-status-table", function () {
+    }).off("change", ".switch-status-table").on("change", ".switch-status-table", async function () {
         let $this = $(this);
         let grid = grids[$this.attr("rel")];
         let valor = $this.attr("data-status") === "false";
-        dbLocal.exeRead('__info', 1).then(info => {
-            $.each(dicionarios[grid.entity], function (column, meta) {
-                if (meta.id === info[grid.entity].status) {
-                    $this.attr("data-status", valor);
-                    let proccessPromisses = [];
-                    dbLocal.exeRead(grid.entity, parseInt($this.attr("data-id"))).then(data => {
-                        data[column] = valor ? 1 : 0;
-                        proccessPromisses.push(db.exeCreate(grid.entity, data));
-                    });
-                    if (grid.$content.find(".table-select:checked").length > 0) {
-                        $.each(grid.$content.find(".table-select:checked"), function () {
-                            let id = parseInt($(this).attr("rel"));
-                            let $switch = grid.$element.find(".switch-status-table[data-id='" + id + "']");
-                            $switch.attr("data-status", valor).prop("checked", valor)
-                            proccessPromisses.push(dbLocal.exeRead(grid.entity, id).then(data => {
-                                data[column] = valor ? 1 : 0;
-                                return db.exeCreate(grid.entity, data)
-                            }));
-                        })
-                    }
 
-                    return Promise.all(proccessPromisses).then(() => {
-                        grid.$element.find(".table-select, .table-select-all").prop("checked", !1);
-                        setTimeout(function () {
-                            _dbRemote.syncPost(grid.entity);
-                        },300);
-                        return !1
-                    })
-
-                }
+        let ids = [];
+        if (grid.$content.find(".table-select:checked").length > 0) {
+            $.each(grid.$content.find(".table-select:checked"), function () {
+                let id = parseInt($(this).attr("rel"));
+                ids.push(id);
+                grid.$element.find(".switch-status-table[data-id='" + id + "']").attr("data-status", valor).prop("checked", valor)
             })
-        });
+        } else {
+            let id = parseInt($this.attr("data-id"));
+            ids.push(id);
+            $this.attr("data-status", valor).prop("checked", valor)
+        }
+        $(".table-select, .table-select-all").prop("checked", false);
+
+        await AJAX.post("gridChangeStatus", {entity: grid.entity, ids: ids, valor: valor ? 1 : 0});
 
     }).off("change keyup", ".table-campo-geral").on("change keyup", ".table-campo-geral", function () {
         let $this = $(this);
@@ -306,23 +290,24 @@ $(function () {
         });
         grid.$element.find(".table-select-all").prop("checked", (all && $this.is(":checked")));
 
-    }).off("click", ".btn-grid-delete").on("click", ".btn-grid-delete", function () {
+    }).off("click", ".btn-grid-delete").on("click", ".btn-grid-delete", async function () {
         let grid = grids[$(this).attr("data-id")];
         let cont = grid.$content.find(".table-select:checked").length;
-        if (confirm(cont > 1 ? "Remover os " + cont + " Registros?" : "Remover este Registro? ")) {
-            toast("Requisitando remoção...", 15000);
+        if (confirm(cont > 1 ? "Excluir " + cont + " Registros?" : "Excluir registro? ")) {
+            toast("Solicitando exclusão...", 150000);
             let ids = [];
             if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
-                    ids.push(parseInt($(this).attr("rel")))
+                    ids.push(parseInt($(this).attr("rel")));
+                    grid.$element.find("#row-" + grid.entity + "-" + $(this).attr("rel")).remove();
                 })
             } else {
                 ids.push(parseInt($(this).attr("rel")))
+                grid.$element.find("#row-" + grid.entity + "-" + $(this).attr("rel")).remove();
             }
-            grid.$element.find(".table-select, .table-select-all").prop("checked", !1);
-            db.exeDelete(grid.entity, ids).then(() => {
-                toast("Registros excluídos", 1500, "toast-success");
-            })
+            let t = await AJAX.post("gridEntityDelete", {entity: grid.entity, ids: ids});
+            if(t)
+                toast("Registros excluídos", 1000, "toast-success");
         }
 
     }).off("click", ".showHideField").on("click", ".showHideField", function () {

@@ -280,13 +280,15 @@ function gridCrud(entity, fields, actions) {
         },
         updateTotalTable: async function() {
             let $this = this;
-            let total = await AJAX.get("totalRegistros/" + $this.entity);
+            $this.total = await AJAX.get("totalRegistros/" + $this.entity);
+            let total = $this.total.toString();
             let totalFormated = "";
             let le = total.length;
             for (let i = 0; i < le; i++)
                 totalFormated += (i > 0 && (le - i) % 3 === 0 ? "." : "") + total[i];
 
-            $this.$element.find(".total").html(totalFormated + " registro" + (total > 1 ? "s" : ""));
+            console.log(totalFormated, totalFormated + " registro" + ($this.total > 1 ? "s" : ""), $this.$element.find(".total").attr("class"));
+            $this.$element.find(".total").html(totalFormated + " registro" + ($this.total > 1 ? "s" : ""));
         },
         readData: async function () {
             let $this = this;
@@ -409,7 +411,6 @@ function gridCrud(entity, fields, actions) {
                                 novo: this.actions.create,
                                 identificador: this.identificador,
                                 goodName: this.goodName,
-                                total: this.total,
                                 fields: this.fields
                             })
                         } else {
@@ -422,7 +423,6 @@ function gridCrud(entity, fields, actions) {
                                 novo: this.actions.create,
                                 identificador: this.identificador,
                                 goodName: this.goodName,
-                                total: "-",
                                 fields: this.fields
                             })
                         }
@@ -450,8 +450,8 @@ function gridCrud(entity, fields, actions) {
             await $this.updateTotalTable();
 
             $this.$element.find(".pagination").remove();
-            let total = parseInt($this.$element.find(".total").html().replace(".", "").replace(".", "").replace(".", ""));
-            if (total > $this.limit) {
+            let total = parseInt($this.total);
+            if ($this.total > $this.limit) {
                 $this.$element.find(".grid-form-body").materializePagination({
                     currentPage: $this.page,
                     lastPage: Math.ceil(total / $this.limit),
