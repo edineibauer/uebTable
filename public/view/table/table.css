@@ -59,6 +59,11 @@
     overflow: hidden;
 }
 
+#table-maestru td {
+    position: relative;
+    overflow: hidden;
+}
+
 .modal-filter-content .display-container header {
     padding-left: 12px;
 }
