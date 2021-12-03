@@ -287,7 +287,6 @@ function gridCrud(entity, fields, actions) {
             for (let i = 0; i < le; i++)
                 totalFormated += (i > 0 && (le - i) % 3 === 0 ? "." : "") + total[i];
 
-            console.log(totalFormated, totalFormated + " registro" + ($this.total > 1 ? "s" : ""), $this.$element.find(".total").attr("class"));
             $this.$element.find(".total").html(totalFormated + " registro" + ($this.total > 1 ? "s" : ""));
         },
         readData: async function () {
