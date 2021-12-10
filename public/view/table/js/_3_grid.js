@@ -112,7 +112,7 @@ async function gridTdFilterValue(value, relationData, meta) {
         return !isEmpty(value) ? value.columnTituloExtend : "";
 
     } else if ('extend_folder' === meta.format) {
-        if(isEmpty(value))
+        if(isEmpty(value) || typeof value !== "object" || value === null)
             return "";
 
         let valueFinal = "";
