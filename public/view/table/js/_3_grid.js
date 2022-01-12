@@ -302,7 +302,7 @@ function gridCrud(entity, fields, actions) {
              * Get data results
              */
             let offset = ($this.page * $this.limit) - $this.limit;
-            let result = await reportRead(entity, !isEmpty($this.search) ? $this.search : null, $this.filter, $this.filterAggroup, $this.filterAggroupSum, $this.filterAggroupMedia, $this.filterAggroupMaior, $this.filterAggroupMenor, $this.order, $this.orderPosition, $this.limit, offset);
+            let result = await exeReadEntity(entity, !isEmpty($this.search) ? $this.search : null, $this.filter, $this.filterAggroup, $this.filterAggroupSum, $this.filterAggroupMedia, $this.filterAggroupMaior, $this.filterAggroupMenor, $this.order, $this.orderPosition, $this.limit, offset);
             let info = await dbLocal.exeRead("__info", 1);
             let templates = await getTemplates();
 
