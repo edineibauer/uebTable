@@ -368,16 +368,15 @@ function gridCrud(entity, fields, actions) {
             this.readData()
         },
         getShow: function () {
-            let pT = dbLocal.keys(entity);
             let pF = (isEmpty(grid.fields) ? getFields(entity, !0, 'grid') : new Promise());
             let perm = permissionToAction(this.entity, 'read');
             let sync = dbLocal.exeRead("sync_" + this.entity);
-            return Promise.all([pT, perm, pF, sync]).then(r => {
+            return Promise.all([perm, pF, sync]).then(r => {
 
                 if (isEmpty(grid.fields))
-                    this.fields = r[2];
+                    this.fields = r[1];
 
-                if (!r[1])
+                if (!r[0])
                     return "<h2 class='align-center padding-32 color-text-gray-dark'>Sem Permissao para Leitura</h2>"
 
                 if (!localStorage.limitGrid)
@@ -400,8 +399,7 @@ function gridCrud(entity, fields, actions) {
                     return getTemplates().then(templates => {
                         if (SERVICEWORKER) {
 
-                            this.total = r[0].length;
-                            let haveSync = r[3].length > 0 && navigator.onLine ? r[3].length : 0;
+                            let haveSync = r[2].length > 0 && navigator.onLine ? r[2].length : 0;
                             return Mustache.render(templates.grid, {
                                 entity: entity,
                                 home: HOME,
