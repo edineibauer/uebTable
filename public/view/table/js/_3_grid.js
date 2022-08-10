@@ -57,6 +57,155 @@ async function gridTr(identificador, entity, data, fields, info, actions, select
     return gridContent
 }
 
+async function getFields(entity, haveId, type) {
+    if (isOnline() && typeof type === "string") {
+        let rec = await AJAX.get("recoveryFieldsCustom/" + type + "/" + entity);
+        if (!isEmpty(rec)) {
+            for (let r of rec) {
+                r.show = r.show === "true";
+                r.first = r.first === "true"
+            }
+            return rec
+        }
+    }
+
+    haveId = haveId || !1;
+
+    let relevants = await dbLocal.exeRead("__relevant", 1);
+    let relation = await dbLocal.exeRead("__general", 1);
+    let info = await dbLocal.exeRead("__info", 1);
+
+    return getFieldsData(entity, haveId, [relevants, relation, info])
+}
+
+function getFieldsData(entity, haveId, r) {
+    let fields = ["", "", "", "", "", "", ""];
+    let relevants = r[0];
+    let relation = r[1][entity];
+    let indices = [];
+    if (haveId) {
+        let data = {
+            'nome': "ID",
+            'column': 'id',
+            'show': !0,
+            'class': "",
+            'style': "",
+            'template': "",
+            'format': "number",
+            'relation': null,
+            'first': !0
+        };
+        pushToArrayIndex(fields, data, 0);
+        indices.push(0)
+    }
+
+    function getIndiceField(indice, indices) {
+        if (indices.indexOf(indice) > -1)
+            return getIndiceField((indice + 1), indices);
+        return indice
+    }
+
+    $.each(dicionarios[entity], function (i, e) {
+        if (!isEmpty(e.datagrid) && !isEmpty(e.datagrid.grid_relevant)) {
+            let data = {
+                'nome': e.nome,
+                'column': e.column,
+                'show': !0,
+                'class': e.datagrid.grid_class || "",
+                'style': e.datagrid.grid_style || "",
+                'template': e.datagrid.grid_template || "",
+                'format': e.format,
+                'relation': e.relation || null,
+                'first': !haveId && e.datagrid.grid_relevant === 1
+            };
+            let indice = getIndiceField(e.datagrid.grid_relevant - 1, indices);
+            indices.push(indice);
+            pushToArrayIndex(fields, data, indice);
+        }
+    });
+
+    if (!isEmpty(relation) && typeof relation === "object" && !isEmpty(relation.belongsTo)) {
+        $.each(relation.belongsTo, function (i, e) {
+            $.each(e, function (relEntity, relData) {
+                if (!isEmpty(relData.datagrid) && isEmpty(fields[relData.datagrid - 1])) {
+                    let data = {
+                        'nome': ucFirst(replaceAll(replaceAll(relEntity, "_", " "), "-", " ")),
+                        'column': relData.column,
+                        'show': !0,
+                        'class': relData.grid_class_relational || "",
+                        'style': relData.grid_style_relational || "",
+                        'template': relData.grid_template_relational || "",
+                        'format': 'text',
+                        'relation': relEntity,
+                        'first': !haveId && relData.datagrid === 1
+                    };
+                    let indice = getIndiceField(relData.datagrid - 1, indices);
+                    indices.push(indice);
+                    pushToArrayIndex(fields, data, indice)
+                }
+            })
+        })
+    }
+
+    if (!isEmpty(relevants)) {
+        for (let a = 0; a < 6; a++) {
+            if (isEmpty(fields[a])) {
+                $.each(dicionarios[entity], function (i, e) {
+                    if (allowThisType(e, fields)) {
+                        let data = {
+                            'nome': e.nome,
+                            'column': e.column,
+                            'show': e.datagrid !== !1 && relevants.indexOf(e.format) > -1,
+                            'class': e.datagrid.grid_class || "",
+                            'style': e.datagrid.grid_style || "",
+                            'template': e.datagrid.grid_template || "",
+                            'format': e.format,
+                            'relation': e.relation || null,
+                            'first': !haveId && a === 0
+                        };
+                        let indice = getIndiceField(a, indices);
+                        if (indice < 7) {
+                            indices.push(indice);
+                            pushToArrayIndex(fields, data, indice)
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    /**
+     * Preenche campos restantes para disponibilizar visualização por controle na tabela
+     */
+    $.each(dicionarios[entity], function (i, e) {
+        if (allowThisType(e, fields)) {
+            let data = {
+                'nome': e.nome,
+                'column': e.column,
+                'show': !1,
+                'class': e.datagrid.grid_class || "",
+                'style': e.datagrid.grid_style || "",
+                'template': e.datagrid.grid_template || "",
+                'format': e.format,
+                'relation': e.relation || null,
+                'first': !1
+            };
+            let indice = getIndiceField(0, indices);
+            indices.push(indice);
+            pushToArrayIndex(fields, data, indice)
+        }
+    })
+
+    let fieldsReturn = fields.filter(function (data) {
+        if (!isEmpty(data))
+            return data
+    });
+
+    AJAX.post("saveFieldsGrid", {type: "grid", entity: entity, fields: fieldsReturn}).catch(() => {});
+
+    return fieldsReturn;
+}
+
 function getTrStyle(meta, value) {
     if (typeof meta !== "undefined") {
         let style = meta.datagrid.grid_style;
