@@ -95,7 +95,7 @@
 
 .pagination {
     background: #f1f1f1;
-    border-top: solid 5px #ddd;
+    border-top: solid 5px var(--colorLine);
 }
 
 .tableImgTd {
@@ -156,7 +156,7 @@
 
 @html.darkmode .color-white, @html.darkmode .form-crud, @html.darkmode .file_gallery > .mock-file{
     background-color: #444444 !important;
-    color: #eeeeee !important;
+    color: var(--colorText) !important;
     border-color: #333333 !important;
 }
 
@@ -189,7 +189,7 @@
 @html.darkmode .table-all tr {
     background-color: #3c3c3c !important;
     border-color: #555 !important;
-    color: #eeeeee !important;
+    color: var(--colorText) !important;
 }
 
 @html.darkmode .table-all tr:nth-child(odd) {
