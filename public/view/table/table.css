@@ -249,10 +249,6 @@
     opacity: .9
 }
 
-#table-maestru {
-    padding: 0 30px;
-}
-
 .table-campo-geral {
     padding-left: 10px!important;
 }
@@ -269,4 +265,14 @@
     border-bottom: none!important;
     border-left: none!important;
     border-right: none!important;
+}
+
+#table-maestru {
+    padding: 0 30px;
+}
+
+@media screen and (max-width: 991px) {
+    #table-maestru {
+        padding: 0;
+    }
 }
