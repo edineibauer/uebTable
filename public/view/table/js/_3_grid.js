@@ -72,8 +72,8 @@ async function getFields(entity, haveId, type) {
     haveId = haveId || !1;
 
     let relevants = await dbLocal.exeRead("__relevant", 1);
-    let relation = await dbLocal.exeRead("__general", 1);
-    let info = await dbLocal.exeRead("__info", 1);
+    let relation = JSON.parse(sessionStorage.__general);
+    let info = JSON.parse(sessionStorage.__info);
 
     return getFieldsData(entity, haveId, [relevants, relation, info])
 }
@@ -452,7 +452,7 @@ function gridCrud(entity, fields, actions) {
              */
             let offset = ($this.page * $this.limit) - $this.limit;
             let result = await reportRead(entity, !isEmpty($this.search) ? $this.search : null, $this.filter, $this.filterAggroup, $this.filterAggroupSum, $this.filterAggroupMedia, $this.filterAggroupMaior, $this.filterAggroupMenor, $this.order, $this.orderPosition, $this.limit, offset);
-            let info = await dbLocal.exeRead("__info", 1);
+            let info = JSON.parse(sessionStorage.__info);
             let templates = await getTemplates();
 
             let selecteds = [];
