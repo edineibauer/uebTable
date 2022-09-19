@@ -187,36 +187,6 @@ $(function () {
 
         grid.readData()
 
-    }).off("click", ".btn-grid-sync").on("click", ".btn-grid-sync", function () {
-        if (navigator.onLine) {
-            let $this = $(this);
-            let grid = grids[$this.attr("data-id")];
-
-            if(grid.$content.find(".table-select:checked").length) {
-                /**
-                 * Checkbox checked, mult sync
-                 * */
-                if(confirm("Sincronizar os " + grid.$content.find(".table-select:checked").length + " registros selecionados?")) {
-                    $.each(grid.$content.find(".table-select:checked"), function (i, e) {
-                        $(e).prop("checked", !1);
-                        _dbRemote.sync(grid.entity, parseInt($(e).attr("rel")), !0).then(() => {
-                            grid.readData()
-                        })
-                    });
-                }
-            } else {
-
-                /**
-                 * Single sync click
-                 * */
-                _dbRemote.sync(grid.entity, parseInt($this.attr("rel")), !0).then(() => {
-                    grid.readData()
-                })
-            }
-        } else {
-            toast("Sem Conexão", 3000, 'toast-warning')
-        }
-
     }).off("change", ".switch-status-table").on("change", ".switch-status-table", async function () {
         let $this = $(this);
         let grid = grids[$this.attr("rel")];
