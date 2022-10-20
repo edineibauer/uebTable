@@ -305,41 +305,39 @@ $(function () {
         let identificador = $this.data("rel");
         let grid = grids[identificador];
 
-        getTemplates().then(tpl => {
-            $this.closest(".table-all").before(Mustache.render(tpl.grid_content_card_header, {
-                identificador: $this.data("rel"),
-                entity: $this.data("entity"),
-                columns: grid.fields
-            }));
-            let $cardHeader = $(".grid_content_card_header");
-            $(document).on("mouseup", function(e) {
-                if (!$cardHeader.is(e.target) && $cardHeader.has(e.target).length === 0) {
-                    $cardHeader.remove();
-                    $(document).off("mouseup");
-                }
-            });
+        let tpl = getTemplates();
+        $this.closest(".table-all").before(Mustache.render(tpl.grid_content_card_header, {
+            identificador: $this.data("rel"),
+            entity: $this.data("entity"),
+            columns: grid.fields
+        }));
+        let $cardHeader = $(".grid_content_card_header");
+        $(document).on("mouseup", function(e) {
+            if (!$cardHeader.is(e.target) && $cardHeader.has(e.target).length === 0) {
+                $cardHeader.remove();
+                $(document).off("mouseup");
+            }
         });
 
     }).off("click", ".table-data-option").on("click", ".table-data-option", function () {
         let $this = $(this);
-        getTemplates().then(tpl => {
-            $this.parent().append(Mustache.render(tpl.grid_content_card_edit, {
-                id: $this.attr("rel"),
-                identificador: $this.data("rel"),
-                entity: $this.data("entity"),
-                editar: $this.data("edit"),
-                deletar: $this.data("delete"),
-                status: $this.data("status"),
-                statusActive: $this.data("statusactive"),
-                sync: $this.data("sync")
-            }));
-            let $cardEdit = $(".grid_content_card_edit");
-            $(document).on("mouseup", function(e) {
-                if (!$cardEdit.is(e.target) && $cardEdit.has(e.target).length === 0) {
-                    $cardEdit.remove();
-                    $(document).off("mouseup");
-                }
-            });
+        let tpl = getTemplates();
+        $this.parent().append(Mustache.render(tpl.grid_content_card_edit, {
+            id: $this.attr("rel"),
+            identificador: $this.data("rel"),
+            entity: $this.data("entity"),
+            editar: $this.data("edit"),
+            deletar: $this.data("delete"),
+            status: $this.data("status"),
+            statusActive: $this.data("statusactive"),
+            sync: $this.data("sync")
+        }));
+        let $cardEdit = $(".grid_content_card_edit");
+        $(document).on("mouseup", function(e) {
+            if (!$cardEdit.is(e.target) && $cardEdit.has(e.target).length === 0) {
+                $cardEdit.remove();
+                $(document).off("mouseup");
+            }
         });
 
     }).off("click", "#export-file-crud").on("click", "#export-file-crud", function () {

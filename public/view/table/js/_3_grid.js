@@ -453,7 +453,7 @@ function gridCrud(entity, fields, actions) {
             let offset = ($this.page * $this.limit) - $this.limit;
             let result = await reportRead(entity, !isEmpty($this.search) ? $this.search : null, $this.filter, $this.filterAggroup, $this.filterAggroupSum, $this.filterAggroupMedia, $this.filterAggroupMaior, $this.filterAggroupMenor, $this.order, $this.orderPosition, $this.limit, offset);
             let info = JSON.parse(sessionStorage.__info);
-            let templates = await getTemplates();
+            let templates = getTemplates();
 
             let selecteds = [];
             if ($this.$content.find(".table-select:checked").length > 0) {
@@ -545,34 +545,33 @@ function gridCrud(entity, fields, actions) {
                     if (this.actions.create)
                         this.actions.create = t;
 
-                    return getTemplates().then(templates => {
-                        if (SERVICEWORKER) {
+                    let templates = getTemplates();
+                    if (SERVICEWORKER) {
 
-                            let haveSync = r[2].length > 0 && navigator.onLine ? r[2].length : 0;
-                            return Mustache.render(templates.grid, {
-                                entity: entity,
-                                home: HOME,
-                                sync: haveSync,
-                                limits: limits,
-                                novo: this.actions.create,
-                                identificador: this.identificador,
-                                goodName: this.goodName,
-                                fields: this.fields
-                            })
-                        } else {
+                        let haveSync = r[2].length > 0 && navigator.onLine ? r[2].length : 0;
+                        return Mustache.render(templates.grid, {
+                            entity: entity,
+                            home: HOME,
+                            sync: haveSync,
+                            limits: limits,
+                            novo: this.actions.create,
+                            identificador: this.identificador,
+                            goodName: this.goodName,
+                            fields: this.fields
+                        })
+                    } else {
 
-                            return Mustache.render(templates.grid, {
-                                entity: entity,
-                                home: HOME,
-                                sync: !1,
-                                limits: limits,
-                                novo: this.actions.create,
-                                identificador: this.identificador,
-                                goodName: this.goodName,
-                                fields: this.fields
-                            })
-                        }
-                    })
+                        return Mustache.render(templates.grid, {
+                            entity: entity,
+                            home: HOME,
+                            sync: !1,
+                            limits: limits,
+                            novo: this.actions.create,
+                            identificador: this.identificador,
+                            goodName: this.goodName,
+                            fields: this.fields
+                        })
+                    }
                 })
             })
         },
@@ -737,16 +736,15 @@ $(function () {
         let nameRegra = (grid.filterRegraOperador === "inner_join" ? "grupo de inclusão" : "grupo de exclusão");
         let $logic = grid.$element.find("#filter-logic");
         grid.$element.find(".btn-new-group").addClass("disabled").attr("disabled", "disabled");
-        getTemplates().then(tpl => {
-            if (grid.filterRegraOperador !== "group") {
-                let $grupoFieldDic = $("<div class='col inner_div'><hr class='col'><div class='left font-small' style='margin: -15px 0 4px 5px'>" + nameRegra + "</div><div class='left font-small grupo-join-field' style='margin: -24px 0 4px 5px;'></div></div>").appendTo($logic);
-                let $grupoField = $("<select class='theme-text-aux grupo-join-field-select' rel='" + identificador + "'><option value='id' class='theme-text'>id</option></select>").appendTo($grupoFieldDic.find(".grupo-join-field"));
+        let tpl = getTemplates();
+        if (grid.filterRegraOperador !== "group") {
+            let $grupoFieldDic = $("<div class='col inner_div'><hr class='col'><div class='left font-small' style='margin: -15px 0 4px 5px'>" + nameRegra + "</div><div class='left font-small grupo-join-field' style='margin: -24px 0 4px 5px;'></div></div>").appendTo($logic);
+            let $grupoField = $("<select class='theme-text-aux grupo-join-field-select' rel='" + identificador + "'><option value='id' class='theme-text'>id</option></select>").appendTo($grupoFieldDic.find(".grupo-join-field"));
 
-                for(let i in dicionarios[grid.entity])
-                    $grupoField.append("<option value='" + i + "' class='theme-text'>" + dicionarios[grid.entity][i].nome + "</option>")
-            }
-            $logic.append(Mustache.render(tpl.filter_group, {identificador: identificador}));
-        });
+            for(let i in dicionarios[grid.entity])
+                $grupoField.append("<option value='" + i + "' class='theme-text'>" + dicionarios[grid.entity][i].nome + "</option>")
+        }
+        $logic.append(Mustache.render(tpl.filter_group, {identificador: identificador}));
 
     }).off("click", ".btn-new-filter-and").on("click", ".btn-new-filter-and", function () {
         let grid = grids[$(this).attr("rel")];
@@ -893,17 +891,15 @@ $(function () {
         /**
          * Adiciona filtro a lista de filtros na UI
          */
-        getTemplates().then(templates => {
-            let showOperador = grid.$filterGroup.prev(".filter-logic").length || grid.$filterGroup.find(".filter_badge").length;
-            return grid.$filterGroup.find("#filter_group_logic").append(Mustache.render(templates.filter_badge, Object.assign({
-                operadorName: operador,
-                showOperador: showOperador
-            }, filter)));
+        let templates = getTemplates();
+        let showOperador = grid.$filterGroup.prev(".filter-logic").length || grid.$filterGroup.find(".filter_badge").length;
+        grid.$filterGroup.find("#filter_group_logic").append(Mustache.render(templates.filter_badge, Object.assign({
+            operadorName: operador,
+            showOperador: showOperador
+        }, filter)));
 
-        }).then(d => {
-            grid.$element.find(".modal-filter").addClass("hide");
-            grid.readData()
-        });
+        grid.$element.find(".modal-filter").addClass("hide");
+        grid.readData()
 
     }).off("change", ".grupo-join-field-select").on("change", ".grupo-join-field-select", function () {
         let $inner = $(this).closest(".inner_div");
