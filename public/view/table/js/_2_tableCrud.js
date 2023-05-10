@@ -269,15 +269,22 @@ $(function () {
             if (cont > 0) {
                 $.each(grid.$content.find(".table-select:checked"), function () {
                     ids.push(parseInt($(this).attr("rel")));
-                    grid.$element.find("#row-" + grid.entity + "-" + $(this).attr("rel")).remove();
                 })
             } else {
                 ids.push(parseInt($(this).attr("rel")))
-                grid.$element.find("#row-" + grid.entity + "-" + $(this).attr("rel")).remove();
             }
             let t = await AJAX.post("gridEntityDelete", {entity: grid.entity, ids: ids});
-            if(t)
+            if(t == 1) {
                 toast("Registros excluídos", 1000, "toast-success");
+
+                if (cont > 0) {
+                    $.each(grid.$content.find(".table-select:checked"), function () {
+                        grid.$element.find("#row-" + grid.entity + "-" + $(this).attr("rel")).remove();
+                    })
+                } else {
+                    grid.$element.find("#row-" + grid.entity + "-" + $(this).attr("rel")).remove();
+                }
+            }
         }
 
     }).off("click", ".showHideField").on("click", ".showHideField", function () {
