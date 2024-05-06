@@ -265,8 +265,15 @@ async function gridTdFilterValue(value, relationData, meta) {
             return "";
 
         let valueFinal = "";
-        for(let vv of value)
-            valueFinal += vv.columnTituloExtend;
+
+        if(typeof value === "object") {
+            if(typeof value.columnTituloExtend === "string") {
+                valueFinal = value.columnTituloExtend;
+            } else if(typeof value[0] !== "undefined" && typeof value[0].columnTituloExtend === "string") {
+                for(let vv of value)
+                    valueFinal += vv.columnTituloExtend;
+            }
+        }
 
         return valueFinal;
 
