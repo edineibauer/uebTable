@@ -166,6 +166,19 @@ function downloadData(grid, pretty) {
     });
 }
 
+function readFile(file) {
+    return new Promise((s, f) => {
+        if (!file)
+            return;
+
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            s(e.target.result);
+        };
+        reader.readAsText(file);
+    });
+}
+
 $(function () {
     $("#app").off("click", ".table-reload").on("click", ".table-reload", function () {
         let grid = grids[$(this).attr("rel")];

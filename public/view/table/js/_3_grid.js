@@ -1,6 +1,59 @@
 var grids = [];
 
+async function permissionToChange(entity, data) {
+    if (USER.setor === "admin")
+        return true;
+
+    let info = JSON.parse(sessionStorage.__info);
+
+    if(typeof info[entity] === "object" && info[entity] !== null) {
+
+        /**
+         * Sistema diferente do usuário
+         * */
+        if (isNumberPositive(data.system_id) && data.system_id != USER.system_id) {
+            if(typeof info[entity].system === "string" && !isEmpty(info[entity].system) && !isEmpty(info[info[entity].system].system) && info[info[entity].system].system === info[USER.setor].system) {
+                let r = await db.exeRead(info[entity].system, data.system_id);
+                return (!isEmpty(r) && r[0].system_id == USER.system_id);
+            } else {
+                return !1;
+            }
+        }
+
+        /**
+         * Sistema administrativo, usuário não tem permissão para editar
+         * */
+        if((!isNumberPositive(data.system_id) || isEmpty(data.system_id)) && typeof info[entity].system === "string" && !isEmpty(info[entity].system) && !isEmpty(data.id))
+            return false;
+
+        /**
+         * Autorpub check permission
+         * */
+        if (typeof info[entity].autor === "number" && info[entity].autor === 1 && isNumberPositive(data.id)) {
+            let dados = await db.exeRead(entity, data.id);
+            if(!isEmpty(dados) && typeof dados[0].autorpub === "number" && parseInt(dados[0].autorpub) !== parseInt(USER.id))
+                return false;
+        }
+
+        /**
+         * Ownerpub check permission
+         * */
+        if (typeof info[entity].autor === "number" && info[entity].autor === 2 && isNumberPositive(data.id)) {
+            let dados = await db.exeRead(entity, data.id);
+            if(!isEmpty(dados) && typeof dados[0].ownerpub === "number" && parseInt(dados[0].ownerpub) !== parseInt(USER.id))
+                return false;
+        }
+    }
+
+    return true;
+}
+
+async function permissionToAction(entity, action) {
+    return USER.setor === "admin" || await AJAX.get("permissionTo/" + entity + "/" + action);
+}
+
 async function gridTr(identificador, entity, data, fields, info, actions, selecteds) {
+
     let gridContent = {
         id: data.id || 0,
         db_status: (typeof data.db_status !== "boolean" || data.db_status),
@@ -10,8 +63,8 @@ async function gridTr(identificador, entity, data, fields, info, actions, select
         fields: [],
         permission: await permissionToChange(entity, data),
         button: {
-            delete: (actions['delete'] ? await havePermission(entity, data, 'delete') : !1),
-            update: (actions.update ? await havePermission(entity, data, 'update') : !1),
+            delete: (actions['delete'] ? await permissionToAction(entity, 'delete') : !1),
+            update: (actions.update ? await permissionToAction(entity, 'update') : !1),
             status: {have: !1, status: !1}
         }
     };
@@ -337,6 +390,13 @@ function separaNumeroValor(val, charact) {
     return reverse(val.substring(0, 3) + (val.substring(3, 6) !== "" ? charact + val.substring(3, 6) : "") + (val.substring(6, 9) !== "" ? charact + val.substring(6, 9) : "") + (val.substring(9, 12) !== "" ? charact + val.substring(9, 12) : "") + (val.substring(12, 15) !== "" ? charact + val.substring(12, 15) : "") + (val.substring(15, 18) !== "" ? charact + val.substring(15, 18) : ""))
 }
 
+function checkUserOptionsTable() {
+    $("." + USER.setor + "Show").removeClass("hide");
+    $("." + USER.setor + "Hide").addClass("hide");
+    $("." + USER.setor + "Allow").removeAttr("disabled");
+    $("." + USER.setor + "Disabled").attr("disabled", "disabled");
+}
+
 function clearForm() {
     $("#app").off("click", ".btn-form-list").on("click", ".btn-form-list", function () {
         form.setReloadAfterSave(!1);
@@ -346,7 +406,7 @@ function clearForm() {
     }).off("click", ".btn-form-save").on("click", ".btn-form-save", function () {
         form.save()
     });
-    checkUserOptions()
+    checkUserOptionsTable()
 }
 
 var syncGrid = null;
@@ -552,11 +612,10 @@ function gridCrud(entity, fields, actions) {
                     if (this.actions.create)
                         this.actions.create = t;
 
-                    let templates = getTemplates();
                     if (SERVICEWORKER) {
 
                         let haveSync = r[2].length > 0 && navigator.onLine ? r[2].length : 0;
-                        return Mustache.render(templates.grid, {
+                        return Mustache.render(getTemplates().grid, {
                             entity: entity,
                             home: HOME,
                             sync: haveSync,
@@ -568,7 +627,7 @@ function gridCrud(entity, fields, actions) {
                         })
                     } else {
 
-                        return Mustache.render(templates.grid, {
+                        return Mustache.render(getTemplates().grid, {
                             entity: entity,
                             home: HOME,
                             sync: !1,
