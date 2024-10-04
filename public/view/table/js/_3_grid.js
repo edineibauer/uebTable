@@ -583,22 +583,23 @@ function gridCrud(entity, fields, actions) {
             }
             this.readData()
         },
-        getShow: function () {
-            let pF = (isEmpty(grid.fields) ? getFields(entity, !0, 'grid') : new Promise());
-            let perm = permissionToAction(this.entity, 'read');
-            let sync = dbLocal.exeRead("sync_" + this.entity);
-            return Promise.all([perm, pF, sync]).then(r => {
+        getShow: async function () {
+            if (isEmpty(grid.fields))
+                this.fields = await getFields(entity, true, 'grid');
 
-                if (isEmpty(grid.fields))
-                    this.fields = r[1];
+            if (!(await permissionToAction(this.entity, 'read')))
+                return "<h2 class='align-center padding-32 color-text-gray-dark'>Sem Permissao para Ler esses dados</h2>";
 
-                if (!r[0])
-                    return "<h2 class='align-center padding-32 color-text-gray-dark'>Sem Permissao para Leitura</h2>"
+            if (!localStorage.limitGrid)
+                localStorage.limitGrid = 15;
 
-                if (!localStorage.limitGrid)
-                    localStorage.limitGrid = 15;
+            if (this.actions.create)
+                this.actions.create = await permissionToAction(this.entity, 'create');
 
-                limits = {
+            return Mustache.render(getTemplates().grid, {
+                entity: entity,
+                home: HOME,
+                limits: {
                     a: this.limit === 15,
                     b: this.limit === 25,
                     c: this.limit === 50,
@@ -606,40 +607,12 @@ function gridCrud(entity, fields, actions) {
                     e: this.limit === 250,
                     f: this.limit === 500,
                     g: this.limit === 1000
-                };
-
-                return permissionToAction(this.entity, 'create').then(t => {
-                    if (this.actions.create)
-                        this.actions.create = t;
-
-                    if (SERVICEWORKER) {
-
-                        let haveSync = r[2].length > 0 && navigator.onLine ? r[2].length : 0;
-                        return Mustache.render(getTemplates().grid, {
-                            entity: entity,
-                            home: HOME,
-                            sync: haveSync,
-                            limits: limits,
-                            novo: this.actions.create,
-                            identificador: this.identificador,
-                            goodName: this.goodName,
-                            fields: this.fields
-                        })
-                    } else {
-
-                        return Mustache.render(getTemplates().grid, {
-                            entity: entity,
-                            home: HOME,
-                            sync: !1,
-                            limits: limits,
-                            novo: this.actions.create,
-                            identificador: this.identificador,
-                            goodName: this.goodName,
-                            fields: this.fields
-                        })
-                    }
-                })
-            })
+                },
+                novo: this.actions.create,
+                identificador: this.identificador,
+                goodName: this.goodName,
+                fields: this.fields
+            });
         },
         show: function ($element) {
             if (typeof $element !== "undefined")
