@@ -19,7 +19,7 @@ function sanitizeCSS(css) {
 $(function () {
 
     if(app.param.css)
-        $target.closest(".core-class-container").prepend("<style>" + sanitizeCSS(app.param.css) + "</style>");
+        $("#table-maestru").closest(".core-class-container").prepend("<style>" + sanitizeCSS(app.param.css) + "</style>");
 
     $("#table-maestru").grid(app.param.url[0]);
 })
